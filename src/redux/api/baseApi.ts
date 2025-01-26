@@ -10,7 +10,6 @@ import { RootState } from "../store";
 import { toast } from "sonner";
 import { logout, setUser } from "../features/auth/authSlice";
 
-
 const baseQuery = fetchBaseQuery({
     baseUrl: 'http://localhost:5000/api',
     credentials: 'include',
