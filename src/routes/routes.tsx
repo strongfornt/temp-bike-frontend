@@ -3,6 +3,8 @@ import App from '../App';
 import ProtectedRoute from '../components/layout/ProtectedRoute';
 import { routeGenerator } from '../utils/routesGenerator';
 import { adminPaths } from './admin.routes';
+import SignIn from '../pages/Authentication/SignIn';
+import SignUp from '../pages/Authentication/SignUp';
 
 
 const router = createBrowserRouter([
@@ -19,18 +21,18 @@ const router = createBrowserRouter([
     ),
     children: routeGenerator(adminPaths),
   },
-//   {
-//     path: '/login',
-//     element: <Login />,
-//   },
-//   {
-//     path: '/change-password',
-//     element: <ChangePassword />,
-//   },
-//   {
-//     path: '/register',
-//     element: <Register />,
-//   },
+  {
+    path: '/sign-up',
+    element: <SignUp />,
+  },
+  //   {
+  //     path: '/change-password',
+  //     element: <ChangePassword />,
+  //   },
+  {
+    path: '/signin',
+    element: <SignIn />,
+  },
 ]);
 
 export default router;
