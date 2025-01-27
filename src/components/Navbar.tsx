@@ -1,5 +1,4 @@
 import { MenuOutlined } from '@ant-design/icons';
-import { Button } from "antd";
 import { Link, NavLink } from "react-router-dom";
 const Navbar = () => {
     const links = <>
@@ -70,18 +69,22 @@ const Navbar = () => {
                 {/* Auth/Cart Buttons */}
                 <div className="flex justify-center items-center gap-3">
                     <Link to="/signin">
-                        <Button
-                            type="primary"
-                        >
-                            Signin
-                        </Button>
+                        <div className="relative p-0.5 inline-flex items-center justify-center font-semibold overflow-hidden group text-sm rounded-md">
+                            <span className="w-full h-full bg-gradient-to-br from-secondary  to-primary group-hover:from-primary group-hover:to-secondary absolute"></span>
+                            <span className="relative px-3 py-1 transition-all ease-out bg-gray-900 rounded-md group-hover:bg-opacity-0 duration-400">
+                                <span className="relative text-gray-300">Signin</span>
+                            </span>
+                        </div>
                     </Link>
                     <Link to="/sign-up" className="hidden md:block">
-                        <Button
-                            type="primary"
+                        <div
+                            className="relative p-0.5 inline-flex items-center justify-center font-semibold overflow-hidden text-sm group rounded-md"
                         >
-                            Sign Up
-                        </Button>
+                            <span className="w-full h-full bg-gradient-to-br from-secondary to-primary group-hover:from-primary group-hover:to-secondary absolute transition-all duration-300 ease-in-out"></span>
+                            <span className="relative px-3 py-1 transition-all ease-out bg-gray-900 rounded-md group-hover:bg-opacity-0 duration-300">
+                                <span className="relative text-gray-300 group-hover:text-white">Sign Up</span>
+                            </span>
+                        </div>
                     </Link>
                 </div>
             </div>

@@ -1,9 +1,7 @@
 import { Button, Checkbox, Divider, Form, Input } from 'antd';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const SignUp = () => {
-    const [agree, setAgree] = useState(false);
     const handleFinish = (values: any) => {
         const { firstName, email, password } = values;
         console.log({ name: firstName, email, password });
@@ -12,7 +10,7 @@ const SignUp = () => {
     return (
         <div className="flex items-center min-h-screen">
             <div className="flex justify-center items-center bg-gray-200 h-screen flex-1">
-                <div className="bg-gray-100 p-5 rounded-md space-y-2 md:space-y-5 w-[550px] shadow-lg">
+                <div className="bg-gray-100 p-5 rounded-md space-y-2 md:space-y-5 w-full md:w-[550px] drop-shadow-lg">
                     <div className="text-center space-y-3">
                         <h4 className="text-sm md:text-lg font-medium">Welcome To</h4>
                         {/* Logo */}
@@ -21,10 +19,11 @@ const SignUp = () => {
                         </Link>
                         <p className="text-xs md:text-sm">Signup for purchase your desire products</p>
                     </div>
-                    <Form onFinish={handleFinish} layout="vertical" className="space-y-5">
+                    <Form onFinish={handleFinish} layout="vertical" className="" requiredMark={false}>
                         <Form.Item
                             name="firstName"
-                            rules={[{ required: true, message: 'First name is required!' }]}
+                            label="Full Name:"
+                            rules={[{ required: true, message: 'Name is required!' }]}
                         >
                             <Input
                                 className="h-[40px] border-2 border-gray-400 bg-white px-2 text-black rounded-md"
@@ -34,6 +33,7 @@ const SignUp = () => {
 
                         <Form.Item
                             name="email"
+                             label="Email:"
                             rules={[
                                 { required: true, message: 'Email is required!' },
                                 { type: 'email', message: 'Enter a valid email!' },
@@ -47,6 +47,7 @@ const SignUp = () => {
 
                         <Form.Item
                             name="password"
+                             label="Password:"
                             rules={[{ required: true, message: 'Password is required!' }]}
                         >
                             <Input.Password
@@ -59,14 +60,13 @@ const SignUp = () => {
                         <Form.Item name="agree" valuePropName="checked" className="space-x-2 font-medium text-xs"
                             rules={[{ validator: (_, value) => value ? Promise.resolve() : Promise.reject('You must agree to the terms and conditions') }]}
                         >
-                            <Checkbox onChange={(e: any) => setAgree(e.target.checked)}>I agree to the Terms & Policy</Checkbox>
+                            <Checkbox>I agree to the Terms & Policy</Checkbox>
                         </Form.Item>
 
                         <Button
                             type="primary"
                             htmlType="submit"
                             size='large'
-                            disabled={!agree}
                             className="py-1 md:py-3 w-full bg-black rounded-md text-white text-xs md:text-sm hover:bg-gray-600 duration-300 disabled:cursor-not-allowed"
                         >
                             Sign Up

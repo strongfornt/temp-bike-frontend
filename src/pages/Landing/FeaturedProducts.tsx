@@ -19,14 +19,17 @@ const FeaturedProducts = () => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     {featuredProducts.map((product) => (
-                        <div key={product.id} className="shadow-lg">
-                            <div className="bg-[#1C1B1B] p-2 rounded-t-xl">
-                                <img className="w-full" src={product?.image} alt="" />
-                                    <h4 className="text-lg md:text-xl font-medium text-[#FFE8D4] text-center my-5">{product.name}</h4>
+                        <div key={product.id} className="shadow-lg bg-gray-200 overflow-hidden border-2 border-gray-200 rounded-lg">
+                            <div className="hover:bg-gray-100 transition-colors duration-300 cursor-pointer">
+                                <img
+                                    className="w-full object-cover h-[250px] bg-contain transform hover:scale-105 transition-transform duration-300"
+                                    src={product.image}
+                                    alt="Contest"
+                                />
                             </div>
-                            <div className="bg-[#F6F6F6] p-4">
+                            <div className="p-4">
                                 <div
-                                    className="mt-8 space-y-2 flex items-center justify-between gap-3 md:gap-5 w-full md:w-11/12 text-xs md:text-sm font-medium">
+                                    className=" space-y-2 flex items-center justify-between gap-3 md:gap-5 w-full md:w-11/12 text-xs md:text-sm font-medium">
                                     <div>
                                         <p>Brand: Mondrake</p>
                                         <p>Material: Steel</p>
@@ -39,16 +42,15 @@ const FeaturedProducts = () => {
                             </div>
                             <div>
                                 <Button
-                                size="large"
-                                className="!rounded-none"
-                                type="primary"
-                                block
+                                    size="large"
+                                    className="!rounded-t-none"
+                                    type="primary"
+                                    block
                                 >
-                                        View Details
+                                    View Details
                                 </Button>
                             </div>
                         </div>
-
                     ))}
                 </div>
                 <div className="text-center mt-6">

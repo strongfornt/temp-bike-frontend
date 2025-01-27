@@ -1,22 +1,48 @@
 import { Button, Divider, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
+import { useLoginMutation } from '../../redux/features/auth/authApi';
 
 const SignIn = () => {
+    const [submitFunc, res] = useLoginMutation()
     const handleSubmit = (values: any) => {
-        console.log(values);
+        const userInfo = {
+            data: {
+                email: values.email,
+                password: values?.password
+            }
+        }
+        submitFunc(userInfo)
     };
+    /**
+     * {
+  "data":{
+  "name": "trump",
+  "email": "trump@example.com",
+  "password": "trump12"
+}
+}
+{
+  "data":{
+  "email": "trump@example.com",
+  "password": "trump12",
+  "newPassword":"trump123"
+}
+}
+     * 
+     */
     return (
-        <div className="flex items-center min-h-screen py-5 lg:py-0 px-3 lg:px-0">
+        <div className="flex items-center min-h-screen">
             <div className="flex justify-center items-center bg-gray-200 h-screen flex-1">
-                <div className='bg-gray-100 p-5 rounded-md space-y-2 md:space-y-5 w-full md:w-[550px] shadow-lg'>
+                <div className='bg-gray-100 p-5 rounded-md space-y-2 md:space-y-5 w-full md:w-[550px] drop-shadow-lg'>
                     <div className='space-y-3 py-3 text-center'>
                         <h4 className='text-2xl md:text-3xl font-semibold'>Welcome Back</h4>
                         <p className='text-sm md:text-lg'>Enter your Credentials to access your account</p>
                     </div>
 
-                    <Form onFinish={handleSubmit} className='space-y-5'>
+                    <Form onFinish={handleSubmit} requiredMark={false} layout='vertical'>
                         <Form.Item
                             name="email"
+                            label="Email:"
                             rules={[{ required: true, message: 'Please enter your email!', type: 'email' }]}
                         >
                             <Input
@@ -27,6 +53,7 @@ const SignIn = () => {
 
                         <Form.Item
                             name="password"
+                            label="Password:"
                             rules={[{ required: true, message: 'Please enter your password!' }]}
                         >
                             <Input.Password
@@ -35,7 +62,7 @@ const SignIn = () => {
                             />
                         </Form.Item>
                         <div className='text-end'>
-                            <Link to="/forgot-password" className='text-end font-semibold !text-primary !hover:text-primary/40 text-xs md:text-sm cursor-pointer'>Forgot password?</Link>
+                            <p className='text-end font-semibold !text-primary !hover:text-primary/40 text-xs md:text-sm cursor-pointer mb-2'>Forgot password?</p>
                         </div>
 
                         <Form.Item>

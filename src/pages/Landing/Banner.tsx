@@ -7,7 +7,7 @@ const Banner = () => {
   const banners = [
     {
       id: 1,
-      title: "Welcome to RideEase!",
+      title: "Welcome to Bike Shop!",
       subtitle: "Your ultimate platform for hassle-free rides.",
       image:
         "https://global.honda/en/japan-mobility-show/2023/info/Honda_e-MTB_Concept/images/main.jpg",
@@ -32,7 +32,6 @@ const Banner = () => {
     <div className="bg-gray-100">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
-        navigation
         pagination={{ clickable: true }}
         autoplay={{ delay: 3000 }}
         loop
@@ -40,7 +39,7 @@ const Banner = () => {
       >
         {banners.map((banner) => (
           <SwiperSlide key={banner.id}>
-            <div className="relative h-screen">
+            <div className="relative h-screen cursor-grabbing">
               {/* Background Image */}
               <img
                 src={banner.image}
