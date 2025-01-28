@@ -30,6 +30,10 @@ const baseQuery = fetchBaseQuery({
   BaseQueryApi,
   DefinitionType
 > = async (args, api, extraOptions): Promise<any> => {
+
+  if (args.method === 'GET' && args.body) {
+    delete args.body;
+  }
   let result:any = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 404) {
@@ -43,17 +47,8 @@ const baseQuery = fetchBaseQuery({
     // console.log('Sending refresh token');
 
     const res = await axios.post('https://bike-store-server-gray.vercel.app/api/auth/refresh-token')
-    
-    // fetch('https://bike-store-server-gray.vercel.app/api/auth/refresh-token', {
-    //   method: 'POST',
-    //   credentials: 'include',
-    // });
-
-    // const data = await res.json();
-
     if (res?.data?.accessToken) {
       const user = (api.getState() as RootState).auth.user;
-
       api.dispatch(
         setUser({
           user,
