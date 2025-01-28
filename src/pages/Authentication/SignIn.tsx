@@ -1,35 +1,29 @@
-import { Button, Divider, Form, Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { Button, Divider, Form, Input, message } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../redux/features/auth/authApi';
-import { AppleOutlined,  GoogleOutlined } from '@ant-design/icons';
+import { AppleOutlined, GoogleOutlined } from '@ant-design/icons';
+import { setUser } from '../../redux/features/auth/authSlice';
+import { useAppDispatch } from '../../redux/hook';
 const SignIn = () => {
     const [submitFunc, res] = useLoginMutation()
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch()
     const handleSubmit = (values: any) => {
         const userInfo = {
-            data: {
-                email: values.email,
-                password: values?.password
-            }
+            email: values.email,
+            password: values?.password
         }
         submitFunc(userInfo)
+        if (res.isSuccess) {
+            message.success("Login successfully!")
+            navigate('/')
+            dispatch(setUser(userInfo.data))
+        }
+        if (res.isError) {
+            message.error(res.error?.data?.message)
+        }
     };
-    /**
-     * {
-  "data":{
-  "name": "trump",
-  "email": "trump@example.com",
-  "password": "trump12"
-}
-}
-{
-  "data":{
-  "email": "trump@example.com",
-  "password": "trump12",
-  "newPassword":"trump123"
-}
-}
-     * 
-     */
+
     return (
         <div className="flex items-center min-h-screen">
             <div className="flex justify-center items-center bg-gray-200 h-screen flex-1">
@@ -70,6 +64,7 @@ const SignIn = () => {
                                 type="primary"
                                 htmlType="submit"
                                 size='large'
+                                loading={res.isLoading}
                                 block
                                 className="bg-black text-white text-xs md:text-sm hover:bg-gray-600 duration-300"
                             >
@@ -89,7 +84,7 @@ const SignIn = () => {
                             Sign in with Google
                         </Button>
                         <Button
-                        icon={<AppleOutlined size={25} />} 
+                            icon={<AppleOutlined size={25} />}
                             size='large'
                             className='w-full pointer-events-none cursor-not-allowed flex justify-center items-center gap-3 border border-gray-400 rounded-md py-1 md:py-3 text-xs md:text-sm hover:bg-black hover:text-white hover:border-black duration-300'
                         >

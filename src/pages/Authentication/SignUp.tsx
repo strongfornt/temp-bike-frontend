@@ -2,9 +2,12 @@ import { Button, Checkbox, Divider, Form, Input, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppleOutlined, GoogleOutlined } from '@ant-design/icons';
 import { useSingInMutation } from '../../redux/features/auth/authApi';
+import { setUser } from '../../redux/features/auth/authSlice';
+import { useAppDispatch } from '../../redux/hook';
 const SignUp = () => {
     const [submitFunc, res] = useSingInMutation()
     const navigate = useNavigate()
+    const dispatch= useAppDispatch()
     const handleFinish = (values: any) => {
         const { name, email, password } = values;
         const userInfo = {
@@ -12,24 +15,16 @@ const SignUp = () => {
             email,
             password
         }
-        submitFunc(userInfo)
-        // fetch('https://bike-store-server-gray.vercel.app/api/users/register', {
-        //     body: JSON.stringify(userInfo),
-        //     method: "POST",
-        // })
-        // .then(res => res.json())
-        // .then(data => console.log(data))
-        // .catch(err => console.log(err))
-
+        submitFunc(userInfo )
+        if (res.isSuccess) {
+            message.success("Log in successfully!")
+            navigate('/')
+            dispatch(setUser(userInfo))
+        }
+        if (res.isError) {
+            message.error("Something went wrong!")
+        }
     };
-    if (res.isSuccess) {
-        message.success("Log in successfully!")
-        return navigate('/dashboard')
-    }
-    if (res.isError) {
-        return message.error("Something went wrong!")
-    }
-    
 
     return (
         <div className="flex items-center min-h-screen">
@@ -91,6 +86,7 @@ const SignUp = () => {
                             type="primary"
                             htmlType="submit"
                             size='large'
+                            loading={res.isLoading}
                             className="py-1 md:py-3 w-full bg-black rounded-md text-white text-xs md:text-sm hover:bg-gray-600 duration-300 disabled:cursor-not-allowed"
                         >
                             Sign Up
