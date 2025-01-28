@@ -7,51 +7,59 @@ const Banner = () => {
   const banners = [
     {
       id: 1,
-      title: "Welcome to Bike Shop!",
-      subtitle: "Your ultimate platform for hassle-free rides.",
+      title: "Experience the Freedom of the Open Road with Our Premium Bikes!",
+      subtitle: "Discover the joy of seamless rides with top-quality bikes tailored to fit every journey, every adventure, and every dream.",
       image:
-        "https://global.honda/en/japan-mobility-show/2023/info/Honda_e-MTB_Concept/images/main.jpg",
+        "https://wallpaperaccess.com/full/1433024.jpg",
     },
     {
       id: 2,
-      title: "Exclusive Discounts!",
-      subtitle: "Get 20% off on your first ride. Use code FIRST20.",
+      title: "Unmissable Offers on All Bikes – Your Ride, Your Way, at the Best Price!",
+      subtitle: "Take advantage of exclusive discounts and enjoy up to 20% off your first purchase. Use code BIKE20 today and start your adventure.",
       image:
-        "https://static.giant-bicycles.com/Images/PageBuilder/PageElements/Banner_E-BikeProducts_MMT_WebsiteDesign_Brand_1595881505.jpg",
+        "https://www.shutterstock.com/image-illustration/black-motorcycle-on-dark-background-600nw-1678269436.jpg",
     },
     {
       id: 3,
-      title: "Join Our Community!",
-      subtitle: "Become a part of our growing family of happy riders.",
+      title: "Join a Community of Passionate Riders and Embrace the Adventure of a Lifetime!",
+      subtitle: "Connect with like-minded enthusiasts, explore breathtaking routes, and become part of a growing family that shares your love for the open road.",
       image:
-        "https://static.giant-bicycles.com/Images/PageBuilder/PageElements/Banner_E-BikeProducts_MMT_WebsiteDesign_Brand_1595881505.jpg",
+        "https://png.pngtree.com/thumb_back/fw800/background/20231221/pngtree-black-motorcycle-photo-image_15541809.png",
     },
   ];
 
   return (
-    <div className="bg-gray-100">
+    <div>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         pagination={{ clickable: true }}
-        autoplay={{ delay: 3000 }}
+        autoplay={{ delay: 7000 }}
         loop
         className="h-screen"
       >
         {banners.map((banner) => (
           <SwiperSlide key={banner.id}>
-            <div className="relative h-screen cursor-grabbing">
+            <div className="relative h-[calc(100vh-72px)] cursor-grabbing">
               {/* Background Image */}
               <img
                 src={banner.image}
                 alt={banner.title}
-                className="h-full object-cover bg-no-repeat w-full blur-xs"
+                className="h-full object-cover bg-no-repeat w-full"
               />
               {/* Overlay Content */}
-              <div className="absolute inset-0 bg-opacity-50 flex flex-col items-center justify-center text-center p-4">
-                <h1 className="text-white text-2xl md:text-4xl font-bold mb-2">
-                  {banner.title}
-                </h1>
-                <p className="text-white text-sm md:text-lg">{banner.subtitle}</p>
+              <div className="absolute inset-0 bg-opacity-50 flex flex-col items-start justify-center text-start p-4">
+                <div className=" max-w-xl ml-2 md:ml-12 lg:ml-24">
+                  <h1 className="text-white text-2xl md:text-5xl font-black mb-2">
+                    {banner.title}
+                  </h1>
+                  <p className="text-white text-sm md:text-lg">{banner.subtitle}</p>
+                  <div className="relative p-0.5 inline-flex items-center justify-center font-semibold overflow-hidden group text-sm rounded-md">
+                    <span className="w-full h-full bg-gradient-to-br from-secondary  to-primary group-hover:from-primary group-hover:to-secondary absolute"></span>
+                    <span className="relative px-3 py-1 transition-all ease-out bg-gray-900 rounded-md group-hover:bg-opacity-0 duration-400">
+                      <span className="relative text-gray-300 cursor-pointer">Learn More</span>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </SwiperSlide>

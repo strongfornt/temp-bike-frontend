@@ -26,8 +26,8 @@ const SignIn = () => {
 
     return (
         <div className="flex items-center min-h-screen">
-            <div className="flex justify-center items-center bg-gray-200 h-screen flex-1">
-                <div className='bg-gray-100 p-5 rounded-md space-y-2 md:space-y-5 w-full md:w-[550px] drop-shadow-lg'>
+            <div className="flex justify-center items-center bg-[#c2c2c2] h-screen flex-1">
+                <div className='bg-[#f3f4f6ec] p-5 rounded-md space-y-2 md:space-y-5 w-full md:w-[470px] drop-shadow-lg'>
                     <div className='space-y-3 py-3 text-center'>
                         <h4 className='text-2xl md:text-3xl font-semibold'>Welcome Back</h4>
                         <p className='text-sm md:text-lg'>Enter your Credentials to access your account</p>
@@ -99,7 +99,7 @@ const SignIn = () => {
             </div>
             <div className="flex-1 min-h-screen lg:flex items-center justify-center hidden relative">
                 <img
-                    src="https://cdn.shoplightspeed.com/shops/623085/files/67047399/image.jpg"
+                    src="https://wallpaperbat.com/img/873096-biker-wallpaper-4k-dark-motorcycle.jpg"
                     alt="Background"
                     className="absolute inset-0 w-full h-full object-cover"
                 />

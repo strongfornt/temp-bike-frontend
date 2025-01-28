@@ -5,8 +5,6 @@ import { routeGenerator } from '../utils/routesGenerator';
 import { adminPaths } from './admin.routes';
 import SignIn from '../pages/Authentication/SignIn';
 import SignUp from '../pages/Authentication/SignUp';
-
-
 const router = createBrowserRouter([
   {
     path: '/',

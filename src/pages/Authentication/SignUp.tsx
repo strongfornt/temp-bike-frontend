@@ -28,8 +28,8 @@ const SignUp = () => {
 
     return (
         <div className="flex items-center min-h-screen">
-            <div className="flex justify-center items-center bg-[#FFFFFF] h-screen flex-1">
-                <div className="bg-[#F3F4F6] p-5 rounded-md space-y-2 md:space-y-5 w-full md:w-[550px] drop-shadow-lg">
+            <div className="flex justify-center items-center bg-[#c2c2c2] h-screen flex-1">
+                <div className="bg-[#f3f4f6ec] p-5 rounded-md space-y-2 md:space-y-5 w-full md:w-[470px] drop-shadow-lg">
                     <div className="text-center space-y-3">
                         <h4 className="text-sm md:text-lg font-medium">Welcome To</h4>
                         {/* Logo */}
@@ -112,7 +112,7 @@ const SignUp = () => {
 
             <div className="flex-1 min-h-screen lg:flex items-center justify-center hidden relative">
                 <img
-                    src="https://cdn.shoplightspeed.com/shops/623085/files/67047399/image.jpg"
+                    src="https://wallpaperbat.com/img/873115-cafe-racer-photo-download-the-best.jpg"
                     alt="Background"
                     className="absolute inset-0 w-full h-full object-cover"
                 />
