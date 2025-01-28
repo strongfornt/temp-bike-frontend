@@ -51,7 +51,7 @@ const baseQuery = fetchBaseQuery({
 
     // const data = await res.json();
 
-    if (res?.data?.data?.accessToken) {
+    if (res?.data?.accessToken) {
       const user = (api.getState() as RootState).auth.user;
 
       api.dispatch(

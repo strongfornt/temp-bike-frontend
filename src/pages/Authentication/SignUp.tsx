@@ -1,16 +1,40 @@
-import { Button, Checkbox, Divider, Form, Input } from 'antd';
-import { Link } from 'react-router-dom';
-
+import { Button, Checkbox, Divider, Form, Input, message } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppleOutlined, GoogleOutlined } from '@ant-design/icons';
+import { useSingInMutation } from '../../redux/features/auth/authApi';
 const SignUp = () => {
+    const [submitFunc, res] = useSingInMutation()
+    const navigate = useNavigate()
     const handleFinish = (values: any) => {
-        const { firstName, email, password } = values;
-        console.log({ name: firstName, email, password });
+        const { name, email, password } = values;
+        const userInfo = {
+            name,
+            email,
+            password
+        }
+        submitFunc(userInfo)
+        // fetch('https://bike-store-server-gray.vercel.app/api/users/register', {
+        //     body: JSON.stringify(userInfo),
+        //     method: "POST",
+        // })
+        // .then(res => res.json())
+        // .then(data => console.log(data))
+        // .catch(err => console.log(err))
+
     };
+    if (res.isSuccess) {
+        message.success("Log in successfully!")
+        return navigate('/dashboard')
+    }
+    if (res.isError) {
+        return message.error("Something went wrong!")
+    }
+    
 
     return (
         <div className="flex items-center min-h-screen">
-            <div className="flex justify-center items-center bg-gray-200 h-screen flex-1">
-                <div className="bg-gray-100 p-5 rounded-md space-y-2 md:space-y-5 w-full md:w-[550px] drop-shadow-lg">
+            <div className="flex justify-center items-center bg-[#FFFFFF] h-screen flex-1">
+                <div className="bg-[#F3F4F6] p-5 rounded-md space-y-2 md:space-y-5 w-full md:w-[550px] drop-shadow-lg">
                     <div className="text-center space-y-3">
                         <h4 className="text-sm md:text-lg font-medium">Welcome To</h4>
                         {/* Logo */}
@@ -21,7 +45,7 @@ const SignUp = () => {
                     </div>
                     <Form onFinish={handleFinish} layout="vertical" className="" requiredMark={false}>
                         <Form.Item
-                            name="firstName"
+                            name="name"
                             label="Full Name:"
                             rules={[{ required: true, message: 'Name is required!' }]}
                         >
@@ -33,7 +57,7 @@ const SignUp = () => {
 
                         <Form.Item
                             name="email"
-                             label="Email:"
+                            label="Email:"
                             rules={[
                                 { required: true, message: 'Email is required!' },
                                 { type: 'email', message: 'Enter a valid email!' },
@@ -47,7 +71,7 @@ const SignUp = () => {
 
                         <Form.Item
                             name="password"
-                             label="Password:"
+                            label="Password:"
                             rules={[{ required: true, message: 'Password is required!' }]}
                         >
                             <Input.Password
@@ -76,10 +100,10 @@ const SignUp = () => {
                     <Divider plain>Or</Divider>
 
                     <div className="flex flex-col md:flex-row items-center justify-between gap-5 text-black font-medium">
-                        <Button size='large' disabled={true} className="py-1 md:py-3 text-xs md:text-sm border border-gray-400 rounded-md w-full flex justify-center items-center gap-3 hover:bg-black hover:text-white hover:border-black duration-300">
+                        <Button icon={<GoogleOutlined size={25} />} size='large' className="py-1 pointer-events-none cursor-not-allowed md:py-3 text-xs md:text-sm border border-gray-400 rounded-md w-full flex justify-center items-center gap-3 hover:bg-black hover:text-white hover:border-black duration-300">
                             Sign in with Google
                         </Button>
-                        <Button size='large' disabled={true} className="py-1 md:py-3 text-xs md:text-sm border border-gray-400 rounded-md w-full flex justify-center items-center gap-3 hover:bg-black hover:text-white hover:border-black duration-300">
+                        <Button icon={<AppleOutlined size={25} />} size='large' className="py-1 pointer-events-none cursor-not-allowed md:py-3 text-xs md:text-sm border border-gray-400 rounded-md w-full flex justify-center items-center gap-3 hover:bg-black hover:text-white hover:border-black duration-300">
                             Sign in with Apple
                         </Button>
                     </div>

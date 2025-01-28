@@ -1,7 +1,7 @@
 import { Button, Divider, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
 import { useLoginMutation } from '../../redux/features/auth/authApi';
-
+import { AppleOutlined,  GoogleOutlined } from '@ant-design/icons';
 const SignIn = () => {
     const [submitFunc, res] = useLoginMutation()
     const handleSubmit = (values: any) => {
@@ -82,14 +82,16 @@ const SignIn = () => {
 
                     <div className='flex flex-col md:flex-row items-center justify-between gap-5 text-black font-medium'>
                         <Button
-                            size='large' disabled={true}
-                            className='w-full flex justify-center items-center gap-3 border border-gray-400 rounded-md py-1 md:py-3 text-xs md:text-sm hover:bg-black hover:text-white hover:border-black duration-300'
+                            size='large'
+                            icon={<GoogleOutlined size={25} />}
+                            className='w-full pointer-events-none cursor-not-allowed flex justify-center items-center gap-3 border border-gray-400 rounded-md py-1 md:py-3 text-xs md:text-sm hover:bg-black hover:text-white hover:border-black duration-300'
                         >
                             Sign in with Google
                         </Button>
                         <Button
-                            size='large' disabled={true}
-                            className='w-full flex justify-center items-center gap-3 border border-gray-400 rounded-md py-1 md:py-3 text-xs md:text-sm hover:bg-black hover:text-white hover:border-black duration-300'
+                        icon={<AppleOutlined size={25} />} 
+                            size='large'
+                            className='w-full pointer-events-none cursor-not-allowed flex justify-center items-center gap-3 border border-gray-400 rounded-md py-1 md:py-3 text-xs md:text-sm hover:bg-black hover:text-white hover:border-black duration-300'
                         >
                             Sign in with Apple
                         </Button>
