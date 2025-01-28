@@ -1,37 +1,64 @@
-import { Button, Divider, Form, Input, message } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import { useLoginMutation } from '../../redux/features/auth/authApi';
-import { AppleOutlined, GoogleOutlined } from '@ant-design/icons';
-import { setUser } from '../../redux/features/auth/authSlice';
-import { useAppDispatch } from '../../redux/hook';
+import { AppleOutlined, GoogleOutlined } from "@ant-design/icons";
+import { Button, Divider, Form, Input } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { useLoginMutation } from "../../redux/features/auth/authApi";
+import {
+    selectCurrentUser,
+    setUser
+} from "../../redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
+import { verifyToken } from "../../utils/verifyToken";
+import { useEffect } from "react";
 const SignIn = () => {
-    const [submitFunc, res] = useLoginMutation()
-    const navigate = useNavigate()
-    const dispatch = useAppDispatch()
-    const handleSubmit = (values: any) => {
-        const userInfo:any = {
-            email: values.email,
-            password: values?.password
-        }
-        submitFunc(userInfo)
-        if (res.isSuccess) {
-            message.success("Login successfully!")
-            navigate('/')
-            dispatch(setUser(userInfo.data))
-        }
-        if (res.isError) {
-            message.error(res.error?.data?.message)
-        }
-    };
+  const [submitFunc, res] = useLoginMutation();
+  const currentUser = useAppSelector(selectCurrentUser)
+  const navigate = useNavigate();
 
-    return (
-        <div className="flex items-center min-h-screen">
-            <div className="flex justify-center items-center bg-gray-200 h-screen flex-1">
-                <div className='bg-gray-100 p-5 rounded-md space-y-2 md:space-y-5 w-full md:w-[550px] drop-shadow-lg'>
-                    <div className='space-y-3 py-3 text-center'>
-                        <h4 className='text-2xl md:text-3xl font-semibold'>Welcome Back</h4>
-                        <p className='text-sm md:text-lg'>Enter your Credentials to access your account</p>
-                    </div>
+  // const token = useAppSelector(useCurrentToken)
+  const dispatch = useAppDispatch();
+  const handleSubmit = async (values: any) => {
+    const toastId = toast.loading("Logging in");
+
+    const userInfo: any = {
+      email: values.email,
+      password: values?.password,
+    };
+    const response = await submitFunc(userInfo);
+    if (response?.data?.success === true) {
+      const user = verifyToken(response?.data?.data?.accessToken);
+      dispatch(
+        setUser({
+          user,
+          token: response?.data?.data.accessToken,
+        })
+      );
+      toast.success(response?.data?.message || "Success", { id: toastId });
+      navigate(`/`);
+    } else {
+      toast.error((response?.error as any).data?.message || "Failed to login", {
+        id: toastId,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if(currentUser) {
+         navigate('/')
+      }
+  },[])
+  
+
+  return (
+    <div className="flex items-center min-h-screen">
+      <div className="flex justify-center items-center bg-gray-200 h-screen flex-1">
+        <div className="bg-gray-100 p-5 rounded-md space-y-2 md:space-y-5 w-full md:w-[550px] drop-shadow-lg">
+          <div className="space-y-3 py-3 text-center">
+            <h4 className="text-2xl md:text-3xl font-semibold">Welcome Back</h4>
+            <p className="text-sm md:text-lg">
+              Enter your Credentials to access your account
+            </p>
+          </div>
 
           <Form onFinish={handleSubmit} requiredMark={false} layout="vertical">
             <Form.Item
@@ -69,38 +96,38 @@ const SignIn = () => {
               </p>
             </div>
 
-                        <Form.Item>
-                            <Button
-                                type="primary"
-                                htmlType="submit"
-                                size='large'
-                                loading={res.isLoading}
-                                block
-                                className="bg-black text-white text-xs md:text-sm hover:bg-gray-600 duration-300"
-                            >
-                                Sign In
-                            </Button>
-                        </Form.Item>
-                    </Form>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                loading={res.isLoading}
+                block
+                className="bg-black text-white text-xs md:text-sm hover:bg-gray-600 duration-300"
+              >
+                Sign In
+              </Button>
+            </Form.Item>
+          </Form>
 
           <Divider plain>Or</Divider>
 
-                    <div className='flex flex-col md:flex-row items-center justify-between gap-5 text-black font-medium'>
-                        <Button
-                            size='large'
-                            icon={<GoogleOutlined size={25} />}
-                            className='w-full pointer-events-none cursor-not-allowed flex justify-center items-center gap-3 border border-gray-400 rounded-md py-1 md:py-3 text-xs md:text-sm hover:bg-black hover:text-white hover:border-black duration-300'
-                        >
-                            Sign in with Google
-                        </Button>
-                        <Button
-                            icon={<AppleOutlined size={25} />}
-                            size='large'
-                            className='w-full pointer-events-none cursor-not-allowed flex justify-center items-center gap-3 border border-gray-400 rounded-md py-1 md:py-3 text-xs md:text-sm hover:bg-black hover:text-white hover:border-black duration-300'
-                        >
-                            Sign in with Apple
-                        </Button>
-                    </div>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-5 text-black font-medium">
+            <Button
+              size="large"
+              icon={<GoogleOutlined size={25} />}
+              className="w-full pointer-events-none cursor-not-allowed flex justify-center items-center gap-3 border border-gray-400 rounded-md py-1 md:py-3 text-xs md:text-sm hover:bg-black hover:text-white hover:border-black duration-300"
+            >
+              Sign in with Google
+            </Button>
+            <Button
+              icon={<AppleOutlined size={25} />}
+              size="large"
+              className="w-full pointer-events-none cursor-not-allowed flex justify-center items-center gap-3 border border-gray-400 rounded-md py-1 md:py-3 text-xs md:text-sm hover:bg-black hover:text-white hover:border-black duration-300"
+            >
+              Sign in with Apple
+            </Button>
+          </div>
 
           <div className="text-center text-xs md:text-sm font-medium">
             Don't have an account?{" "}

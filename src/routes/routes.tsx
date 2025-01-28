@@ -5,12 +5,13 @@ import { routeGenerator } from '../utils/routesGenerator';
 import { adminPaths } from './admin.routes';
 import SignIn from '../pages/Authentication/SignIn';
 import SignUp from '../pages/Authentication/SignUp';
+import Home from '../pages/Landing/Home';
 
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <Home />,
   },
   {
     path: '/admin',
