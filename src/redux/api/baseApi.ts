@@ -9,6 +9,7 @@ import {
 import { RootState } from "../store";
 import { toast } from "sonner";
 import { logout, setUser } from "../features/auth/authSlice";
+import axios from "axios";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'https://bike-store-server-gray.vercel.app/api',
@@ -41,20 +42,22 @@ const baseQuery = fetchBaseQuery({
     //* Send Refresh
     // console.log('Sending refresh token');
 
-    const res = await fetch('http://localhost:5000/api/v1/auth/refresh-token', {
-      method: 'POST',
-      credentials: 'include',
-    });
+    const res = await axios.post('https://bike-store-server-gray.vercel.app/api/auth/refresh-token')
+    
+    // fetch('https://bike-store-server-gray.vercel.app/api/auth/refresh-token', {
+    //   method: 'POST',
+    //   credentials: 'include',
+    // });
 
-    const data = await res.json();
+    // const data = await res.json();
 
-    if (data?.data?.accessToken) {
+    if (res?.data?.data?.accessToken) {
       const user = (api.getState() as RootState).auth.user;
 
       api.dispatch(
         setUser({
           user,
-          token: data.data.accessToken,
+          token: res?.data?.data?.accessToken,
         })
       );
 
