@@ -1,19 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { AppleOutlined, GoogleOutlined } from "@ant-design/icons";
 import { Button, Divider, Form, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
 import {
-    selectCurrentUser,
-    setUser
+  setUser
 } from "../../redux/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hook";
+import { useAppDispatch } from "../../redux/hook";
 import { verifyToken } from "../../utils/verifyToken";
-import { useEffect } from "react";
 const SignIn = () => {
   const [submitFunc, res] = useLoginMutation();
-  const currentUser = useAppSelector(selectCurrentUser)
   const navigate = useNavigate();
 
   // const token = useAppSelector(useCurrentToken)
@@ -43,11 +39,11 @@ const SignIn = () => {
     }
   };
 
-  useEffect(() => {
-    if(currentUser) {
-         navigate('/')
-      }
-  },[])
+  // useEffect(() => {
+  //   if(currentUser) {
+  //        navigate('/')
+  //     }
+  // },[])
   
 
   return (
