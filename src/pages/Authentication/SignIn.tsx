@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { AppleOutlined, GoogleOutlined } from "@ant-design/icons";
 import { Button, Divider, Form, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
