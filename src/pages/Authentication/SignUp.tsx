@@ -27,13 +27,10 @@ const SignUp = () => {
         }
     };
 
- 
-
-
     return (
         <div className="flex items-center min-h-screen">
             <div className="flex justify-center items-center bg-[#c2c2c2] h-screen flex-1">
-                <div className="bg-[#f3f4f6ec] p-5 rounded-md space-y-2 md:space-y-5 w-full md:w-[470px] drop-shadow-lg">
+                <div className="bg-[#f3f4f6ec] p-5 rounded-xl space-y-2 md:space-y-5 w-full md:w-[480px] drop-shadow-lg">
                     <div className="text-center space-y-3">
                         <h4 className="text-sm md:text-lg font-medium">Welcome To</h4>
                         {/* Logo */}

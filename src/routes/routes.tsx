@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <SuspenseWrapper>
-        <Home />,
+        <Home />
       </SuspenseWrapper>
     ),
   },

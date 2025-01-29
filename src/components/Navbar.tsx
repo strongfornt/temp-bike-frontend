@@ -1,5 +1,9 @@
-import { MenuOutlined } from '@ant-design/icons';
+import { MenuOutlined, ShopOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, NavLink } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from '../redux/hook';
+import { logout, selectCurrentUser } from '../redux/features/auth/authSlice';
+import { Button } from 'antd';
+import { toast } from 'sonner';
 const Navbar = () => {
     const links = <>
         <NavLink to="/" className={({ isActive }) =>
@@ -28,8 +32,10 @@ const Navbar = () => {
                 : "font-medium hover:text-secondary "
         }>Blogs</NavLink>
     </>
+    const user = useAppSelector(selectCurrentUser)
+    const dispatch = useAppDispatch()
     return (
-        <nav className="p-3 md:p-4 bg-gray-900 sticky top-0 z-10">
+        <nav className="p-3 md:p-4 bg-[#000001] sticky top-0 z-10">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 <div className="flex justify-center items-center gap-3 lg:gap-5">
                     {/* Mobile menu toggle button */}
@@ -64,29 +70,32 @@ const Navbar = () => {
                 </div>
                 <div className="lg:flex justify-center items-center h-full gap-5 xl:gap-10 text-gray-300 hidden">
                     {links}
+                    <div className='relative'>
+                        <ShoppingCartOutlined className='!text-white text-2xl cursor-pointer' />
+                        <p className='absolute -top-2 -right-2 text-white'>0</p>
+                    </div>
                 </div>
-
                 {/* Auth/Cart Buttons */}
-                <div className="flex justify-center items-center gap-3">
-                    <Link to="/signin">
-                        <div className="relative p-0.5 inline-flex items-center justify-center font-semibold overflow-hidden group text-sm rounded-md">
-                            <span className="w-full h-full bg-gradient-to-br from-secondary  to-primary group-hover:from-primary group-hover:to-secondary absolute"></span>
-                            <span className="relative px-3 py-1 transition-all ease-out bg-gray-900 rounded-md group-hover:bg-opacity-0 duration-400">
-                                <span className="relative text-gray-300">Signin</span>
-                            </span>
+                {
+                    user ?
+                        <div className='text-start flex items-center gap-4'>
+                            <UserOutlined className='!text-white text-2xl cursor-pointer' />
+                            <Button onClick={() => {
+                                dispatch(logout())
+                                toast.success("Logout successfully!")
+                            }} size='small'>Logout</Button>
+                        </div> :
+                        <div className="flex justify-center items-center gap-3">
+                            <Link to="/signin">
+                                <div className="relative p-0.5 inline-flex items-center justify-center font-semibold overflow-hidden group text-sm rounded-md">
+                                    <span className="w-full h-full bg-gradient-to-br from-secondary  to-primary group-hover:from-primary group-hover:to-secondary absolute"></span>
+                                    <span className="relative px-3 py-1 transition-all ease-out bg-[#000001] rounded-md group-hover:bg-opacity-0 duration-400">
+                                        <span className="relative text-gray-300">Signin</span>
+                                    </span>
+                                </div>
+                            </Link>
                         </div>
-                    </Link>
-                    <Link to="/sign-up" className="hidden md:block">
-                        <div
-                            className="relative p-0.5 inline-flex items-center justify-center font-semibold overflow-hidden text-sm group rounded-md"
-                        >
-                            <span className="w-full h-full bg-gradient-to-br from-secondary to-primary group-hover:from-primary group-hover:to-secondary absolute transition-all duration-300 ease-in-out"></span>
-                            <span className="relative px-3 py-1 transition-all ease-out bg-gray-900 rounded-md group-hover:bg-opacity-0 duration-300">
-                                <span className="relative text-gray-300 group-hover:text-white">Sign Up</span>
-                            </span>
-                        </div>
-                    </Link>
-                </div>
+                }
             </div>
         </nav>
     );

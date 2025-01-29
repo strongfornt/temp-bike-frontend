@@ -7,9 +7,9 @@ interface ISuspenseWrapper {
 
 const SuspenseWrapper = ({
   children,
-  fallback = <div>Loading...</div>,
+  fallback = <div>Loading...</div>
 }: ISuspenseWrapper) => {
-  return <Suspense fallback={fallback}>{children}</Suspense>;
+  return <Suspense fallback={fallback}>{children}</Suspense>
 };
 
 export default SuspenseWrapper;

@@ -11,25 +11,25 @@ const featuredProducts = [
 ];
 const FeaturedProducts = () => {
     return (
-        <section className="bg-gray-50 py-10">
+        <section className="bg-gradient-to-tl from-[#434343] to-[#000000] py-10">
             <div className="max-w-7xl mx-auto px-4">
                 <div className="my-5 md:my-8">
-                    <h2 className="text-3xl font-bold text-center ">Featured Products</h2>
-                    <p className="text-sm text-center">Ultra-premium components, engineered by Probike. The ultimate upgrade. Wherever you ride, we’ve got a bike for the joyrider in you</p>
+                    <h2 className="text-3xl font-bold text-center text-primary">Featured Products</h2>
+                    <p className="text-sm text-center text-white w-full md:w-xl mx-auto">Ultra-premium components, engineered by Probike. The ultimate upgrade. Wherever you ride, we’ve got a bike for the joyrider in you</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     {featuredProducts.map((product) => (
-                        <div key={product.id} className="shadow-lg bg-gray-200 overflow-hidden border-2 border-gray-200 rounded-lg">
-                            <div className="hover:bg-gray-100 transition-colors duration-300 cursor-pointer">
+                        <div key={product.id} className="shadow-lg overflow-hidden rounded-t-lg border border-white">
+                            <div className="transition-colors duration-300 cursor-pointer">
                                 <img
                                     className="w-full object-cover h-[250px] bg-contain transform hover:scale-105 transition-transform duration-300"
                                     src={product.image}
                                     alt="Contest"
                                 />
                             </div>
-                            <div className="p-4">
+                            <div className="p-4 text-white">
                                 <div
-                                    className=" space-y-2 flex items-center justify-between gap-3 md:gap-5 w-full md:w-11/12 text-xs md:text-sm font-medium">
+                                    className="space-y-2 flex items-center justify-between gap-3 md:gap-5 w-full md:w-11/12 text-xs md:text-sm font-medium">
                                     <div>
                                         <p>Brand: Mondrake</p>
                                         <p>Material: Steel</p>
@@ -41,14 +41,11 @@ const FeaturedProducts = () => {
                                 </div>
                             </div>
                             <div>
-                                <Button
-                                    size="large"
-                                    className="!rounded-t-none"
-                                    type="primary"
-                                    block
-                                >
-                                    View Details
-                                </Button>
+                                <div className="w-full relative inline-flex items-center justify-center px-10 py-4 overflow-hidden text-white bg-gray-800  group cursor-pointer text-sm font-bold">
+                                    <span className=" absolute w-0 h-0 transition-all duration-500 ease-out bg-primary group-hover:w-full group-hover:h-56"></span>
+                                    <span className="absolute inset-0 w-full h-full -mt-1  opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+                                    <span className="relative">Button Text</span>
+                                </div>
                             </div>
                         </div>
                     ))}
