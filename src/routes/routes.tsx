@@ -1,17 +1,27 @@
-import { createBrowserRouter } from 'react-router-dom';
-import App from '../App';
-import ProtectedRoute from '../components/layout/ProtectedRoute';
-import { routeGenerator } from '../utils/routesGenerator';
-import { adminPaths } from './admin.routes';
-import SignIn from '../pages/Authentication/SignIn';
-import SignUp from '../pages/Authentication/SignUp';
+import { createBrowserRouter } from "react-router-dom";
+import App from "../App";
+import ProtectedRoute from "../components/layout/ProtectedRoute";
+import { routeGenerator } from "../utils/routesGenerator";
+import { adminPaths } from "./admin.routes";
+import { lazy } from "react";
+import SuspenseWrapper from "../utils/SuspenseWrapper";
+import { customerPaths } from "./customer.routes";
+import AuthGuard from "../components/layout/AuthGuard";
+const Home = lazy(() => import("../pages/Landing/Home"));
+const SignIn = lazy(() => import("../pages/Authentication/SignIn"));
+const SignUp = lazy(() => import("../pages/Authentication/SignUp"));
+
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <App />,
+    path: "/",
+    element: (
+      <SuspenseWrapper>
+        <Home />,
+      </SuspenseWrapper>
+    ),
   },
   {
-    path: '/admin',
+    path: "/admin",
     element: (
       <ProtectedRoute role="admin">
         <App />
@@ -20,16 +30,37 @@ const router = createBrowserRouter([
     children: routeGenerator(adminPaths),
   },
   {
-    path: '/sign-up',
-    element: <SignUp />,
+    path: "/customer",
+    element: (
+      <ProtectedRoute role="customer">
+        <App />
+      </ProtectedRoute>
+    ),
+    children: routeGenerator(customerPaths),
+  },
+  {
+    path: "/sign-up",
+    element: (
+      <AuthGuard>
+        <SuspenseWrapper>
+          <SignUp />
+        </SuspenseWrapper>
+      </AuthGuard>
+    ),
   },
   //   {
   //     path: '/change-password',
   //     element: <ChangePassword />,
   //   },
   {
-    path: '/signin',
-    element: <SignIn />,
+    path: "/signin",
+    element: (
+      <AuthGuard>
+        <SuspenseWrapper>
+          <SignIn />
+        </SuspenseWrapper>
+      </AuthGuard>
+    ),
   },
 ]);
 

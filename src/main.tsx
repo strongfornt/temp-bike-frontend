@@ -7,6 +7,7 @@ import './index.css'
 import { persistor, store } from './redux/store.ts'
 import 'antd/dist/reset.css';
 import router from './routes/routes.tsx'
+import { Toaster } from 'sonner'
 const theme = {
   token: {
     colorPrimary: '#3B82F6',
@@ -20,5 +21,6 @@ createRoot(document.getElementById('root')!).render(
         <RouterProvider router={router} />
       </ConfigProvider>
     </PersistGate>
+    <Toaster duration={1500} />
   </Provider>
 )

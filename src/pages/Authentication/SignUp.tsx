@@ -1,11 +1,12 @@
+import { AppleOutlined, GoogleOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Divider, Form, Input, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppleOutlined, GoogleOutlined } from '@ant-design/icons';
 import { useSingInMutation } from '../../redux/features/auth/authApi';
 import { setUser } from '../../redux/features/auth/authSlice';
 import { useAppDispatch } from '../../redux/hook';
 const SignUp = () => {
     const [submitFunc, res] = useSingInMutation()
+    
     const navigate = useNavigate()
     const dispatch= useAppDispatch()
     const handleFinish = (values: any) => {
@@ -25,6 +26,9 @@ const SignUp = () => {
             message.error("Something went wrong!")
         }
     };
+
+ 
+
 
     return (
         <div className="flex items-center min-h-screen">
