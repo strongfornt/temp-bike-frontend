@@ -1,5 +1,5 @@
 import { MenuOutlined, ShopOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from '../redux/hook';
 import { logout, selectCurrentUser } from '../redux/features/auth/authSlice';
 import { Button } from 'antd';
@@ -34,6 +34,7 @@ const Navbar = () => {
     </>
     const user = useAppSelector(selectCurrentUser)
     const dispatch = useAppDispatch()
+    const navigate: any = useNavigate()
     return (
         <nav className="p-3 md:p-4 bg-[#000001] sticky top-0 z-10">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -79,11 +80,15 @@ const Navbar = () => {
                 {
                     user ?
                         <div className='text-start flex items-center gap-4'>
-                            <UserOutlined className='!text-white text-2xl cursor-pointer' />
-                            <Button onClick={() => {
+                            <button onClick={() => {
+                                navigate(`/${user?.role}/dashboard`)
+                            }}>
+                                <UserOutlined className='!text-white text-2xl cursor-pointer' />
+                            </button>
+                            {/* <Button onClick={() => {
                                 dispatch(logout())
                                 toast.success("Logout successfully!")
-                            }} size='small'>Logout</Button>
+                            }} size='small'>Logout</Button> */}
                         </div> :
                         <div className="flex justify-center items-center gap-3">
                             <Link to="/signin">
