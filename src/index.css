@@ -5,11 +5,23 @@
     --color-primary: #3B82F6;
     --color-secondary: #F97316;
 }
+
+
 body{
     font-family: "Poppins", serif;
+    
 }
+
+p, h1, h2, h3, h4, h5, h6 {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-weight: normal !important;
+  }
+  
 .gradient-border {
     border: 2px solid transparent;
     background: linear-gradient(to bottom right, var(--tw-color-secondary), var(--tw-color-primary)) border-box;
     border-radius: 8px;
 }
+
+
