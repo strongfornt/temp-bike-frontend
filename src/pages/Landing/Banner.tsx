@@ -42,7 +42,7 @@ const Banner = () => {
               {/* Background Image */}
               <img
                 src={banner.image}
-                alt={banner.title}
+                alt="Banner Img"
                 className="h-full object-cover bg-no-repeat w-full"
               />
             </div>
