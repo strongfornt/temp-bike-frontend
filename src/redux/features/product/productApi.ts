@@ -8,6 +8,12 @@ const productApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
+    getProductDetails: builder.query({
+      query: ({ id }: any) => ({
+        url: `/products/${id}`,
+        method: 'GET',
+      }),
+    }),
     addProduct: builder.mutation({
       query: (productData: any) => ({
         url: `/products`,
@@ -18,4 +24,4 @@ const productApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useAddProductMutation, useGetProductsQuery} = productApi;
+export const { useAddProductMutation, useGetProductsQuery, useGetProductDetailsQuery } = productApi;

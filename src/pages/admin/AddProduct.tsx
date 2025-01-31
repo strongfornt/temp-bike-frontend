@@ -15,7 +15,6 @@ const AddProduct = () => {
   // Handle form submission
   const onFinish = async (values: any) => {
     const { image, ...payload } = values || {};
-    
     const formData = new FormData();
     formData.append("image", image[0].originFileObj);
 

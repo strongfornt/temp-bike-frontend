@@ -8,7 +8,10 @@ import SuspenseWrapper from "../utils/SuspenseWrapper";
 import { customerPaths } from "./customer.routes";
 import AuthGuard from "../components/layout/AuthGuard";
 import NotFound from "../pages/NotFound/NotFound";
+import AllProducts from "../pages/AllProducts/AllProducts";
+import ProductDetails from "../pages/ProductDetails/ProductDetails";
 const Home = lazy(() => import("../pages/Landing/Home"));
+const Landing = lazy(() => import("../pages/Landing/Landing"));
 const SignIn = lazy(() => import("../pages/Authentication/SignIn"));
 const SignUp = lazy(() => import("../pages/Authentication/SignUp"));
 
@@ -18,9 +21,23 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     element: (
       <SuspenseWrapper>
-        <Home />
+       <Landing />
       </SuspenseWrapper>
     ),
+    children: [
+      {
+        path: '/',
+        element: <Home />
+      },
+      {
+        path: '/products',
+        element: <AllProducts />
+      },
+      {
+        path: '/product/:id',
+        element: <ProductDetails />
+      }
+    ]
   },
   {
     path: "/admin",

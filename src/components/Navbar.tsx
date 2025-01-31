@@ -20,7 +20,7 @@ const Navbar = () => {
                 Home
             </NavLink>
             <NavLink
-                to="/all-products"
+                to="/products"
                 className={({ isActive }) =>
                     isActive
                         ? "text-primary font-medium"

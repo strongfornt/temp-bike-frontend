@@ -34,7 +34,7 @@ const Banner = () => {
         pagination={{ clickable: true }}
         autoplay={{ delay: 5000 }}
         loop
-        className="h-[calc(100vh-72px)] "
+        className="h-[calc(100vh-72px)]"
       >
         {banners.map((banner) => (
           <SwiperSlide key={banner.id}>
