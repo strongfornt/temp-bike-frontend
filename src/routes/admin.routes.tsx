@@ -1,5 +1,6 @@
 import React from "react";
 import ManageUser from "../pages/admin/ManageUser";
+import { CreateProducts } from "../pages/admin/productManagement";
 const AdminDashboard = React.lazy(
   () => import("../pages/admin/AdminDashboard")
 );
@@ -21,5 +22,17 @@ export const adminPaths = [
     //     element: <div>Add User</div>,
     //   }
     // ]
-  },
+  },  
+
+  {
+    name: "Product Management",
+    children: [
+      {
+        name: "Create Product",
+        path: "create-product",
+        element:<CreateProducts/>,
+      },
+    ]
+  }
+
 ];
