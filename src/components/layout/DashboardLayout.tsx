@@ -19,7 +19,7 @@ const DashboardLayout = () => {
       <Layout>
         <Header
           style={{ backgroundColor: "#000001" }}
-          className="sticky top-0 flex  items-center justify-end"
+          className="sticky top-0 flex  items-center justify-end z-10"
         >
           <Button onClick={handleLogout}>Logout</Button>{" "}
         </Header>
@@ -32,7 +32,7 @@ const DashboardLayout = () => {
             style={{
               // padding: 24,
               // minHeight: 360,
-              minHeight: "100vh",
+              // minHeight: "100vh",
             }}
           >
             <Outlet />

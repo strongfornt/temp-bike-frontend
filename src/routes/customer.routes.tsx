@@ -4,7 +4,7 @@ const CustomerDashboard = React.lazy (() => import ("../pages/customer/CustomerD
 
 export const customerPaths = [
     {
-      name: 'Dashboard',
+      name: 'Profile',
       path: 'dashboard',
       element: <CustomerDashboard/>,
     },
