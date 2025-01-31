@@ -28,7 +28,7 @@ const Banner = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-tl from-[#434343] to-[#000000]">
+    <div>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         pagination={{ clickable: true }}
@@ -49,7 +49,7 @@ const Banner = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 text-white max-w-7xl mx-auto gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 py-5 text-white max-w-7xl mx-auto gap-10 mt-10">
         <div className="border border-white rounded-md shadow-md min-h-[180px] p-4 flex flex-col justify-between">
           <img className="size-16" src={bike} alt="" />
           <div className="flex justify-between items-center">

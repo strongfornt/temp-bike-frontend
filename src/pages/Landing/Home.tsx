@@ -7,13 +7,13 @@ import Testimonials from "./Testimonials";
 const Home = () => {
  
   return (
-    <>
+    <div className="bg-gradient-to-tl from-[#434343] to-[#000000]">
       <Navbar />
       <Banner />
       <FeaturedProducts />
       <Testimonials />
       <Footer />
-    </>
+    </div>
   );
 };
 

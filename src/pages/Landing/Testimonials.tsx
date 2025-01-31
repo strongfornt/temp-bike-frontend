@@ -50,7 +50,7 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="bg-gradient-to-tl from-[#434343] to-[#000000] py-10">
+    <section className="py-10">
       <div className="max-w-7xl mx-auto px-4">
         <div className="my-5 md:my-8">
           <h2 className="text-3xl font-bold text-center text-primary">
