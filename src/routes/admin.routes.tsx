@@ -12,14 +12,14 @@ export const adminPaths = [
   },
   {
     name: "User Management",
-    // path: "user-management",
-    // element: <ManageUser />,
-    children: [
-      {
-        name: "Add User",
-        path: "add-user",
-        element: <div>Add User</div>,
-      }
-    ]
+    path: "user-management",
+    element: <ManageUser />,
+    // children: [
+    //   {
+    //     name: "Add User",
+    //     path: "add-user",
+    //     element: <div>Add User</div>,
+    //   }
+    // ]
   },
 ];
