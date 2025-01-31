@@ -1,32 +1,109 @@
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import quotes from "../../assets/quotes.svg";
 
 const Testimonials = () => {
-    return (
-        <section className="bg-white py-10" >
-            <div className="max-w-7xl mx-auto px-4">
-                <h2 className="text-3xl font-bold text-center mb-6">What Our Customers Say</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div className="p-6 bg-gray-50 rounded-lg shadow">
-                        <p className="italic text-gray-700">
-                            "Great products and fantastic service! Highly recommend this store."
-                        </p>
-                        <h4 className="mt-4 font-semibold">- John Doe</h4>
+  const reviews = [
+    {
+      id: 1,
+      name: "Jack Thompson",
+      address: "Los Angeles, USA",
+      pic: "https://randomuser.me/api/portraits/men/10.jpg",
+      review:
+        "Fantastic bike shop! Bought a mountain bike, and it rides like a dream. Great customer service too!",
+    },
+    {
+      id: 2,
+      name: "Sophia Miller",
+      address: "Toronto, Canada",
+      pic: "https://randomuser.me/api/portraits/women/15.jpg",
+      review:
+        "Excellent selection of bikes and accessories. Staff was very knowledgeable and helped me find the perfect road bike!",
+    },
+    {
+      id: 3,
+      name: "Ryan Carter",
+      address: "Manchester, UK",
+      pic: "https://randomuser.me/api/portraits/men/18.jpg",
+      review:
+        "Had a great experience! My bike was serviced quickly, and it rides smoother than ever. Highly recommended!",
+    },
+    {
+      id: 4,
+      name: "Emily Wilson",
+      address: "Sydney, Australia",
+      pic: "https://randomuser.me/api/portraits/women/22.jpg",
+      review:
+        "Great quality bikes at affordable prices. The staff was super friendly and helped me choose the perfect bike!",
+    },
+    {
+      id: 5,
+      name: "Daniel Robinson",
+      address: "Berlin, Germany",
+      pic: "https://randomuser.me/api/portraits/men/25.jpg",
+      review:
+        "Highly professional bike shop! Got my custom bike assembled here, and the workmanship was top-notch.",
+    },
+  ];
+
+  return (
+    <section className="py-10">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="my-5 md:my-8">
+          <h2 className="text-3xl font-bold text-center text-primary">
+            What our customer says!
+          </h2>
+        </div>
+        <div className="w-full">
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 7000 }}
+            loop
+            slidesPerView={3} // Show 3 reviews at once
+            spaceBetween={30} // Add spacing between slides
+            breakpoints={{
+              320: { slidesPerView: 1 }, // 1 review on small screens
+              640: { slidesPerView: 2 }, // 2 reviews on tablets
+              1024: { slidesPerView: 3 }, // 3 reviews on larger screens
+            }}
+            className="max-w-7xl"
+          >
+            {reviews.map((review) => (
+              <SwiperSlide key={review.id}>
+                <div className="p-6 border border-white text-white rounded-lg shadow-lg flex flex-col justify-between items-center h-full min-h-[350px]">
+                  <p className="italic max-w-xl text-2xl">
+                    {review.review}
+                  </p>
+                  <div className="flex justify-between items-center w-full">
+                    <div className="flex items-start gap-3">
+                      <img
+                        className="size-14 rounded-full"
+                        src={review.pic}
+                        alt=""
+                      />
+                      <div className="flex flex-col gap-2">
+                        <span className="text-lg tracking-tight font-medium">
+                          {review.name}
+                        </span>
+                        <span className="text-sm -mt-2">{review.address}</span>
+                      </div>
                     </div>
-                    <div className="p-6 bg-gray-50 rounded-lg shadow">
-                        <p className="italic text-gray-700">
-                            "Amazing quality and fast delivery. I’m a loyal customer now!"
-                        </p>
-                        <h4 className="mt-4 font-semibold">- Jane Smith</h4>
+                    <div>
+                      <img src={quotes} alt="" />
                     </div>
-                    <div className="p-6 bg-gray-50 rounded-lg shadow">
-                        <p className="italic text-gray-700">
-                            "The best shopping experience I’ve ever had. Exceptional!"
-                        </p>
-                        <h4 className="mt-4 font-semibold">- Michael Lee</h4>
-                    </div>
+                  </div>
                 </div>
-            </div>
-        </section >
-    );
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Testimonials;

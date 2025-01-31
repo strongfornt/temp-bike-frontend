@@ -7,6 +7,7 @@ import { lazy } from "react";
 import SuspenseWrapper from "../utils/SuspenseWrapper";
 import { customerPaths } from "./customer.routes";
 import AuthGuard from "../components/layout/AuthGuard";
+import NotFound from "../pages/NotFound/NotFound";
 const Home = lazy(() => import("../pages/Landing/Home"));
 const SignIn = lazy(() => import("../pages/Authentication/SignIn"));
 const SignUp = lazy(() => import("../pages/Authentication/SignUp"));
@@ -14,6 +15,7 @@ const SignUp = lazy(() => import("../pages/Authentication/SignUp"));
 const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <NotFound />,
     element: (
       <SuspenseWrapper>
         <Home />

@@ -1,5 +1,5 @@
 import { Layout, Menu } from "antd";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { TUser, useCurrentToken } from "../../redux/features/auth/authSlice";
 import { useAppSelector } from "../../redux/hook";
 import { adminPaths } from "../../routes/admin.routes";
@@ -63,15 +63,18 @@ const Sidebar = () => {
         }}
       >
         {/* <h1>PH Uni</h1> */}
-        <h1
-          // to="/"
-          // style={{
-          //   marginBottom: 0
-          // }}
-          className="text-xl text-center !py-[11.4px] md:text-3xl lg:text-4xl  !font-bold text-primary "
-        >
-          Bike<span className="text-secondary">Shop</span>
-        </h1>
+        <Link to={'/'}>
+          <h1
+            // to="/"
+            style={{
+              marginBottom: 0,
+              padding: '11px 0px'
+            }}
+            className="text-xl text-center  md:text-3xl lg:text-4xl  !font-bold text-primary "
+          >
+            Bike<span className="text-secondary">Shop</span>
+          </h1>
+        </Link>
       </div>
       <Menu
         theme="dark"
