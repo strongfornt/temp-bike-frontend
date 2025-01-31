@@ -1,9 +1,9 @@
-import { Button, Layout } from 'antd';
+import { Button, Layout } from "antd";
 
-import { logout } from '../../redux/features/auth/authSlice';
-import { Outlet } from 'react-router-dom';
-import { useAppDispatch } from '../../redux/hook';
-import Sidebar from './Sidebar';
+import { logout } from "../../redux/features/auth/authSlice";
+import { Outlet } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hook";
+import Sidebar from "./Sidebar";
 const { Header, Content } = Layout;
 
 const DashboardLayout = () => {
@@ -14,17 +14,25 @@ const DashboardLayout = () => {
   };
 
   return (
-    <Layout style={{ height: '100%' }}>
+    <Layout style={{ height: "100%",}}>
       <Sidebar />
       <Layout>
-        <Header>
-          <Button onClick={handleLogout}>Logout</Button>{' '}
+        <Header
+          style={{ backgroundColor: "#000001" }}
+          className="sticky top-0 flex  items-center justify-end"
+        >
+          <Button onClick={handleLogout}>Logout</Button>{" "}
         </Header>
-        <Content style={{ margin: '24px 16px 0' }}>
+        <Content
+          style={{
+            padding: "10px 20px",
+          }}
+        >
           <div
             style={{
-              padding: 24,
-              minHeight: 360,
+              // padding: 24,
+              // minHeight: 360,
+              minHeight: "100vh",
             }}
           >
             <Outlet />
