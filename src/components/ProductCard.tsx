@@ -1,7 +1,10 @@
 import { Button } from "antd";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../redux/hook";
+import { addToCart } from "../redux/features/cart/cartSlice";
 
 const ProductCard = ({ product }: any) => {
+    const dispatch = useAppDispatch()
     if (!product) return null;
     return (
         <div className="space-y-4 rounded-lg text-white border shadow-lg max-w-[380px] cursor-pointer">
@@ -33,7 +36,10 @@ const ProductCard = ({ product }: any) => {
 
                 {/* Buttons */}
                 <div className="flex gap-4 text-xs justify-center items-center">
-                    <Button size="middle" type="primary">Add to Cart</Button>
+                    <Button onClick={() => {
+                        dispatch(addToCart(product))
+                    }
+                    } size="middle" type="primary">Add to Cart</Button>
                     <Link to={`/product/${product?._id}`}> <Button size="middle">View Details</Button></Link>
                 </div>
             </div>

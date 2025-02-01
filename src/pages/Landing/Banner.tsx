@@ -8,22 +8,22 @@ import usedbike from '../../assets/used-bike.svg'
 import assosorise from '../../assets/racing-helmet1.svg'
 import location from '../../assets/location_point.svg'
 import arrow from '../../assets/arrow.svg'
+import bg1 from '../../assets/banner1.webp'
+import bg2 from '../../assets/banner2.webp'
+import bg3 from '../../assets/banner3.webp'
 const Banner = () => {
   const banners = [
     {
       id: 1,
-      image:
-        "https://suzuki.com.bd/_next/image?url=https%3A%2F%2Fapiprod.suzuki.com.bd%2Fapi%2Fuser%2Fmedia%2Fcdn%2Fcms%252Foriginal-f649c366-888a-43ab-9dcf-ecd816af6e72.webp&w=1920&q=75",
+      image: bg1,
     },
     {
       id: 2,
-      image:
-        "https://suzuki.com.bd/_next/image?url=https%3A%2F%2Fapiprod.suzuki.com.bd%2Fapi%2Fuser%2Fmedia%2Fcdn%2Fcms%252Foriginal-f5878d0b-407c-4fe3-8271-af2751dde9f9.webp&w=1920&q=75",
+      image: bg2
     },
     {
       id: 3,
-      image:
-        "https://suzuki.com.bd/_next/image?url=https%3A%2F%2Fapiprod.suzuki.com.bd%2Fapi%2Fuser%2Fmedia%2Fcdn%2Fcms%252Foriginal-776e3197-8b86-4a6a-af59-394b86b451b1.webp&w=1920&q=75",
+      image:bg3
     },
   ];
 

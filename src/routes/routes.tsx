@@ -1,15 +1,15 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import ProtectedRoute from "../components/layout/ProtectedRoute";
-import { routeGenerator } from "../utils/routesGenerator";
-import { adminPaths } from "./admin.routes";
-import { lazy } from "react";
-import SuspenseWrapper from "../utils/SuspenseWrapper";
-import { customerPaths } from "./customer.routes";
 import AuthGuard from "../components/layout/AuthGuard";
-import NotFound from "../pages/NotFound/NotFound";
+import ProtectedRoute from "../components/layout/ProtectedRoute";
 import AllProducts from "../pages/AllProducts/AllProducts";
+import NotFound from "../pages/NotFound/NotFound";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
+import { routeGenerator } from "../utils/routesGenerator";
+import SuspenseWrapper from "../utils/SuspenseWrapper";
+import { adminPaths } from "./admin.routes";
+import { customerPaths } from "./customer.routes";
 const Home = lazy(() => import("../pages/Landing/Home"));
 const Landing = lazy(() => import("../pages/Landing/Landing"));
 const SignIn = lazy(() => import("../pages/Authentication/SignIn"));
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       {
         path: '/product/:id',
         element: <ProductDetails />
-      }
+      },
     ]
   },
   {

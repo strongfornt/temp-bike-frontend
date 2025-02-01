@@ -49,13 +49,13 @@ const AllProducts = () => {
                                                     brand: data?.value,
                                                 });
                                             }}
-                                            style={{ height: 35, borderRadius: 8, borderColor: '#D7D7D7' }}
+                                            style={{ height: 35, borderRadius: 8, borderColor: '#D7D7D7', background: 'none' }}
                                             allowClear
                                             showSearch
                                             filterOption={(input, option) =>
                                                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                             }
-                                            className="text-gray-500 md:w-[180px] w-full"
+                                            className="!bg-red-400 md:w-[180px] w-full"
                                             suffixIcon={<span style={{ color: '#BBBABA' }}>▼</span>}
                                             options={[{ label: 'Yamaha', value: 'yamaha' }, { label: 'Honda', value: 'honda' }]}
                                         />
@@ -80,7 +80,7 @@ const AllProducts = () => {
                                             filterOption={(input, option) =>
                                                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                             }
-                                            className="text-gray-500 md:w-[180px] w-full"
+                                            className="!bg-red-400 md:w-[180px] w-full"
                                             suffixIcon={<span style={{ color: '#BBBABA' }}>▼</span>}
                                             options={[
                                                 { label: 'Sports', value: 'sports' },
@@ -108,7 +108,7 @@ const AllProducts = () => {
                                             filterOption={(input, option) =>
                                                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                             }
-                                            className="text-gray-500 md:w-[180px] w-full"
+                                            className="!bg-red-400 md:w-[180px] w-full"
                                             suffixIcon={<span style={{ color: '#BBBABA' }}>▼</span>}
                                             options={[
                                                 { label: 'Model X', value: 'model-x' },
@@ -157,7 +157,7 @@ const AllProducts = () => {
                                             style={{ height: 35, borderRadius: 8, borderColor: '#D7D7D7' }}
                                             allowClear
                                             showSearch
-                                            className="text-gray-500 md:w-[180px] w-full"
+                                            className="!bg-red-400 md:w-[180px] w-full"
                                             suffixIcon={<span style={{ color: '#BBBABA' }}>▼</span>}
                                             options={[
                                                 { label: 'In Stock', value: 'in-stock' },
