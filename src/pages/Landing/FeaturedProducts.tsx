@@ -15,7 +15,7 @@ const FeaturedProducts = () => {
                     {isLoading ? (
                         <div>Loading...</div>
                     ) : data && data?.data.length > 0 ? (
-                        data?.data?.map((product:any) => <ProductCard key={product._id} product={product} />)
+                        data?.data?.slice(0, 6)?.map((product:any) => <ProductCard key={product._id} product={product} />)
                     ) : (
                         <div>No products found.</div>
                     )}
