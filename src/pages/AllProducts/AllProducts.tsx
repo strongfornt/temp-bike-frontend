@@ -1,4 +1,4 @@
-import { Form, Input, Select, Slider } from "antd";
+import { Form, Input, Select } from "antd";
 import ProductCard from "../../components/ProductCard";
 import { useGetProductsQuery } from "../../redux/features/product/productApi";
 
@@ -11,10 +11,9 @@ const AllProducts = () => {
     const [form] = Form.useForm()
 
     return (
-        <div className="max-w-7xl mx-auto py-5 text-white">
+        <div className="max-w-7xl mx-auto py-5 px-5 text-white">
             {/* Filter Section */}
             <div className="rounded-lg shadow mb-6">
-                <h3 className="text-lg font-semibold mb-4">Filters</h3>
                 <Form form={form} className="my-4 flex flex-col md:flex-row justify-between gap-3 md:gap-0 items-start">
                     <div>
                         <Form.Item noStyle shouldUpdate>
@@ -174,7 +173,7 @@ const AllProducts = () => {
             </div>
 
             {/* Products Section */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center items-center ">
                 {isLoading ? (
                     <div>Loading...</div>
                 ) : products.length > 0 ? (

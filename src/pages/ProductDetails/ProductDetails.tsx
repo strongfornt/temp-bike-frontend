@@ -45,6 +45,7 @@ const ProductDetails = () => {
                             <Button
                                 size="large"
                                 type="primary"
+                                disabled={!product?.inStock}
                                 className="bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-200"
                                 onClick={() => dispatch(addToCart(product))}>
                                 Add to Cart

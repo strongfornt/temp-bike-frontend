@@ -11,6 +11,8 @@ import { RootState } from "../redux/store";
 import { useState } from "react";
 import { Button, Divider, Drawer } from "antd";
 import { clearCart, removeFromCart, updateQuantity } from "../redux/features/cart/cartSlice";
+import { useOrderProductMutation } from "../redux/features/order/orderSlice";
+import { toast } from "sonner";
 const Navbar = () => {
     const links = (
         <>
@@ -70,7 +72,7 @@ const Navbar = () => {
     const cart = useAppSelector((state: RootState) => state.cart);
     const navigate: any = useNavigate()
     const dispatch = useAppDispatch();
-
+    const [handleProduct] = useOrderProductMutation()
     const [open, setOpen] = useState(false);
 
     const showDrawer = () => {
@@ -80,8 +82,19 @@ const Navbar = () => {
     const onClose = () => {
         setOpen(false);
     };
-    console.log(cart);
-    
+    const handleCheckout = async () => {
+        const checkoutData = cart.cartItems?.map(p => {
+            return { id: p._id, quantity: p.quantity }
+        })
+        const res = await handleProduct(checkoutData)
+        console.log(res);
+        
+        if(res.data.success){
+            window.open(res.data.data, )
+            toast.success("Successfully order created")
+        }
+    }
+
     return (
         <nav className="p-3 md:p-4 bg-[#000001] sticky top-0 z-10">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -217,10 +230,12 @@ const Navbar = () => {
                                 >
                                     Clear Cart
                                 </Button>
-
                                 {/* Checkout Button */}
                                 <Button
                                     type="primary"
+                                    onClick={() => {
+                                        handleCheckout()
+                                    }}
                                     className="w-full bg-black hover:bg-gray-800 text-white py-2 rounded-lg mt-2"
                                 >
                                     Proceed to Checkout

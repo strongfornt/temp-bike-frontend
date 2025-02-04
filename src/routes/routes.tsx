@@ -10,6 +10,7 @@ import { routeGenerator } from "../utils/routesGenerator";
 import SuspenseWrapper from "../utils/SuspenseWrapper";
 import { adminPaths } from "./admin.routes";
 import { customerPaths } from "./customer.routes";
+import OrderVerification from "../pages/order/VerifyOrder";
 const Home = lazy(() => import("../pages/Landing/Home"));
 const Landing = lazy(() => import("../pages/Landing/Landing"));
 const SignIn = lazy(() => import("../pages/Authentication/SignIn"));
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
         path: '/product/:id',
         element: <ProductDetails />
       },
+      // {
+      //   path: '/checkout',
+      //   element: <OrderVerification />
+      // }
     ]
   },
   {
