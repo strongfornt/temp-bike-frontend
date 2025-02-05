@@ -3,11 +3,13 @@ import { Button, Skeleton } from "antd";
 import { Link, useSearchParams } from "react-router-dom";
 import { clearCart } from "../../redux/features/cart/cartSlice";
 import { useVerifyOrderQuery } from "../../redux/features/order/orderSlice";
-import { useAppDispatch } from "../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
+import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 
 export default function OrderVerification() {
   const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
+  const user = useAppSelector(selectCurrentUser)
   const { isLoading, data } = useVerifyOrderQuery(searchParams.get("order_id"), {
     refetchOnMountOrArgChange: true,
   });
@@ -27,8 +29,11 @@ export default function OrderVerification() {
           <p><strong>Order ID:</strong> {orderData?.order_id}</p>
           <p><strong>Amount:</strong> {orderData?.currency} {orderData?.amount?.toFixed(2)}</p>
           <p><strong>Status:</strong>
-            <CheckCircleOutlined className="text-lg !text-green-400 ml-1" />
-            <span> Success</span>
+            {
+              orderData?.sp_message == "Success" ? <><CheckCircleOutlined className="text-lg !text-green-400 ml-1" />
+                <span> Success</span></> : <><ExclamationCircleOutlined className="text-lg !text-red-400 ml-1" />
+                <span> Failed</span></>
+            }
           </p>
           <p><strong>Date:</strong> {new Date(orderData?.date_time)?.toLocaleString()}</p>
         </div>
@@ -70,7 +75,7 @@ export default function OrderVerification() {
       </div>
 
       <div className="mt-8 flex justify-center">
-        <Link to="/order">
+        <Link to={`/${user?.role}/order-history`}>
           <Button type="primary" size="large" className="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-8 rounded-lg shadow-lg hover:scale-105 transition-transform">View Orders</Button>
         </Link>
       </div>

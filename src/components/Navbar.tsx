@@ -71,7 +71,7 @@ const Navbar = () => {
     const cart = useAppSelector((state: RootState) => state.cart);
     const navigate: any = useNavigate()
     const dispatch = useAppDispatch();
-    const [handleProduct] = useOrderProductMutation()
+    const [handleProduct, res] = useOrderProductMutation()
     const [open, setOpen] = useState(false);
 
     const showDrawer = () => {
@@ -232,6 +232,7 @@ const Navbar = () => {
                                     onClick={() => {
                                         handleCheckout()
                                     }}
+                                    loading={res.isLoading}
                                     className="w-full bg-black hover:bg-gray-800 text-white py-2 rounded-lg mt-2"
                                 >
                                     Proceed to Checkout

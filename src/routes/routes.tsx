@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     element: (
       <SuspenseWrapper>
-       <Landing />
+        <Landing />
       </SuspenseWrapper>
     ),
     children: [
@@ -40,7 +40,9 @@ const router = createBrowserRouter([
       },
       {
         path: '/verify-order',
-        element: <OrderVerification />
+        element: <ProtectedRoute role="customer">
+          <OrderVerification />
+        </ProtectedRoute>
       }
     ]
   },
