@@ -4,7 +4,6 @@ import { useGetProductsQuery } from "../../redux/features/product/productApi";
 
 
 const AllProducts = () => {
-
     // Fetch filtered data from the backend
     const { data, isLoading } = useGetProductsQuery(undefined);
     const products = data?.data || [];

@@ -4,15 +4,14 @@ import {
     ShoppingCartOutlined,
     UserOutlined,
 } from "@ant-design/icons";
+import { Button, Divider, Drawer } from "antd";
+import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { selectCurrentUser } from "../redux/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "../redux/hook";
-import { RootState } from "../redux/store";
-import { useState } from "react";
-import { Button, Divider, Drawer } from "antd";
 import { clearCart, removeFromCart, updateQuantity } from "../redux/features/cart/cartSlice";
 import { useOrderProductMutation } from "../redux/features/order/orderSlice";
-import { toast } from "sonner";
+import { useAppDispatch, useAppSelector } from "../redux/hook";
+import { RootState } from "../redux/store";
 const Navbar = () => {
     const links = (
         <>
@@ -87,11 +86,8 @@ const Navbar = () => {
             return { id: p._id, quantity: p.quantity }
         })
         const res = await handleProduct(checkoutData)
-        console.log(res);
-        
         if(res.data.success){
-            window.open(res.data.data, )
-            toast.success("Successfully order created")
+            window.location.href = res.data.data
         }
     }
 

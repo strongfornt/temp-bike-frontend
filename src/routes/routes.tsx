@@ -38,10 +38,10 @@ const router = createBrowserRouter([
         path: '/product/:id',
         element: <ProductDetails />
       },
-      // {
-      //   path: '/checkout',
-      //   element: <OrderVerification />
-      // }
+      {
+        path: '/verify-order',
+        element: <OrderVerification />
+      }
     ]
   },
   {

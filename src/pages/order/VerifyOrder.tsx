@@ -1,140 +1,78 @@
-import { Badge, Button, Card } from "antd";
-import { Link } from "react-router-dom";
-
-interface OrderData {
-  id: number;
-  order_id: string;
-  currency: string;
-  amount: number;
-  payable_amount: number;
-  discsount_amount: number | null;
-  disc_percent: number;
-  received_amount: string;
-  usd_amt: number;
-  usd_rate: number;
-  is_verify: number;
-  card_holder_name: string | null;
-  card_number: string | null;
-  phone_no: string;
-  bank_trx_id: string;
-  invoice_no: string;
-  bank_status: string;
-  customer_order_id: string;
-  sp_code: string;
-  sp_message: string;
-  name: string;
-  email: string;
-  address: string;
-  city: string;
-  value1: string | null;
-  value2: string | null;
-  value3: string | null;
-  value4: string | null;
-  transaction_status: string | null;
-  method: string;
-  date_time: string;
-}
+import { CheckCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import { Button, Skeleton } from "antd";
+import { Link, useSearchParams } from "react-router-dom";
+import { clearCart } from "../../redux/features/cart/cartSlice";
+import { useVerifyOrderQuery } from "../../redux/features/order/orderSlice";
+import { useAppDispatch } from "../../redux/hook";
 
 export default function OrderVerification() {
+  const [searchParams] = useSearchParams();
+  const dispatch = useAppDispatch();
+  const { isLoading, data } = useVerifyOrderQuery(searchParams.get("order_id"), {
+    refetchOnMountOrArgChange: true,
+  });
+  const orderData = data?.data?.[0];
+  if (orderData?.sp_message === "Success") {
+    dispatch(clearCart());
+  }
+  return isLoading ? (
+    <Skeleton active />
+  ) : (
+    <div className="max-w-7xl mx-auto py-10 px-6  text-white rounded-lg shadow-xl">
+      <h1 className="text-4xl font-extrabold mb-8 text-center ">Order Verification</h1>
 
-
-  const orderData: any = {}
-
-  return(
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Order Verification</h1>
       <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <div>
-            <h1>Order Details</h1>
-          </div>
-          <div>
-            <dl className="grid grid-cols-2 gap-2">
-              <dt className="font-semibold">Order ID:</dt>
-              <dd>{orderData?.order_id}</dd>
-              <dt className="font-semibold">Amount:</dt>
-              <dd>
-                {orderData?.currency} {orderData?.amount?.toFixed(2)}
-              </dd>
-              <dt className="font-semibold">Status:</dt>
-              <dd>
-                <Badge
-                
-                >
-                  {orderData?.bank_status}
-                </Badge>
-              </dd>
-              <dt className="font-semibold">Date:</dt>
-              <dd>{new Date(orderData?.date_time)?.toLocaleString()}</dd>
-            </dl>
-          </div>
-        </Card>
+        <div className="p-6 bg-gray-800 rounded-lg shadow-lg border border-white">
+          <h2 className="text-xl font-semibold mb-4 text-primary">Order Details</h2>
+          <p><strong>Order ID:</strong> {orderData?.order_id}</p>
+          <p><strong>Amount:</strong> {orderData?.currency} {orderData?.amount?.toFixed(2)}</p>
+          <p><strong>Status:</strong>
+            <CheckCircleOutlined className="text-lg !text-green-400 ml-1" />
+            <span> Success</span>
+          </p>
+          <p><strong>Date:</strong> {new Date(orderData?.date_time)?.toLocaleString()}</p>
+        </div>
 
-        <Card>
-          <div>
-            <div>Payment Information</div>
-          </div>
-          <div>
-            <dl className="grid grid-cols-2 gap-2">
-              <dt className="font-semibold">Method:</dt>
-              <dd>{orderData?.method}</dd>
-              <dt className="font-semibold">Transaction ID:</dt>
-              <dd>{orderData?.bank_trx_id}</dd>
-              <dt className="font-semibold">Invoice No:</dt>
-              <dd>{orderData?.invoice_no}</dd>
-              <dt className="font-semibold">SP Code:</dt>
-              <dd>{orderData?.sp_code}</dd>
-              <dt className="font-semibold">SP Message:</dt>
-              <dd>{orderData?.sp_message}</dd>
-            </dl>
-          </div>
-        </Card>
+        <div className="p-6 bg-gray-800 rounded-lg shadow-lg border border-white">
+          <h2 className="text-xl font-semibold mb-4 text-primary">Payment Information</h2>
+          <p><strong>Method:</strong> {orderData?.method}</p>
+          <p><strong>Transaction ID:</strong> {orderData?.bank_trx_id}</p>
+          <p><strong>Invoice No:</strong> {orderData?.invoice_no}</p>
+          <p><strong>SP Code:</strong> {orderData?.sp_code}</p>
+          <p><strong>SP Message:</strong> {orderData?.sp_message}</p>
+        </div>
+      </div>
 
-        <Card>
-          <div>
-            <h1>Customer Information</h1>
-          </div>
-          <div>
-            <dl className="grid grid-cols-2 gap-2">
-              <dt className="font-semibold">Name:</dt>
-              <dd>{orderData?.name}</dd>
-              <dt className="font-semibold">Email:</dt>
-              <dd>{orderData?.email}</dd>
-              <dt className="font-semibold">Phone:</dt>
-              <dd>{orderData?.phone_no}</dd>
-              <dt className="font-semibold">Address:</dt>
-              <dd>{orderData?.address}</dd>
-              <dt className="font-semibold">City:</dt>
-              <dd>{orderData?.city}</dd>
-            </dl>
-          </div>
-        </Card>
+      <div className="grid gap-6 md:grid-cols-2 mt-6">
+        <div className="p-6 bg-gray-800 rounded-lg shadow-lg border border-white">
+          <h2 className="text-xl font-semibold mb-4 text-primary">Customer Information</h2>
+          <p><strong>Name:</strong> {orderData?.name}</p>
+          <p><strong>Email:</strong> {orderData?.email}</p>
+          <p><strong>Phone:</strong> {orderData?.phone_no}</p>
+          <p><strong>Address:</strong> {orderData?.address}</p>
+          <p><strong>City:</strong> {orderData?.city}</p>
+        </div>
 
-        <Card>
-          <div>
-            <h1>Verification Status</h1>
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              {orderData?.is_verify === 1 ? (
-                <>
-                  {/* <CheckCircle className="text-green-500" /> */}
-                  <span>Verified</span>
-                </>
-              ) : (
-                <>
-                  {/* <AlertCircle className="text-yellow-500" /> */}
-                  <span>Not Verified</span>
-                </>
-              )}
+        <div className="p-6 bg-gray-800 rounded-lg shadow-lg border border-white text-center">
+          <h2 className="text-xl font-semibold mb-4 text-primary">Verification Status</h2>
+          {orderData?.bank_status === "Success" ? (
+            <div className="flex items-center justify-center gap-3 text-green-400 text-xl">
+              <CheckCircleOutlined className="text-3xl" />
+              <span>Verified</span>
             </div>
-          </div>
-          <div>
-            <Link to="/order">
-              <Button className="w-full">View Orders</Button>
-            </Link>
-          </div>
-        </Card>
+          ) : (
+            <div className="flex items-center justify-center gap-3 text-yellow-400 text-xl">
+              <ExclamationCircleOutlined className="text-3xl" />
+              <span>Not Verified</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-8 flex justify-center">
+        <Link to="/order">
+          <Button type="primary" size="large" className="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-8 rounded-lg shadow-lg hover:scale-105 transition-transform">View Orders</Button>
+        </Link>
       </div>
     </div>
   );
