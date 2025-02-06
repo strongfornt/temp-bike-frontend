@@ -12,26 +12,41 @@ const OrderHistory = () => {
             render: (_: any, __: any, index: number) => index + 1,
         },
         {
-            title: "Name",
-            dataIndex: "name",
-            key: "name",
-        },
-        {
             title: "Email",
             dataIndex: "email",
             key: "email",
         },
         {
-            title: "Role",
-            dataIndex: "role",
-            key: "role",
+            title: "Product Name",
+            dataIndex: "products",
+            key: "products",
+            render: (products: any[]) => products.map((p) => p.name).join(", "), // Handling multiple products
+        },
+        {
+            title: "Quantity",
+            dataIndex: "products",
+            key: "quantity",
+            render: (products: any[]) => products.map((p) => p.quantity), // Handling multiple products
+        },
+        {
+            title: "Total Price",
+            dataIndex: "totalPrice",
+            key: "totalPrice",
+        },
+        {
+            title: "Transaction ID",
+            dataIndex: "transaction",
+            key: "id",
+            render: (transaction: any) => transaction?.id || "N/A", // Handles missing status
         },
         {
             title: "Status",
-            dataIndex: "isBlocked",
-            key: "isBlocked",
+            dataIndex: "transaction",
+            key: "transactionStatus",
+            render: (transaction: any) => transaction?.transactionStatus || "N/A", // Handles missing status
         },
-    ]
+    ];
+
     return (
         <>
             <div>

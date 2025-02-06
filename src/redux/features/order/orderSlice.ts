@@ -10,13 +10,16 @@ const orderApi = baseApi.injectEndpoints({
       }),
     }),
     getOrders: builder.query({
-      query: () => "/orders",
+      query: () => ({
+        url: "/orders",
+        method: "GET"
+      })
     }),
     verifyOrder: builder.query({
       query: (order_id) => ({
         url: `/orders/verify-order`,
         params: { order_id },
-        method: "GET",
+        method: "PATCH",
       }),
     }),
   }),
