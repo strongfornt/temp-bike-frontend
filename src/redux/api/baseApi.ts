@@ -69,4 +69,5 @@ export const baseApi = createApi({
   baseQuery: baseQueryWithRefreshToken,
   tagTypes: ['user'],
   endpoints: () => ({}),
+  // keepUnusedDataFor:Infinity
 });
