@@ -1,10 +1,10 @@
 import { CheckCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
-import { Button, Skeleton } from "antd";
+import { Button } from "antd";
 import { Link, useSearchParams } from "react-router-dom";
+import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 import { clearCart } from "../../redux/features/cart/cartSlice";
 import { useVerifyOrderQuery } from "../../redux/features/order/orderSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
-import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 
 export default function OrderVerification() {
   const [searchParams] = useSearchParams();
@@ -18,7 +18,7 @@ export default function OrderVerification() {
     dispatch(clearCart());
   }
   return isLoading ? (
-    <Skeleton active />
+   <div className="text-white text-center ">loading...</div>
   ) : (
     <div className="max-w-7xl mx-auto py-10 px-6  text-white rounded-lg shadow-xl">
       <h1 className="text-4xl font-extrabold mb-8 text-center ">Order Verification</h1>

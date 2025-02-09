@@ -38,8 +38,8 @@ const Footer = () => {
                                 <div>
                                     <h3 className="text-gray-300 font-medium uppercase">Products</h3>
                                     <a href="#" className="block mt-2 text-sm text-gray-400 hover:underline">Mega Cloud</a>
-                                    <a href="#" className="block mt-2 text-sm text-gray-400 hover:underline">Aperion UI</a>
-                                    <a href="#" className="block mt-2 text-sm text-gray-400 hover:underline">Meraki UI</a>
+                                    <a href="#" className="block mt-2 text-sm text-gray-400 hover:underline">Mega Offer</a>
+                                    <a href="#" className="block mt-2 text-sm text-gray-400 hover:underline">Save Life</a>
                                 </div>
                                 <div>
                                     <h3 className="text-gray-300 font-medium uppercase">Contact</h3>

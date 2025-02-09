@@ -12,9 +12,10 @@ const OrderHistory = () => {
             render: (_: any, __: any, index: number) => index + 1,
         },
         {
-            title: "Email",
-            dataIndex: "email",
-            key: "email",
+            title: "Date",
+            key: 'date_time',
+            dataIndex: 'transaction',
+            render: (t: any) => t.date_time
         },
         {
             title: "Product Name",
@@ -34,16 +35,22 @@ const OrderHistory = () => {
             key: "totalPrice",
         },
         {
+            title:"Method",
+            dataIndex: "transaction",
+            key: "method",
+            render: (transaction: any) => transaction?.method || "N/A", // Handles missing status
+        },
+        {
             title: "Transaction ID",
             dataIndex: "transaction",
             key: "id",
             render: (transaction: any) => transaction?.id || "N/A", // Handles missing status
         },
         {
-            title: "Status",
+            title: "Bank Status",
             dataIndex: "transaction",
-            key: "transactionStatus",
-            render: (transaction: any) => transaction?.transactionStatus || "N/A", // Handles missing status
+            key: "bank_status",
+            render: (transaction: any) => transaction?.bank_status || "N/A", // Handles missing status
         },
     ];
 
