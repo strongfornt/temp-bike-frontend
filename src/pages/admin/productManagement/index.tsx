@@ -86,7 +86,7 @@ const ProductManagement = () => {
     };
 
     const columns = [
-        { title: "SL", dataIndex: "serial", key: "serial", render: (_: any, __: any, index: number) => index + 1 },
+        { title: "SL", dataIndex: "serial", key: "serial", align: 'center', render: (_: any, __: any, index: number) => index + 1 },
         {
             title: "Name", key: "name", render: (record: any) => (
                 <div className="flex items-center gap-2">
@@ -104,7 +104,7 @@ const ProductManagement = () => {
             title: "Action",
             key: "action",
             render: (record: any) => (
-                <div className="flex justify-center items-center gap-2">
+                <div className="flex justify-start items-center gap-2">
                     <Button size="small" onClick={() => handleEdit(record)}>
                         <EditFilled />
                     </Button>

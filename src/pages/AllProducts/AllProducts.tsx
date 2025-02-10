@@ -15,9 +15,9 @@ const AllProducts = () => {
         setFilter(filterData)
     };
     return (
-        <div className="max-w-7xl mx-auto py-5 px-5 text-white">
+        <div className="max-w-7xl mx-auto py-5  px-5 text-white">
             {/* Filter Section */}
-            <div className="rounded-lg shadow mb-6">
+            <div className="rounded-lg shadow">
                 <Form form={form} onValuesChange={handleFilter} className="my-4 flex flex-col md:flex-row justify-between gap-3 md:gap-0 items-start">
                     <div>
                         <Form.Item noStyle shouldUpdate>
@@ -46,7 +46,7 @@ const AllProducts = () => {
                                     const formData = form.getFieldsValue(true);
                                     return (
                                         <Select
-                                            placeholder="Brand"
+                                            placeholder="Select Brand"
                                             value={formData?.brand || undefined}
                                             onChange={(value) => {
                                                 form.setFieldsValue({ brand: value || undefined });
@@ -78,7 +78,7 @@ const AllProducts = () => {
                                     const formData = form.getFieldsValue(true);
                                     return (
                                         <Select
-                                            placeholder="Category"
+                                            placeholder="Select Category"
                                             value={formData?.category || undefined}
                                             onChange={(value) => {
                                                 form.setFieldsValue({ category: value || undefined });
@@ -107,7 +107,7 @@ const AllProducts = () => {
                                     const formData = form.getFieldsValue(true);
                                     return (
                                         <Select
-                                            placeholder="Price Range"
+                                            placeholder="Select Price Range"
                                             value={formData?.priceRange || undefined}
                                             onChange={(value) => {
                                                 if (value) {
@@ -137,7 +137,7 @@ const AllProducts = () => {
                                     const formData = form.getFieldsValue(true);
                                     return (
                                         <Select
-                                            placeholder="Availability"
+                                            placeholder="Select Availability"
                                             value={formData?.inStock !== undefined ? formData.inStock : undefined}
                                             onChange={(value) => {
                                                 form.setFieldsValue({ inStock: value !== undefined ? value : undefined });
@@ -162,7 +162,7 @@ const AllProducts = () => {
             </div>
 
             {/* Products Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center items-center ">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center items-center py-10">
                 {isLoading ? (
                     <div>Loading...</div>
                 ) : products.length > 0 ? (

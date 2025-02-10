@@ -11,6 +11,7 @@ import SuspenseWrapper from "../utils/SuspenseWrapper";
 import { adminPaths } from "./admin.routes";
 import { customerPaths } from "./customer.routes";
 import OrderVerification from "../pages/order/VerifyOrder";
+import About from "../pages/About/About";
 const Home = lazy(() => import("../pages/Landing/Home"));
 const Landing = lazy(() => import("../pages/Landing/Landing"));
 const SignIn = lazy(() => import("../pages/Authentication/SignIn"));
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
         element: <ProtectedRoute role="customer">
           <OrderVerification />
         </ProtectedRoute>
+      },
+      {
+        path: '/about',
+        element: <About />
       }
     ]
   },
