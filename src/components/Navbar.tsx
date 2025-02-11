@@ -4,7 +4,7 @@ import {
     ShoppingCartOutlined,
     UserOutlined,
 } from "@ant-design/icons";
-import { Button, Divider, Drawer } from "antd";
+import { Button, Divider, Drawer, Tooltip } from "antd";
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { selectCurrentUser } from "../redux/features/auth/authSlice";
@@ -86,7 +86,7 @@ const Navbar = () => {
             return { id: p._id, quantity: p.quantity }
         })
         const res = await handleProduct(checkoutData)
-        if(res.data.success){
+        if (res.data.success) {
             window.location.href = res.data.data
         }
     }
@@ -139,11 +139,13 @@ const Navbar = () => {
                 {/* Auth/Cart Buttons */}
                 {user ? (
                     <div className="text-start flex items-center gap-4">
-                        <button onClick={() => {
-                            navigate(`/${user.role}/dashboard`)
-                        }}>
-                            <UserOutlined className="!text-white text-2xl cursor-pointer" />
-                        </button>
+                        <Tooltip title="View Dashboard" >
+                            <button onClick={() => {
+                                navigate(`/${user.role}/dashboard`)
+                            }}>
+                                <UserOutlined className="!text-white text-2xl cursor-pointer" />
+                            </button>
+                        </Tooltip>
                     </div>
                 ) : (
                     <div className="flex justify-center items-center gap-3">

@@ -1,8 +1,9 @@
-import { Button, DatePicker, Modal, Select, message } from 'antd';
-import moment from 'moment';
+import { Button, DatePicker, Dropdown, Modal } from 'antd';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import BTable from "../../components/BTable";
-import { useGetAllOrdersQuery } from "../../redux/features/order/orderSlice";
+import { useGetAllOrdersQuery, useUpdateDeliveryDateMutation, useUpdateOrderStatusMutation } from "../../redux/features/order/orderSlice";
+import dayjs from 'dayjs';
 
 const OrderManagement = () => {
     const { data, isLoading, isFetching } = useGetAllOrdersQuery(undefined);
@@ -10,19 +11,19 @@ const OrderManagement = () => {
     const [newDate, setNewDate] = useState<string | null>(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
-
-    const handleDateChange = (date: any, dateString: string) => {
-        setNewDate(dateString);
-    };
-
-    const handleSaveDate = (orderId: string) => {
+    // const [] = useUpdateDeliveryDateQuery()
+    const [handleUpdate, res] = useUpdateOrderStatusMutation()
+    const [handleUpdateDelivery,] = useUpdateDeliveryDateMutation()
+    const handleSaveDate = async (orderId: string) => {
         if (!newDate) {
-            message.error('Please select a date');
+            toast.error('Please select a date');
             return;
         }
-        console.log(isEditMode ? 'Editing' : 'Adding', 'date for order:', 'Date:', newDate);
-
-        message.success(isEditMode ? 'Date updated successfully!' : 'Date added successfully!');
+        const res = await handleUpdateDelivery({ orderId, estimate_delivery_date: newDate })
+        if (res.error) {
+            return toast.error(res.error?.data?.message || "An error occur. Please try again!")
+        }
+        toast.success(isEditMode ? 'Date updated successfully!' : 'Date added successfully!');
         setNewDate(null);
         setIsModalVisible(false);
     };
@@ -45,7 +46,32 @@ const OrderManagement = () => {
         setIsModalVisible(false);
         setNewDate(null);
     };
+    const onMenuClick: any = async (data: any) => {
+        const res = await handleUpdate(data)
+        if (res.error) {
+            return toast.error(res.error?.data?.message || "An error occur. Please try again!")
+        }
+        toast.success(res.data?.message)
+    };
 
+    const items = [
+        {
+            key: 'Pending',
+            label: 'Pending',
+        },
+        {
+            key: 'Processing',
+            label: 'Processing',
+        },
+        {
+            key: 'Shipped',
+            label: 'Shipped',
+        },
+        {
+            key: 'Delivered',
+            label: 'Delivered',
+        },
+    ];
     const columns = [
         {
             title: "SL",
@@ -58,7 +84,21 @@ const OrderManagement = () => {
             title: "Date",
             key: 'date_time',
             dataIndex: 'transaction',
-            render: (t: any) => t.date_time
+            // render: (t: any) => t.date_time
+            render: (t: any) => {
+                const date = dayjs(t?.value).format('YYYY/MM/DD');
+                const time = dayjs(t?.value).format('hh:mm:ss A');
+                return (
+                  <div>
+                    <div>
+                      {date}
+                    </div>
+                    <div>
+                      {time}
+                    </div>
+                  </div>
+                );
+              },
         },
         {
             title: "Product Name",
@@ -97,21 +137,10 @@ const OrderManagement = () => {
         },
         {
             title: "Order Status",
-            dataIndex: "orderStatus",
-            key: "orderStatus",
-            render: (value: any) => {
+            render: (record: any) => {
                 return (
                     <div>
-                        <Select
-                            className={`${value === "Pending" ? "!text-red-300" : "!text-green-400"}`}
-                            defaultValue={value}
-                            options={[
-                                { label: "Pending", value: "Pending" },
-                                { label: "Processing", value: "Processing" },
-                                { label: "Shipped", value: "Shipped" },
-                                { label: "Delivered", value: "Delivered" },
-                            ]}
-                        />
+                        <Dropdown.Button disabled={record?.orderStatus === "Delivered"} size='small' menu={{ items, onClick: (e) => onMenuClick({ key: e.key, orderId: record?._id }) }}>{record?.orderStatus}</Dropdown.Button>
                     </div>
                 )
             }
@@ -135,14 +164,14 @@ const OrderManagement = () => {
                             record?.estimate_delivery_date ?
                                 <Button
                                     size="small"
-                                    className='!bg-yellow-400  !text-black'
+                                    className='!bg-secondary  !text-white !px-4'
                                     onClick={() => handleEditDate(record)}
                                 >
                                     Edit Date
                                 </Button>
                                 : <Button
                                     size="small"
-                                    className='!bg-green-400 !text-black'
+                                    className='!bg-primary !text-white !px-4'
                                     onClick={() => handleAddDate(record)}
                                 >
                                     Add Date
@@ -162,27 +191,31 @@ const OrderManagement = () => {
             {isLoading ? (
                 <div>Loading....</div>
             ) : (
-                <>
-                    <BTable columns={columns} dataSource={data?.data || []} isBorder={true} isLoading={isFetching} />
-
-                    {/* Modal for adding/editing the date */}
-                    <Modal
-                        title={`${isEditMode ? 'Edit' : 'Add'} Date for Order`}
-                        visible={isModalVisible}
-                        onOk={() => handleSaveDate(editingOrder?._id)}
-                        onCancel={handleCancel}
-                        okText={isEditMode ? "Save" : "Add"}
-                        cancelText="Cancel"
-                    >
-                        <DatePicker
-                            className="w-full"
-                            value={newDate ? moment(newDate, 'MM-DD-YYYY') : null}
-                            onChange={handleDateChange}
-                            format="YYYY-MM-DD"
-                        />
-                    </Modal>
-                </>
+                <BTable columns={columns} dataSource={data?.data || []} isBorder={true} isLoading={isFetching || res.isLoading} />
             )}
+            <Modal
+                title={`${isEditMode ? 'Edit' : 'Add'} Date for Order`}
+                visible={isModalVisible}
+                onOk={() => handleSaveDate(editingOrder?._id)}
+                onCancel={handleCancel}
+                okText={isEditMode ? "Update" : "Add"}
+                cancelText="Cancel"
+            >
+                <DatePicker
+                    className="w-full"
+                    value={newDate ? dayjs(newDate, "MM-DD-YYYY") : null}
+                    onChange={(value) => {
+                        if (value) {
+                            const date = value.format('MM-DD-YYYY');
+                            setNewDate(date);
+                        } else {
+                            setNewDate(null);
+                        }
+                    }}
+                    format="MM-DD-YYYY"
+                    allowClear={true}
+                />
+            </Modal>
         </>
     );
 };

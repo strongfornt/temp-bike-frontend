@@ -13,13 +13,15 @@ const orderApi = baseApi.injectEndpoints({
       query: () => ({
         url: "/orders",
         method: "GET"
-      })
+      }),
+      providesTags: ['orders']
     }),
     getAllOrders: builder.query({
       query: () => ({
         url: "/orders/get-all-orders",
         method: "GET"
-      })
+      }),
+      providesTags: ['orders']
     }),
     verifyOrder: builder.query({
       query: (order_id) => ({
@@ -28,7 +30,23 @@ const orderApi = baseApi.injectEndpoints({
         method: "PATCH",
       }),
     }),
+    updateOrderStatus: builder.mutation({
+      query: (updateData) => ({
+        url: `/admin/update-order-status/${updateData?.orderId}`,
+        method: "PATCH",
+        body: {orderStatus: updateData?.key}
+      }),
+      invalidatesTags: ['orders']
+    }),
+    updateDeliveryDate: builder.mutation({
+      query: (updateData) => ({
+        url: `/admin/update-order-estimate-delivery-date/${updateData?.orderId}`,
+        method: "PATCH",
+        body: updateData
+      }),
+      invalidatesTags: ['orders']
+    }),
   }),
 });
 
-export const { useOrderProductMutation, useVerifyOrderQuery, useGetOrdersQuery, useGetAllOrdersQuery} = orderApi;
+export const { useOrderProductMutation, useVerifyOrderQuery, useGetOrdersQuery, useGetAllOrdersQuery, useUpdateDeliveryDateMutation, useUpdateOrderStatusMutation} = orderApi;
