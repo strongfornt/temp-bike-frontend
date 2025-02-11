@@ -203,6 +203,9 @@ const OrderManagement = () => {
             >
                 <DatePicker
                     className="w-full"
+                    disabledDate={(current) => {
+                        return current && current < dayjs(newDate); // Disable past dates
+                      }}
                     value={newDate ? dayjs(newDate, "MM-DD-YYYY") : null}
                     onChange={(value) => {
                         if (value) {
