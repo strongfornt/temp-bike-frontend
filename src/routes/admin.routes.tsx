@@ -1,4 +1,5 @@
 import React from "react";
+import OrderManagement from "../pages/admin/OrderManagement";
 const ManageUser = React.lazy(
   () => import("../pages/admin/ManageUser")
 )
@@ -23,6 +24,11 @@ export const adminPaths = [
     name: "Product Management",
     path: 'product-management',
     element: <ProductManagement />
+  },
+  {
+    name: "Order Management",
+    path: 'order-management',
+    element: <OrderManagement />
   }
 
 ];

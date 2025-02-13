@@ -4,13 +4,14 @@ import {
     ShoppingCartOutlined,
     UserOutlined,
 } from "@ant-design/icons";
+import { Button, Divider, Drawer, Tooltip } from "antd";
+import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { selectCurrentUser } from "../redux/features/auth/authSlice";
+import { clearCart, removeFromCart, updateQuantity } from "../redux/features/cart/cartSlice";
+import { useOrderProductMutation } from "../redux/features/order/orderSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 import { RootState } from "../redux/store";
-import { useState } from "react";
-import { Button, Divider, Drawer } from "antd";
-import { clearCart, removeFromCart, updateQuantity } from "../redux/features/cart/cartSlice";
 const Navbar = () => {
     const links = (
         <>
@@ -70,7 +71,7 @@ const Navbar = () => {
     const cart = useAppSelector((state: RootState) => state.cart);
     const navigate: any = useNavigate()
     const dispatch = useAppDispatch();
-
+    const [handleProduct, res] = useOrderProductMutation()
     const [open, setOpen] = useState(false);
 
     const showDrawer = () => {
@@ -80,8 +81,16 @@ const Navbar = () => {
     const onClose = () => {
         setOpen(false);
     };
-    console.log(cart);
-    
+    const handleCheckout = async () => {
+        const checkoutData = cart.cartItems?.map(p => {
+            return { id: p._id, quantity: p.quantity }
+        })
+        const res = await handleProduct(checkoutData)
+        if (res.data.success) {
+            window.location.href = res.data.data
+        }
+    }
+
     return (
         <nav className="p-3 md:p-4 bg-[#000001] sticky top-0 z-10">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -130,11 +139,13 @@ const Navbar = () => {
                 {/* Auth/Cart Buttons */}
                 {user ? (
                     <div className="text-start flex items-center gap-4">
-                        <button onClick={() => {
-                            navigate(`/${user.role}/dashboard`)
-                        }}>
-                            <UserOutlined className="!text-white text-2xl cursor-pointer" />
-                        </button>
+                        <Tooltip title="View Dashboard" >
+                            <button onClick={() => {
+                                navigate(`/${user.role}/dashboard`)
+                            }}>
+                                <UserOutlined className="!text-white text-2xl cursor-pointer" />
+                            </button>
+                        </Tooltip>
                     </div>
                 ) : (
                     <div className="flex justify-center items-center gap-3">
@@ -217,10 +228,13 @@ const Navbar = () => {
                                 >
                                     Clear Cart
                                 </Button>
-
                                 {/* Checkout Button */}
                                 <Button
                                     type="primary"
+                                    onClick={() => {
+                                        handleCheckout()
+                                    }}
+                                    loading={res.isLoading}
                                     className="w-full bg-black hover:bg-gray-800 text-white py-2 rounded-lg mt-2"
                                 >
                                     Proceed to Checkout

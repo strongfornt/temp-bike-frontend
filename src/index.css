@@ -26,3 +26,11 @@ body {
     border-box;
   border-radius: 8px;
 }
+
+.filter .ant-select-selector{
+  background: transparent !important;
+  color: white !important;
+}
+.filter .ant-select-selection-placeholder{
+  color: white !important;
+}

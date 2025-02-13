@@ -1,15 +1,17 @@
-import { Layout, Menu } from "antd";
+import { Button, Layout, Menu, Modal, Popconfirm } from "antd";
 import { Link, useLocation } from "react-router-dom";
-import { TUser, useCurrentToken } from "../../redux/features/auth/authSlice";
-import { useAppSelector } from "../../redux/hook";
+import { logout, TUser, useCurrentToken } from "../../redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { adminPaths } from "../../routes/admin.routes";
 import { customerPaths } from "../../routes/customer.routes";
 import { findRouteName } from "../../utils/findRouteNames";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 import { verifyToken } from "../../utils/verifyToken";
 import './sidebar.css'
+import { clearCart } from "../../redux/features/cart/cartSlice";
 const { Sider } = Layout;
-
+import { LogoutOutlined } from "@ant-design/icons";
+import { toast } from "sonner";
 const userRole = {
   ADMIN: "admin",
   CUSTOMER: "customer",
@@ -38,7 +40,7 @@ const Sidebar = () => {
   }
   const location = useLocation();
   const routeName = findRouteName(sidebarItems, location.pathname);
-
+  const dispatch = useAppDispatch();
   return (
     <Sider
       breakpoint="lg"
@@ -83,6 +85,19 @@ const Sidebar = () => {
         defaultSelectedKeys={[(routeName as string) || "Dashboard"]}
         items={sidebarItems as any}
       />
+      <div className="absolute bottom-12 w-full px-4">
+        <Popconfirm
+          title="Are you sure you want to log out?"
+          onConfirm={() => {
+            dispatch(logout());
+            dispatch(clearCart())
+          }}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button block icon={<LogoutOutlined />} className="!bg-transparent !rounded-none !text-primary">Logout</Button>
+        </Popconfirm>
+      </div>
     </Sider>
   );
 };

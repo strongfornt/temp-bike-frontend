@@ -1,6 +1,6 @@
 import React from "react";
-
 const CustomerDashboard = React.lazy (() => import ("../pages/customer/CustomerDashboard"))
+const OrderHistory = React.lazy (() => import ("../pages/customer/OrderHistory"))
 
 export const customerPaths = [
     {
@@ -10,9 +10,13 @@ export const customerPaths = [
     },
     {
       name: 'Managing',
-      path: 'managing',
-      element: <><div>
-        hhhh</div></>,
+      children: [
+        {
+          name: "Order History",
+          path: 'order-history',
+          element: <OrderHistory />
+        }
+      ]
     },
    
   ];

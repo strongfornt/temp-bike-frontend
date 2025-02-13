@@ -29,7 +29,7 @@ const ProductCard = ({ product }: any) => {
                         <h1 className="text-sm font-semibold">{product?.brand}</h1>
                     </div>
                     <div className="text-sm font-semibold flex justify-between items-center">
-                        <p>Price: <span className="text-green-400">${product?.price}</span></p>
+                        <p>Price: <span className="text-green-400"><span>&#2547;</span> {product?.price}</span></p>
                         <p>Ratings: <span className="text-yellow-400">4.5 ★</span></p>
                     </div>
                 </div>
@@ -38,8 +38,12 @@ const ProductCard = ({ product }: any) => {
                 <div className="flex gap-4 text-xs justify-center items-center">
                     <Button onClick={() => {
                         dispatch(addToCart(product))
-                    }
-                    } size="middle" type="primary">Add to Cart</Button>
+                    }}
+                        size="middle"
+                        type="primary"
+                        disabled={!product.inStock}
+                        className="!text-white"
+                    >Add to Cart</Button>
                     <Link to={`/product/${product?._id}`}> <Button size="middle">View Details</Button></Link>
                 </div>
             </div>

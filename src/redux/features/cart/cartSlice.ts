@@ -92,7 +92,6 @@ const cartSlice = createSlice({
       state.cartItems = [];
       state.totalQuantity = 0;
       state.totalPrice = 0;
-      toast.success('Cart cleared!');
     },
   },
 });

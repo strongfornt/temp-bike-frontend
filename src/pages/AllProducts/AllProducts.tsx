@@ -1,39 +1,43 @@
-import { Form, Input, Select, Slider } from "antd";
+import { Form, Input, Select } from "antd";
+import { useState } from "react";
 import ProductCard from "../../components/ProductCard";
 import { useGetProductsQuery } from "../../redux/features/product/productApi";
 
 
 const AllProducts = () => {
-
     // Fetch filtered data from the backend
-    const { data, isLoading } = useGetProductsQuery(undefined);
+    const [filter, setFilter] = useState({})
+    const { data, isLoading } = useGetProductsQuery(filter);
     const products = data?.data || [];
     const [form] = Form.useForm()
-
+    const handleFilter = () => {
+        const filterData = form.getFieldsValue(true)
+        setFilter(filterData)
+    };
     return (
-        <div className="max-w-7xl mx-auto py-5 text-white">
+        <div className="max-w-7xl mx-auto py-5  px-5 text-white">
             {/* Filter Section */}
-            <div className="rounded-lg shadow mb-6">
-                <h3 className="text-lg font-semibold mb-4">Filters</h3>
-                <Form form={form} className="my-4 flex flex-col md:flex-row justify-between gap-3 md:gap-0 items-start">
+            <div className="rounded-lg shadow">
+                <Form form={form} onValuesChange={handleFilter} className="my-4 flex flex-col md:flex-row justify-between gap-3 md:gap-0 items-start">
                     <div>
                         <Form.Item noStyle shouldUpdate>
                             {() => {
                                 const formData = form.getFieldsValue(true);
                                 return (
                                     <Input
-                                        placeholder="Search by Brand, Bike Name, or Category"
+                                        placeholder="Search"
                                         value={formData?.searchValue || ''}
                                         onChange={(event) => {
-                                            const value = event.target.value;
-                                            form.setFieldsValue({ searchValue: value });
+                                            form.setFieldsValue({ searchValue: event.target.value || undefined });
+                                            handleFilter();
                                         }}
-                                        className="w-full md:w-[180px] py-[6.1px]"
+                                        className="w-full md:w-[180px] py-[6.1px] !bg-transparent !text-white placeholder:!text-white"
                                     />
                                 );
                             }}
                         </Form.Item>
                     </div>
+
                     <div className="flex flex-col md:flex-row items-center justify-end flex-1 w-full">
                         <div className="w-full flex md:flex-row flex-wrap flex-col justify-end items-end gap-[10px] transition-all duration-300 opacity-100">
                             {/* Brand Filter */}
@@ -42,22 +46,27 @@ const AllProducts = () => {
                                     const formData = form.getFieldsValue(true);
                                     return (
                                         <Select
-                                            placeholder="Brand"
+                                            placeholder="Select Brand"
                                             value={formData?.brand || undefined}
-                                            onChange={(key, data: any) => {
-                                                form.setFieldsValue({
-                                                    brand: data?.value,
-                                                });
+                                            onChange={(value) => {
+                                                form.setFieldsValue({ brand: value || undefined });
+                                                handleFilter();
                                             }}
-                                            style={{ height: 35, borderRadius: 8, borderColor: '#D7D7D7', background: 'none' }}
                                             allowClear
                                             showSearch
                                             filterOption={(input, option) =>
                                                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                             }
-                                            className="!bg-red-400 md:w-[180px] w-full"
                                             suffixIcon={<span style={{ color: '#BBBABA' }}>▼</span>}
-                                            options={[{ label: 'Yamaha', value: 'yamaha' }, { label: 'Honda', value: 'honda' }]}
+                                            options={[
+                                                { label: 'Yamaha', value: 'Yamaha' },
+                                                { label: 'Suzuki', value: 'Suzuki' },
+                                                { label: 'Honda', value: 'Honda' },
+                                                { label: 'Bajaj', value: 'Bajaj' },
+                                                { label: 'Hero', value: 'Hero' },
+                                                { label: 'TVS', value: 'TVS' },
+                                            ]}
+                                            className="w-full md:w-[180px] py-[6.1px] filter"
                                         />
                                     );
                                 }}
@@ -69,99 +78,78 @@ const AllProducts = () => {
                                     const formData = form.getFieldsValue(true);
                                     return (
                                         <Select
-                                            placeholder="Category"
+                                            placeholder="Select Category"
                                             value={formData?.category || undefined}
-                                            onChange={(key, data: any) => {
-                                                form.setFieldsValue({ category: data?.value });
+                                            onChange={(value) => {
+                                                form.setFieldsValue({ category: value || undefined });
+                                                handleFilter();
                                             }}
-                                            style={{ height: 35, borderRadius: 8, borderColor: '#D7D7D7' }}
                                             allowClear
                                             showSearch
                                             filterOption={(input, option) =>
                                                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                             }
-                                            className="!bg-red-400 md:w-[180px] w-full"
+                                            className="md:w-[180px] w-full filter"
                                             suffixIcon={<span style={{ color: '#BBBABA' }}>▼</span>}
                                             options={[
-                                                { label: 'Sports', value: 'sports' },
-                                                { label: 'Cruiser', value: 'cruiser' },
+                                                { label: 'Mountain', value: 'Mountain' },
+                                                { label: 'Road', value: 'Road' },
+                                                { label: 'Electric', value: 'Electric' },
                                             ]}
                                         />
                                     );
                                 }}
                             </Form.Item>
 
-                            {/* Model Filter */}
+                            {/* Price Range Filter */}
                             <Form.Item noStyle shouldUpdate>
                                 {() => {
                                     const formData = form.getFieldsValue(true);
                                     return (
                                         <Select
-                                            placeholder="Model"
-                                            value={formData?.model || undefined}
-                                            onChange={(key, data: any) => {
-                                                form.setFieldsValue({ model: data?.value });
+                                            placeholder="Select Price Range"
+                                            value={formData?.priceRange || undefined}
+                                            onChange={(value) => {
+                                                if (value) {
+                                                    const [minPrice, maxPrice] = value.split('-').map(Number);
+                                                    form.setFieldsValue({ minPrice, maxPrice,});
+                                                } else {
+                                                    form.setFieldsValue({ minPrice: undefined, maxPrice: undefined});
+                                                }
+                                                handleFilter();
                                             }}
-                                            style={{ height: 35, borderRadius: 8, borderColor: '#D7D7D7' }}
                                             allowClear
-                                            showSearch
-                                            filterOption={(input, option) =>
-                                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                                            }
-                                            className="!bg-red-400 md:w-[180px] w-full"
+                                            className="md:w-[180px] w-full filter"
                                             suffixIcon={<span style={{ color: '#BBBABA' }}>▼</span>}
                                             options={[
-                                                { label: 'Model X', value: 'model-x' },
-                                                { label: 'Model Y', value: 'model-y' },
+                                                { label: 'Below $1000', value: '0-1000' },
+                                                { label: '$1000 - $3000', value: '1000-3000' },
+                                                { label: 'Above $3000', value: '3000-50000000000000000' },
                                             ]}
                                         />
                                     );
                                 }}
                             </Form.Item>
-                            {/* 
-                            <Form.Item noStyle shouldUpdate>
-                                {() => {
-                                    const formData = form.getFieldsValue(true);
-                                    return (
-                                        <div className="md:w-[200px] w-full text-white">
-                                            <label className=" text-sm mb-1 block">Price Range</label>
-                                            <Slider
-                                                range
-                                                min={500}
-                                                max={5000}
-                                                step={100}
-                                                value={formData?.priceRange || [500, 5000]}
-                                                onChange={(value) => {
-                                                    form.setFieldsValue({ priceRange: value });
-                                                }}
-                                            />
-                                            <div className="flex justify-between  text-xs">
-                                                <span>${formData?.priceRange?.[0] || 500}</span>
-                                                <span>${formData?.priceRange?.[1] || 5000}</span>
-                                            </div>
-                                        </div>
-                                    );
-                                }}
-                            </Form.Item> */}
+
                             {/* Availability Filter */}
                             <Form.Item noStyle shouldUpdate>
                                 {() => {
                                     const formData = form.getFieldsValue(true);
                                     return (
                                         <Select
-                                            placeholder="Availability"
-                                            value={formData?.availability || undefined}
-                                            onChange={(key, data: any) => {
-                                                form.setFieldsValue({ availability: data?.value });
+                                            placeholder="Select Availability"
+                                            value={formData?.inStock !== undefined ? formData.inStock : undefined}
+                                            onChange={(value) => {
+                                                form.setFieldsValue({ inStock: value !== undefined ? value : undefined });
+                                                handleFilter();
                                             }}
-                                            style={{ height: 35, borderRadius: 8, borderColor: '#D7D7D7' }}
                                             allowClear
                                             showSearch
-                                            className="!bg-red-400 md:w-[180px] w-full"
+                                            className="md:w-[180px] w-full filter"
                                             suffixIcon={<span style={{ color: '#BBBABA' }}>▼</span>}
                                             options={[
-                                                { label: 'In Stock', value: 'in-stock' },
-                                                { label: 'Out of Stock', value: 'out-of-stock' },
+                                                { label: 'In Stock', value: true },
+                                                { label: 'Out of Stock', value: false },
                                             ]}
                                         />
                                     );
@@ -174,7 +162,7 @@ const AllProducts = () => {
             </div>
 
             {/* Products Section */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center items-center py-10">
                 {isLoading ? (
                     <div>Loading...</div>
                 ) : products.length > 0 ? (

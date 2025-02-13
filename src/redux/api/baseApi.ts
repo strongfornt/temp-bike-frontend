@@ -67,7 +67,7 @@ const baseQuery = fetchBaseQuery({
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ['user'],
+  tagTypes: ['user', 'product', 'orders'],
   endpoints: () => ({}),
   // keepUnusedDataFor:Infinity
 });
