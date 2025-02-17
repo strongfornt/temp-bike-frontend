@@ -12,6 +12,8 @@ import { adminPaths } from "./admin.routes";
 import { customerPaths } from "./customer.routes";
 import OrderVerification from "../pages/order/VerifyOrder";
 import About from "../pages/About/About";
+import Contact from "../pages/Landing/Contact";
+import Blog from "../pages/Blogs/Blog";
 const Home = lazy(() => import("../pages/Landing/Home"));
 const Landing = lazy(() => import("../pages/Landing/Landing"));
 const SignIn = lazy(() => import("../pages/Authentication/SignIn"));
@@ -48,6 +50,14 @@ const router = createBrowserRouter([
       {
         path: '/about',
         element: <About />
+      },
+      {
+        path: '/contact',
+        element: <Contact />
+      },
+      {
+        path: '/blog',
+        element: <Blog />
       }
     ]
   },

@@ -5,10 +5,10 @@ import { useGetProductsQuery } from "../../redux/features/product/productApi";
 const FeaturedProducts = () => {
     const { data, isLoading } = useGetProductsQuery(undefined)
     return (
-        <section className=" py-10">
+        <section className="pb-10">
             <div className="max-w-7xl mx-auto px-4">
                 <div className="my-5 md:my-8">
-                    <h2 className="text-3xl font-bold text-center text-primary">Featured Products</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-center text-primary my-5 md:my-8">Featured Products</h2>
                     <p className="text-sm text-center text-white w-full md:w-xl !mx-auto !my-4">Ultra-premium components, engineered by Probike. The ultimate upgrade. Wherever you ride, we’ve got a bike for the joyrider in you</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

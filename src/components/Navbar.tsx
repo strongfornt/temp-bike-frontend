@@ -1,17 +1,19 @@
 import {
     DeleteOutlined,
+    LogoutOutlined,
     MenuOutlined,
     ShoppingCartOutlined,
     UserOutlined,
 } from "@ant-design/icons";
-import { Button, Divider, Drawer, Tooltip } from "antd";
+import { Button, Divider, Drawer, Dropdown, MenuProps } from "antd";
 import { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { selectCurrentUser } from "../redux/features/auth/authSlice";
 import { clearCart, removeFromCart, updateQuantity } from "../redux/features/cart/cartSlice";
 import { useOrderProductMutation } from "../redux/features/order/orderSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 import { RootState } from "../redux/store";
+import useHandleLogout from "../utils/handleLogout";
 const Navbar = () => {
     const links = (
         <>
@@ -69,11 +71,10 @@ const Navbar = () => {
     );
     const user = useAppSelector(selectCurrentUser);
     const cart = useAppSelector((state: RootState) => state.cart);
-    const navigate: any = useNavigate()
     const dispatch = useAppDispatch();
     const [handleProduct, res] = useOrderProductMutation()
     const [open, setOpen] = useState(false);
-
+    const { handleLogout } = useHandleLogout()
     const showDrawer = () => {
         setOpen(true);
     };
@@ -90,7 +91,32 @@ const Navbar = () => {
             window.location.href = res.data.data
         }
     }
-
+    const items: MenuProps['items'] = [
+        {
+            key: '1',
+            label: (
+                <Link to={`/${user?.role}/dashboard`}>
+                    Dashboard
+                </Link>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <button>
+                    Change Password
+                </button>
+            ),
+        },
+        {
+            key: '3',
+            label: (
+                <button onClick={() => {
+                    handleLogout()
+                }} className="flex items-center gap-2 cursor-pointer"><LogoutOutlined />Logout</button>
+            ),
+        },
+    ];
     return (
         <nav className="p-3 md:p-4 bg-[#000001] sticky top-0 z-10">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -138,15 +164,11 @@ const Navbar = () => {
                 </div>
                 {/* Auth/Cart Buttons */}
                 {user ? (
-                    <div className="text-start flex items-center gap-4">
-                        <Tooltip title="View Dashboard" >
-                            <button onClick={() => {
-                                navigate(`/${user.role}/dashboard`)
-                            }}>
-                                <UserOutlined className="!text-white text-2xl cursor-pointer" />
-                            </button>
-                        </Tooltip>
-                    </div>
+                    <Dropdown menu={{ items }} placement="bottomRight" arrow>
+                        <button>
+                            <UserOutlined className="!text-white text-2xl cursor-pointer" />
+                        </button>
+                    </Dropdown>
                 ) : (
                     <div className="flex justify-center items-center gap-3">
                         <Link to="/signin">
@@ -244,7 +266,7 @@ const Navbar = () => {
                     )}
                 </div>
             </Drawer>
-        </nav>
+        </nav >
     );
 };
 
