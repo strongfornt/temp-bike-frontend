@@ -86,7 +86,7 @@ const OrderManagement = () => {
             dataIndex: 'transaction',
             // render: (t: any) => t.date_time
             render: (t: any) => {
-                const date = dayjs(t?.value).format('YYYY/MM/DD');
+                const date = dayjs(t?.value).format('MM-DD-YYYY');
                 const time = dayjs(t?.value).format('hh:mm:ss A');
                 return (
                   <div>
@@ -203,9 +203,6 @@ const OrderManagement = () => {
             >
                 <DatePicker
                     className="w-full"
-                    disabledDate={(current) => {
-                        return current && current < dayjs(newDate); // Disable past dates
-                      }}
                     value={newDate ? dayjs(newDate, "MM-DD-YYYY") : null}
                     onChange={(value) => {
                         if (value) {

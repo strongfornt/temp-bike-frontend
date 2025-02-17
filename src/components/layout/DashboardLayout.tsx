@@ -1,5 +1,5 @@
-import { Layout } from "antd";
-
+import { Button, Layout } from "antd";
+import { LogoutOutlined } from "@ant-design/icons";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 const { Header, Content } = Layout;
@@ -12,9 +12,10 @@ const DashboardLayout = () => {
       <Layout>
         <Header
           style={{ backgroundColor: "#000001" }}
-          className="sticky top-0 flex  items-center justify-end z-10"
+          className="sticky top-0 flex  items-center justify-end z-10 gap-3"
         >
-         
+         <Button href="/" className="!bg-transparent !text-gray-300 !rounded-md hover:!text-white">Change Password</Button>
+         <Button icon={<LogoutOutlined />} className="!bg-transparent !rounded-md !text-gray-300 hover:!text-white">Logout</Button>
         </Header>
         <Content
           style={{
