@@ -46,6 +46,8 @@ const baseQuery = fetchBaseQuery({
     // console.log('Sending refresh token');
 
     const res = await axios.post('https://bike-store-server-gray.vercel.app/api/auth/refresh-token')
+    // console.log(res);
+    
     if (res?.data?.accessToken) {
       const user = (api.getState() as RootState).auth.user;
       api.dispatch(
