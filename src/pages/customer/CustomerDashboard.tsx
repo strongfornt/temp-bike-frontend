@@ -7,7 +7,7 @@ const CustomerDashboard = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [imageText, setImageText] = useState('Upload Image');
 
-  const handleImageChange = (file) => {
+  const handleImageChange = (file:any) => {
     setImageText(file.name);
     const reader = new FileReader();
     reader.onloadend = () => setImagePreview(reader.result);
