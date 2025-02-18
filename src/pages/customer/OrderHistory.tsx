@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import BTable from "../../components/BTable";
 import { useGetOrdersQuery } from "../../redux/features/order/orderSlice";
 
@@ -15,7 +16,16 @@ const OrderHistory = () => {
       title: "Date",
       key: "date_time",
       dataIndex: "transaction",
-      render: (t: any) => t.date_time,
+      render: (t: any) => {
+        const date = dayjs(t?.date_time).format("MM-DD-YYYY");
+        const time = dayjs(t?.date_time).format("hh:mm:ss A");
+        return (
+          <div>
+            <div className="">{date}</div>
+            <div className="text-xs">{time}</div>
+          </div>
+        );
+      },
     },
     {
       title: "Product Name",

@@ -104,7 +104,7 @@ const OrderManagement = () => {
         return (
           <div>
             <div>{date}</div>
-            <div>{time}</div>
+            <div className="text-xs">{time}</div>
           </div>
         );
       },

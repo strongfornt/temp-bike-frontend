@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
 import BTable from "../../../components/BTable";
 import { useGetOrdersQuery } from "../../../redux/features/order/orderSlice";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import { useState } from "react";
 import StatusTrackModal from "./StatusTrackModal";
-
+import { ReloadOutlined } from "@ant-design/icons";
 const TrackMyOrder = () => {
-  const { data, isLoading, isFetching } = useGetOrdersQuery(undefined, {
+  const { data, isLoading, isFetching, refetch } = useGetOrdersQuery(undefined, {
     pollingInterval: 60000,
   });
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -24,8 +24,8 @@ const TrackMyOrder = () => {
       key: "date_time",
       dataIndex: "transaction",
       render: (t: any) => {
-        const date = dayjs(t?.value).format("MM-DD-YYYY");
-        const time = dayjs(t?.value).format("hh:mm:ss A");
+        const date = dayjs(t?.date_time).format("MM-DD-YYYY");
+        const time = dayjs(t?.date_time).format("hh:mm:ss A");
         return (
           <div>
             <div className="">{date}</div>
@@ -101,8 +101,17 @@ const TrackMyOrder = () => {
 
   return (
     <>
-      <div>
+      <div className="flex flex-col md:flex-row items-center justify-between">
         <h1 className="text-xl font-bold pb-3">Track Order</h1>
+        <Button
+          onClick={() => {
+            refetch()
+          }}
+        >
+          <Tooltip title="Refresh">
+            <ReloadOutlined />
+          </Tooltip>
+        </Button>
       </div>
       {isLoading ? (
         <div>Loading....</div>
