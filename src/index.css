@@ -34,3 +34,7 @@ body {
 .filter .ant-select-selection-placeholder{
   color: white !important;
 }
+.ant-timeline-item-tail{
+  color: white !important;
+  background-color: #3b83f65b !important;
+}
