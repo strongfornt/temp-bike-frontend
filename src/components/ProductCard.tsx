@@ -27,16 +27,19 @@ const ProductCard = ({ product }: any) => {
       {/* Product Details */}
       <div className="p-4 text-gray-300">
         <div className="space-y-1">
-          <h1 className="text-lg font-bold"> Brand: {product?.name}</h1>
+          <h1 className="text-lg text-left font-bold">
+            {" "}
+            Brand: <span className="text-base">{product?.brand}</span>
+          </h1>
           <div className="flex justify-between items-center">
-            <h1 className="text-sm font-semibold">{product?.category}</h1>
-            <h1 className="text-sm font-semibold">{product?.brand}</h1>
+            <h1 className="text-sm font-semibold">Name: {product?.name}</h1>
+            <h1 className="text-sm font-semibold">Category: {product?.category}</h1>
           </div>
           <div className="text-sm font-semibold flex justify-between items-center">
             <p>
               Price:{" "}
               <span className="text-green-400">
-                <span>&#2547;</span> {product?.price}
+                $ {product?.price}
               </span>
             </p>
             <p>

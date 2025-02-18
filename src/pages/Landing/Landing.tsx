@@ -7,8 +7,8 @@ const Landing = () => {
   return (
     <div className="bg-gradient-to-tl from-[#434343] to-[#000000]">
       <Navbar />
-      <div className="min-h-[calc(100vh-72px)]">
-        <Outlet />
+      <div className="min-h-[calc(100vh-353px)]">
+        <Outlet  />
       </div>
       <Footer />
     </div>
