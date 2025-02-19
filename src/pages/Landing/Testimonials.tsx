@@ -17,14 +17,22 @@ const Testimonials = () => {
     },
     {
       id: 2,
+      name: "Daniel Robinson",
+      address: "Berlin, Germany",
+      pic: "https://randomuser.me/api/portraits/men/25.jpg",
+      review:
+        "Highly professional bike shop! Got my custom bike assembled here, and the workmanship was top-notch.",
+    },
+    {
+      id: 3,
       name: "Sophia Miller",
       address: "Toronto, Canada",
-      pic: "https://randomuser.me/api/portraits/women/15.jpg",
+      pic: "https://randomuser.me/api/portraits/men/10.jpg",
       review:
         "Excellent selection of bikes and accessories. Staff was very knowledgeable and helped me find the perfect road bike!",
     },
     {
-      id: 3,
+      id: 4,
       name: "Ryan Carter",
       address: "Manchester, UK",
       pic: "https://randomuser.me/api/portraits/men/18.jpg",
@@ -32,28 +40,21 @@ const Testimonials = () => {
         "Had a great experience! My bike was serviced quickly, and it rides smoother than ever. Highly recommended!",
     },
     {
-      id: 4,
+      id: 5,
       name: "Emily Wilson",
       address: "Sydney, Australia",
-      pic: "https://randomuser.me/api/portraits/women/22.jpg",
+      pic: "https://randomuser.me/api/portraits/men/10.jpg",
       review:
         "Great quality bikes at affordable prices. The staff was super friendly and helped me choose the perfect bike!",
     },
-    {
-      id: 5,
-      name: "Daniel Robinson",
-      address: "Berlin, Germany",
-      pic: "https://randomuser.me/api/portraits/men/25.jpg",
-      review:
-        "Highly professional bike shop! Got my custom bike assembled here, and the workmanship was top-notch.",
-    },
+  
   ];
 
   return (
-    <section className="py-10">
+    <section className="">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="my-5 md:my-8">
-          <h2 className="text-3xl font-bold text-center text-primary">
+        <div className="">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-5 md:mb-8">
             What our customer says!
           </h2>
         </div>

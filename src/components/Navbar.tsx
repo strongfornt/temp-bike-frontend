@@ -58,11 +58,12 @@ const Navbar = () => {
                 Contact
             </NavLink>
             <NavLink
+            
                 to="/blog"
                 className={({ isActive }) =>
                     isActive
-                        ? "text-primary font-medium"
-                        : "font-medium hover:text-secondary "
+                        ? "text-primary font-medium "
+                        : "font-medium hover:text-secondary cursor-not-allowed  "
                 }
             >
                 Blogs

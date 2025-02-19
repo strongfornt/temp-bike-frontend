@@ -1,9 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import dayjs from "dayjs";
 import BTable from "../../components/BTable";
 import { useGetOrdersQuery } from "../../redux/features/order/orderSlice";
+import { useEffect } from "react";
+import { useAppDispatch } from "../../redux/hook";
+import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
 
 const OrderHistory = () => {
-  const { data, isLoading, isFetching } = useGetOrdersQuery(undefined);
+  const { data, isLoading, isFetching, refetch } = useGetOrdersQuery(undefined, {
+    pollingInterval:120000 
+  });
+  const dispatch = useAppDispatch()
   const columns = [
     {
       title: "SL",
@@ -64,6 +71,23 @@ const OrderHistory = () => {
     },
   ];
 
+  const handleRefresh = () => {
+     refetch()
+    };
+    useEffect(() => {
+      dispatch(
+        setRefreshObj({
+          CB: () => {
+            handleRefresh();
+          },
+        })
+      );
+  
+      return () => {
+        dispatch(setRefreshObj({}));
+      };
+    }, []);
+    
   return (
     <>
       <div>

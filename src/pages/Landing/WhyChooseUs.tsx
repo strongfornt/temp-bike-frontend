@@ -5,9 +5,9 @@ import {
 } from "@ant-design/icons";
 const WhyChooseUs = () => {
   return (
-    <section className="py-10">
+    <section className="">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-primary my-5 md:my-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-5 md:mb-8">
           Why Choose Us?
         </h2>
         <div className="grid md:grid-cols-3 gap-8">

@@ -1,14 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Button } from "antd";
 import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import BTable from "../../../components/BTable";
+import { setRefreshObj } from "../../../redux/features/commonRefresh/commonSlice";
 import { useGetOrdersQuery } from "../../../redux/features/order/orderSlice";
-import { Button, Tooltip } from "antd";
-import { useState } from "react";
+import { useAppDispatch } from "../../../redux/hook";
 import StatusTrackModal from "./StatusTrackModal";
-import { ReloadOutlined } from "@ant-design/icons";
 const TrackMyOrder = () => {
   const { data, isLoading, isFetching, refetch } = useGetOrdersQuery(undefined, {
     pollingInterval: 60000,
   });
+  const dispatch = useAppDispatch()
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const columns = [
@@ -99,20 +102,30 @@ const TrackMyOrder = () => {
     },
   ];
 
+  const handleRefresh = () => {
+   refetch()
+  };
+
+  
+  useEffect(() => {
+    dispatch(
+      setRefreshObj({
+        CB: () => {
+          handleRefresh();
+        },
+      })
+    );
+
+    return () => {
+      dispatch(setRefreshObj({}));
+    };
+  }, []);
+
+
   return (
     <>
-      <div className="flex flex-col md:flex-row items-center justify-between">
         <h1 className="text-xl font-bold pb-3">Track Order</h1>
-        <Button
-          onClick={() => {
-            refetch()
-          }}
-        >
-          <Tooltip title="Refresh">
-            <ReloadOutlined />
-          </Tooltip>
-        </Button>
-      </div>
+      
       {isLoading ? (
         <div>Loading....</div>
       ) : (

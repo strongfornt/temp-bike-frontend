@@ -5,15 +5,15 @@ import { useGetProductsQuery } from "../../redux/features/product/productApi";
 const FeaturedProducts = () => {
   const { data, isLoading } = useGetProductsQuery(undefined);
   return (
-    <section className="pb-10">
+    <section className="">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="my-5 md:my-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-primary my-5 md:my-8">
+        <div className="">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-5 md:mb-8">
             Featured Products
           </h2>
-          <p className="text-sm text-center text-white w-full md:w-xl !mx-auto !my-4">
+          <p className="text-sm text-center text-white w-full md:w-xl !mx-auto mb-6 md:!mb-8">
             Ultra-premium components, engineered by Probike. The ultimate
-            upgrade. Wherever you ride, we’ve got a bike for the joyrider in you
+            upgrade. Wherever you ride, we&apos;ve got a bike for the joyrider in you
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
