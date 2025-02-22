@@ -1,0 +1,11 @@
+:where(.css-dev-only-do-not-override-uadenj).ant-drawer .ant-drawer-close {
+    display: inline-flex
+;
+  
+    color: white;
+   
+}
+
+:where(.css-dev-only-do-not-override-uadenj).ant-drawer .ant-drawer-close:hover {
+    color: rgba(244, 230, 230, 0.88);
+}

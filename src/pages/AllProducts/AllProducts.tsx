@@ -14,6 +14,7 @@ const AllProducts = () => {
     setFilter(filterData);
   };
 
+
   const handleSearch = (event: any) => {
     form.setFieldsValue({ search: event.target.value || undefined });
     setTimeout(() => {
