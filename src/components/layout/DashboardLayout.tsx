@@ -1,6 +1,6 @@
 import { Button, Layout, Tooltip } from "antd";
 import { LogoutOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useAppSelector } from "../../redux/hook";
 import { useRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
@@ -47,6 +47,7 @@ const refreshObj = useAppSelector(useRefreshObj)
             padding: "10px 20px",
           }}
         >
+          <ScrollRestoration />
           <div
             style={
               {

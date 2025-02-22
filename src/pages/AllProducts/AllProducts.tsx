@@ -14,7 +14,6 @@ const AllProducts = () => {
     setFilter(filterData);
   };
 
-
   const handleSearch = (event: any) => {
     form.setFieldsValue({ search: event.target.value || undefined });
     setTimeout(() => {
@@ -22,7 +21,7 @@ const AllProducts = () => {
     }, 1000);
   };
   return (
-    <div className="max-w-7xl mx-auto py-5  px-5 text-white">
+    <div className="max-w-7xl mx-auto mt-12  px-5 text-white">
       {/* Filter Section */}
       <div className="rounded-lg shadow">
         <Form
@@ -188,7 +187,7 @@ const AllProducts = () => {
       </div>
 
       {/* Products Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center items-center py-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center  items-center my-10">
         {isLoading ? (
           <div>Loading...</div>
         ) : products.length > 0 ? (
