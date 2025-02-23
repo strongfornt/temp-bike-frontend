@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Form, Input, Select, Spin } from "antd";
-import { useState, useEffect } from "react";
-import ProductCard from "../../components/ProductCard";
-import { useGetProductsQuery } from "../../redux/features/product/productApi";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useInView } from "react-intersection-observer";
+import ProductCard from "../../components/ProductCard";
+import { useGetProductsQuery } from "../../redux/features/product/productApi";
 
 const AllProducts = () => {
   const [filter, setFilter] = useState({});
@@ -60,7 +60,6 @@ const AllProducts = () => {
       <Helmet>
         <title>All Products | SteelRev</title>
       </Helmet>
-
       <div className="max-w-7xl mx-auto mt-12  px-5 text-white">
         {/* Filter Section */}
         <div className="rounded-lg shadow">
