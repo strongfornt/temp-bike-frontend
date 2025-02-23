@@ -4,12 +4,12 @@ import { Outlet, ScrollRestoration } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useAppSelector } from "../../redux/hook";
 import { useRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
+import useHandleLogout from "../../utils/handleLogout";
 const { Header, Content } = Layout;
 
 const DashboardLayout = () => {
 const refreshObj = useAppSelector(useRefreshObj)
-
-
+const { handleLogout } = useHandleLogout();
   return (
    <>
    <ScrollRestoration />
@@ -29,6 +29,7 @@ const refreshObj = useAppSelector(useRefreshObj)
           </Button>
           <Button
             icon={<LogoutOutlined />}
+            onClick={() => handleLogout()}
             className="!bg-transparent !rounded-md !text-gray-300 hover:!text-white"
           >
             Logout

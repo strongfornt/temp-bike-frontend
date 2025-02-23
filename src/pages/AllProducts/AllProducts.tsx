@@ -190,60 +190,62 @@ const AllProducts = () => {
                   }}
                 </Form.Item>
 
-                {/* Availability Filter */}
-                <Form.Item noStyle shouldUpdate>
-                  {() => {
-                    const formData = form.getFieldsValue(true);
-                    return (
-                      <Select
-                        placeholder="Select Availability"
-                        value={
-                          formData?.inStock !== undefined
-                            ? formData.inStock
-                            : undefined
-                        }
-                        onChange={(value) => {
-                          form.setFieldsValue({
-                            inStock: value !== undefined ? value : undefined,
-                          });
-                          handleFilter();
-                        }}
-                        allowClear
-                        showSearch
-                        className="md:w-[180px] w-full filter"
-                        suffixIcon={<span style={{ color: "#BBBABA" }}>▼</span>}
-                        options={[
-                          { label: "In Stock", value: true },
-                          { label: "Out of Stock", value: false },
-                        ]}
-                      />
-                    );
-                  }}
-                </Form.Item>
-              </div>
+              {/* Availability Filter */}
+              <Form.Item noStyle shouldUpdate>
+                {() => {
+                  const formData = form.getFieldsValue(true);
+                  return (
+                    <Select
+                      placeholder="Select Availability"
+                      value={
+                        formData?.inStock !== undefined
+                          ? formData.inStock
+                          : undefined
+                      }
+                      onChange={(value) => {
+                        form.setFieldsValue({
+                          inStock: value !== undefined ? value : undefined,
+                        });
+                        handleFilter();
+                      }}
+                      allowClear
+                      showSearch
+                      className="md:w-[180px] w-full filter"
+                      suffixIcon={<span style={{ color: "#BBBABA" }}>▼</span>}
+                      options={[
+                        { label: "In Stock", value: true },
+                        { label: "Out of Stock", value: false },
+                      ]}
+                    />
+                  );
+                }}
+              </Form.Item>
             </div>
-          </Form>
-        </div>
-        {/* Products Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
-          {isLoading && page === 1 ? (
-            <div>Loading...</div>
-          ) : allProducts.length > 0 ? (
-            <>
+          </div>
+        </Form>
+      </div>
+      {/* Products Section */}
+      <>
+        {isLoading && page === 1 ? (
+          <div>Loading...</div>
+        ) : allProducts.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
               {allProducts.map((product: any) => (
                 <ProductCard key={product._id} product={product} />
               ))}
-            </>
-          ) : (
-            <div>No products found.</div>
-          )}
-        </div>
-        {hasMore && (
-          <div ref={loadMoreRef} className="w-full flex justify-center py-4">
-            <Spin />
-          </div>
+            </div>
+            {hasMore && (
+              <div ref={loadMoreRef} className="w-full flex justify-center py-4">
+                <Spin />
+              </div>
+            )}
+          </>
+        ) : (
+          <div>No products found.</div>
         )}
-      </div>
+      </>
+    </div>
     </>
   );
 };
