@@ -1,5 +1,6 @@
 import { ClockCircleOutlined, EnvironmentOutlined, TeamOutlined, BulbOutlined, RocketOutlined } from "@ant-design/icons";
 import { Timeline } from "antd";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 
 const teamMembers = [
@@ -27,6 +28,10 @@ const stats = [
 const About = () => {
   return (
     <div className="min-h-screen text-white">
+      {/* page title using helmet  */}
+       <Helmet>
+              <title>About | SteelRev</title>
+            </Helmet>
       {/* About Section */}
       <section className="py-8 px-4">
         <div className='max-w-7xl mx-auto'>

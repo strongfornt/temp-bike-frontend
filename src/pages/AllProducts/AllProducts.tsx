@@ -2,6 +2,7 @@ import { Form, Input, Select } from "antd";
 import { useState } from "react";
 import ProductCard from "../../components/ProductCard";
 import { useGetProductsQuery } from "../../redux/features/product/productApi";
+import { Helmet } from "react-helmet-async";
 
 const AllProducts = () => {
   // Fetch filtered data from the backend
@@ -21,6 +22,11 @@ const AllProducts = () => {
     }, 1000);
   };
   return (
+    <>
+     <Helmet>
+            <title>All Products | SteelRev</title>
+          </Helmet>
+    
     <div className="max-w-7xl mx-auto mt-12  px-5 text-white">
       {/* Filter Section */}
       <div className="rounded-lg shadow">
@@ -200,6 +206,7 @@ const AllProducts = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

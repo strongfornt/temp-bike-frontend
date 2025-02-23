@@ -3,6 +3,7 @@ import { Modal, Upload, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useAppSelector } from "../../redux/hook";
 import { selectCurrentUser } from "../../redux/features/auth/authSlice";
+import { Helmet } from "react-helmet-async";
 
 const CustomerDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -20,6 +21,9 @@ const CustomerDashboard = () => {
 
   return (
     <div className="flex justify-center items-center p-4">
+       <Helmet>
+              <title>Dashboard | SteelRev</title>
+            </Helmet>
       <div className="bg-white shadow-lg rounded-2xl w-full md:w-4/5">
         <img
           alt="profile cover"

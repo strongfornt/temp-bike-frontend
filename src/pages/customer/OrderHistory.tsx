@@ -5,6 +5,7 @@ import BTable from "../../components/BTable";
 import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
 import { useGetOrdersQuery } from "../../redux/features/order/orderSlice";
 import { useAppDispatch } from "../../redux/hook";
+import { Helmet } from "react-helmet-async";
 
 const OrderHistory = () => {
   const { data, isLoading, isFetching, refetch } = useGetOrdersQuery(undefined, {
@@ -90,6 +91,9 @@ const OrderHistory = () => {
     
   return (
     <>
+     <Helmet>
+            <title>Order History | SteelRev</title>
+          </Helmet>
       <div>
         <h1 className="text-xl font-bold pb-3">Order History</h1>
       </div>

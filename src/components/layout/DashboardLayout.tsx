@@ -11,6 +11,8 @@ const refreshObj = useAppSelector(useRefreshObj)
 
 
   return (
+   <>
+   <ScrollRestoration />
     <Layout style={{ height: "100%" }}>
       <Sidebar />
       <Layout>
@@ -47,7 +49,7 @@ const refreshObj = useAppSelector(useRefreshObj)
             padding: "10px 20px",
           }}
         >
-          <ScrollRestoration />
+          
           <div
             style={
               {
@@ -62,6 +64,7 @@ const refreshObj = useAppSelector(useRefreshObj)
         </Content>
       </Layout>
     </Layout>
+   </>
   );
 };
 

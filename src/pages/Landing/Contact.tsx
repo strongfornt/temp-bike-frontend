@@ -6,10 +6,15 @@ import {
   TwitterOutlined,
   LinkedinOutlined,
 } from "@ant-design/icons";
+import { Helmet } from "react-helmet-async";
 
 export default function Contact() {
   return (
     <div className=" text-gray-100 p-4 my-4 lg:my-8  sm:p-6 lg:p-8">
+      {/* page title  */}
+       <Helmet>
+              <title>Contact | SteelRev</title>
+            </Helmet>
       <div className="max-w-6xl min-h-full mx-auto">
         <h1 className="text-2xl  lg:text-4xl font-bold  text-center text-primary">
           Get in Touch

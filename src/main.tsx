@@ -8,6 +8,7 @@ import './index.css'
 import { persistor, store } from './redux/store.ts'
 import router from './routes/routes.tsx'
 import { Toaster } from 'sonner'
+import { HelmetProvider } from 'react-helmet-async'
 const theme = {
   token: {
     colorPrimary: '#3B82F6',
@@ -18,7 +19,9 @@ createRoot(document.getElementById('root')!).render(
   <Provider store={store} >
     <PersistGate loading={null} persistor={persistor}>
       <ConfigProvider theme={theme}>
+        <HelmetProvider>
         <RouterProvider router={router} />
+        </HelmetProvider>
       </ConfigProvider>
     </PersistGate>
     <Toaster position='top-center' duration={1500} />

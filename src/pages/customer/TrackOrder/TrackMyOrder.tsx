@@ -7,6 +7,7 @@ import { setRefreshObj } from "../../../redux/features/commonRefresh/commonSlice
 import { useGetOrdersQuery } from "../../../redux/features/order/orderSlice";
 import { useAppDispatch } from "../../../redux/hook";
 import StatusTrackModal from "./StatusTrackModal";
+import { Helmet } from "react-helmet-async";
 const TrackMyOrder = () => {
   const { data, isLoading, isFetching, refetch } = useGetOrdersQuery(undefined, {
     pollingInterval: 60000,
@@ -125,6 +126,9 @@ const TrackMyOrder = () => {
 
   return (
     <>
+     <Helmet>
+            <title>Track Order | SteelRev</title>
+          </Helmet>
         <h1 className="text-xl font-bold pb-3">Track Order</h1>
       
       {isLoading ? (
