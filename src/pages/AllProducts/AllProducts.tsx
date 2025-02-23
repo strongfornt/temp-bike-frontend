@@ -1,18 +1,51 @@
-import { Form, Input, Select } from "antd";
-import { useState } from "react";
+import { Form, Input, Select, Spin } from "antd";
+import { useState, useEffect } from "react";
 import ProductCard from "../../components/ProductCard";
 import { useGetProductsQuery } from "../../redux/features/product/productApi";
+import { useInView } from "react-intersection-observer";
 
 const AllProducts = () => {
-  // Fetch filtered data from the backend
   const [filter, setFilter] = useState({});
-  const { data, isLoading } = useGetProductsQuery(filter);
+  const [page, setPage] = useState(1);
+  const [allProducts, setAllProducts] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const limit = 6;
+  const { data, isLoading } = useGetProductsQuery({ ...filter, limit, page });
   const products = data?.data || [];
   const [form] = Form.useForm();
+  const { ref: loadMoreRef, inView } = useInView({ threshold: 0.1 });
+
+  // Append new products when data updates
+  useEffect(() => {
+    if (data) {
+      if (products.length > 0) {
+        setAllProducts((prev) =>
+          page === 1 ? products : [...new Set([...prev, ...products])]
+        );
+      }
+      // Ensure `hasMore` updates correctly
+      if (products.length < limit) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+      }
+    }
+  }, [data, page]);
+
+  useEffect(() => {
+    if (inView && hasMore && !isLoading && products.length === limit) {
+      setPage((prev) => prev + 1);
+    }
+  }, [inView, hasMore, isLoading]);
+
   const handleFilter = () => {
     const filterData = form.getFieldsValue(true);
     setFilter(filterData);
+    setPage(1);
+    setAllProducts([]);
+    setHasMore(true);
   };
+
 
   const handleSearch = (event: any) => {
     form.setFieldsValue({ search: event.target.value || undefined });
@@ -20,8 +53,9 @@ const AllProducts = () => {
       handleFilter();
     }, 1000);
   };
+
   return (
-    <div className="max-w-7xl mx-auto mt-12  px-5 text-white">
+    <div className="max-w-7xl mx-auto mt-12 px-5 text-white">
       {/* Filter Section */}
       <div className="rounded-lg shadow">
         <Form
@@ -38,7 +72,7 @@ const AllProducts = () => {
                     placeholder="Search..."
                     value={formData?.search || ""}
                     allowClear
-                   
+
                     onChange={(event) => handleSearch(event)}
                     className="w-full  md:w-[180px] py-[6.1px] [&_.ant-input-clear-icon]:!text-white !bg-transparent !text-white placeholder:!text-white"
                   />
@@ -186,19 +220,25 @@ const AllProducts = () => {
           </div>
         </Form>
       </div>
-
       {/* Products Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center  items-center my-10">
-        {isLoading ? (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
+        {isLoading && page === 1 ? (
           <div>Loading...</div>
-        ) : products.length > 0 ? (
-          products.map((product: any) => (
-            <ProductCard key={product._id} product={product} />
-          ))
+        ) : allProducts.length > 0 ? (
+          <>
+            {allProducts.map((product: any) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </>
         ) : (
           <div>No products found.</div>
         )}
       </div>
+      {hasMore && (
+        <div ref={loadMoreRef} className="w-full flex justify-center py-4">
+          <Spin />
+        </div>
+      )}
     </div>
   );
 };
