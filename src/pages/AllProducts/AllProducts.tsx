@@ -221,24 +221,26 @@ const AllProducts = () => {
         </Form>
       </div>
       {/* Products Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
+      <>
         {isLoading && page === 1 ? (
           <div>Loading...</div>
         ) : allProducts.length > 0 ? (
           <>
-            {allProducts.map((product: any) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
+              {allProducts.map((product: any) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
+            {hasMore && (
+              <div ref={loadMoreRef} className="w-full flex justify-center py-4">
+                <Spin />
+              </div>
+            )}
           </>
         ) : (
           <div>No products found.</div>
         )}
-      </div>
-      {hasMore && (
-        <div ref={loadMoreRef} className="w-full flex justify-center py-4">
-          <Spin />
-        </div>
-      )}
+      </>
     </div>
   );
 };
