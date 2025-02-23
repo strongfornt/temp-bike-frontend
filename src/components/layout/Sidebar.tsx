@@ -9,6 +9,7 @@ import { findRouteName } from "../../utils/findRouteNames";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 import { verifyToken } from "../../utils/verifyToken";
 import './sidebar.css';
+import logo from "./../../assets/logo/logo.png"
 const { Sider } = Layout;
 const userRole = {
   ADMIN: "admin",
@@ -69,9 +70,12 @@ const Sidebar = () => {
               marginBottom: 0,
               padding: '11px 0px'
             }}
-            className="text-xl text-center  md:text-3xl lg:text-4xl  !font-bold text-primary "
+            className="text-xl flex items-center text-center  md:text-3xl lg:text-3xl  !font-bold text-primary "
           >
-            Bike<span className="text-secondary">Shop</span>
+             <span className="">
+              <img className="h-7" src={logo} alt="" />
+            </span>
+            Steel<span className="text-secondary">Rev</span>
           </h1>
         </Link>
       </div>

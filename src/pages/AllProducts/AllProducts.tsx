@@ -35,11 +35,12 @@ const AllProducts = () => {
                 const formData = form.getFieldsValue(true);
                 return (
                   <Input
-                    placeholder="Search"
+                    placeholder="Search..."
                     value={formData?.search || ""}
                     allowClear
+                   
                     onChange={(event) => handleSearch(event)}
-                    className="w-full md:w-[180px] py-[6.1px] [&_.ant-input-clear-icon]:!text-white !bg-transparent !text-white placeholder:!text-white"
+                    className="w-full  md:w-[180px] py-[6.1px] [&_.ant-input-clear-icon]:!text-white !bg-transparent !text-white placeholder:!text-white"
                   />
                 );
               }}

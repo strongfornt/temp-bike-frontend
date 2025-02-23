@@ -19,7 +19,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hook";
 import { RootState } from "../redux/store";
 import useHandleLogout from "../utils/handleLogout";
 import logo from "../assets/logo/logo.png";
-import "./nav.css"
+import "./nav.css";
 const Navbar = () => {
   const links = (
     <>
@@ -91,7 +91,7 @@ const Navbar = () => {
     setOpen(false);
   };
   const handleCheckout = async () => {
-    const checkoutData = cart.cartItems?.map((p:any) => {
+    const checkoutData = cart.cartItems?.map((p: any) => {
       return { id: p._id, quantity: p.quantity };
     });
     const res = await handleProduct(checkoutData);
@@ -104,12 +104,12 @@ const Navbar = () => {
       key: "1",
       label: <Link to={`/${user?.role}/dashboard`}>Dashboard</Link>,
     },
+    // {
+    //   key: "2",
+    //   label: <button>Change Password</button>,
+    // },
     {
       key: "2",
-      label: <button>Change Password</button>,
-    },
-    {
-      key: "3",
       label: (
         <button
           onClick={() => {
@@ -201,7 +201,7 @@ const Navbar = () => {
         onClose={onClose}
         open={open}
         style={{
-          backgroundColor: '#000001'
+          backgroundColor: "#000001",
         }}
         className=" !text-white"
         width={450}
@@ -216,7 +216,7 @@ const Navbar = () => {
           ) : (
             <div className="space-y-6">
               {/* Map over the cart items */}
-              {cart.cartItems.map((item :any) => (
+              {cart.cartItems.map((item: any) => (
                 <div
                   key={item._id}
                   className="flex justify-between items-center p-4 border-b border-gray-600 rounded-lg bg-gray-700"
