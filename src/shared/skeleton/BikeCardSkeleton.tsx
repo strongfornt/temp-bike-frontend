@@ -1,14 +1,14 @@
 
 const BikeCardSkeleton = () => {
     return (
-        <div>
-            <div className="h-28 bg-gray-200 w-24" >
+        <div className="grid lg:grid-cols-3 gap-20 " >
+            <div className="h-28 animate-pulse w-full bg-gray-200 " >
             
             </div>
-            <div className="h-28 bg-gray-200 w-24" >
+            <div className="h-28 animate-pulse wull bg-gray-200 " >
             
             </div>
-            <div className="h-28 bg-gray-200 w-24" >
+            <div className="h-28 animate-pulse w-full bg-gray-200 " >
             
             </div>
         </div>
