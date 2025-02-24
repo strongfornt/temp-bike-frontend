@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   DeleteOutlined,
   EditFilled,
@@ -25,6 +26,8 @@ import {
   useUpdateProductMutation,
 } from "../../../redux/features/product/productApi";
 import BPagination from "../../../shared/Pagination/BPagination";
+import { setRefreshObj } from "../../../redux/features/commonRefresh/commonSlice";
+import { useAppDispatch } from "../../../redux/hook";
 
 const ProductManagement = () => {
   const [form] = Form.useForm();
@@ -36,7 +39,8 @@ const ProductManagement = () => {
   const [currentProduct, setCurrentProduct] = useState<any | null>(null);
   const [params, setParams] = useState<{limit:number, page:number}>({limit:10, page:1})
   const [isEdit, setIsEdit] = useState(false);
-  const { data, isFetching } = useGetProductsQuery(params);
+  const { data, isFetching, refetch } = useGetProductsQuery(params);
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (isEdit && currentProduct) {
@@ -150,6 +154,23 @@ const ProductManagement = () => {
       ),
     },
   ];
+
+
+   const handleRefresh = () => {
+      refetch();
+    };
+    useEffect(() => {
+      dispatch(
+        setRefreshObj({
+          CB: () => {
+            handleRefresh();
+          },
+        })
+      );
+      return () => {
+        dispatch(setRefreshObj({}));
+      };
+    }, []);
 
   return (
     <>

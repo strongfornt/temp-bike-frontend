@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Modal, Tag } from "antd";
 import BTable from "../../components/BTable/BTable";
 import {
@@ -6,13 +7,21 @@ import {
 } from "../../redux/features/user/userApi";
 import { useAppSelector } from "../../redux/hook";
 import { selectCurrentUser } from "../../redux/features/auth/authSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
+import { useDispatch } from "react-redux";
+import BPagination from "../../shared/Pagination/BPagination";
 
 export default function ManageUser() {
   const user = useAppSelector(selectCurrentUser);
   const [handleAction] = useUpdateStatusMutation();
-  const { data, isLoading, isFetching } = useGetAllUserQuery(undefined);
+  const [params, setParams] = useState<{ limit: number; page: number }>({
+    limit: 10,
+    page: 1,
+  });
+  const { data, isLoading, isFetching, refetch } = useGetAllUserQuery(params);
+  const dispatch = useDispatch();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
@@ -121,6 +130,22 @@ export default function ManageUser() {
     },
   ];
 
+  const handleRefresh = () => {
+    refetch();
+  };
+  useEffect(() => {
+    dispatch(
+      setRefreshObj({
+        CB: () => {
+          handleRefresh();
+        },
+      })
+    );
+    return () => {
+      dispatch(setRefreshObj({}));
+    };
+  }, []);
+
   return (
     <>
       <div>
@@ -129,12 +154,16 @@ export default function ManageUser() {
       {isLoading ? (
         <div>Loading....</div>
       ) : (
-        <BTable
-          columns={columns}
-          dataSource={data?.data || []}
-          isBorder={true}
-          isLoading={isFetching}
-        />
+        <>
+          <BTable
+            columns={columns}
+            dataSource={data?.data || []}
+            isBorder={true}
+            isLoading={isFetching}
+            scroll={{y:440}}
+          />
+          <BPagination params={params} setParams={setParams} totalCount={data?.totalCount} />
+        </>
       )}
 
       {/* Deactivation/Activation Confirmation Modal */}

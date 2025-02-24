@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, DatePicker, Dropdown, Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import BTable from "../../components/BTable/BTable";
 import {
@@ -9,13 +10,19 @@ import {
 } from "../../redux/features/order/orderSlice";
 import dayjs from "dayjs";
 import BPagination from "../../shared/Pagination/BPagination";
+import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
+import { useAppDispatch } from "../../redux/hook";
 
 const OrderManagement = () => {
-  const [params, setParams] = useState<{limit:number, page:number}>({limit:10, page:1})
-  const { data, isLoading, isFetching } = useGetAllOrdersQuery(params);
+  const [params, setParams] = useState<{ limit: number; page: number }>({
+    limit: 10,
+    page: 1,
+  });
+  const { data, isLoading, isFetching, refetch } = useGetAllOrdersQuery(params);
   const [editingOrder, setEditingOrder] = useState<any>(null);
   const [newDate, setNewDate] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const dispatch = useAppDispatch();
   const [isEditMode, setIsEditMode] = useState(false);
   // const [] = useUpdateDeliveryDateQuery()
   const [handleUpdate, res] = useUpdateOrderStatusMutation();
@@ -25,7 +32,7 @@ const OrderManagement = () => {
       toast.error("Please select a date");
       return;
     }
-    const res:any = await handleUpdateDelivery({
+    const res: any = await handleUpdateDelivery({
       orderId,
       estimate_delivery_date: newDate,
     });
@@ -60,7 +67,7 @@ const OrderManagement = () => {
     setNewDate(null);
   };
   const onMenuClick: any = async (data: any) => {
-    const res:any = await handleUpdate(data);
+    const res: any = await handleUpdate(data);
     if (res.error) {
       return toast.error(
         res.error?.data?.message || "An error occur. Please try again!"
@@ -207,6 +214,22 @@ const OrderManagement = () => {
     },
   ];
 
+  const handleRefresh = () => {
+    refetch();
+  };
+  useEffect(() => {
+    dispatch(
+      setRefreshObj({
+        CB: () => {
+          handleRefresh();
+        },
+      })
+    );
+    return () => {
+      dispatch(setRefreshObj({}));
+    };
+  }, []);
+
   return (
     <>
       <div>
@@ -215,16 +238,20 @@ const OrderManagement = () => {
       {isLoading ? (
         <div>Loading....</div>
       ) : (
-    <>
-        <BTable
-          columns={columns}
-          dataSource={data?.data || []}
-          isBorder={true}
-          scroll={{ x: 500, y: 440 }}
-          isLoading={isFetching || res.isLoading}
-        />
-        <BPagination params={params} setParams={setParams} totalCount={data?.totalCount} />
-    </>
+        <>
+          <BTable
+            columns={columns}
+            dataSource={data?.data || []}
+            isBorder={true}
+            scroll={{ x: 500, y: 440 }}
+            isLoading={isFetching || res.isLoading}
+          />
+          <BPagination
+            params={params}
+            setParams={setParams}
+            totalCount={data?.totalCount}
+          />
+        </>
       )}
       <Modal
         title={`${isEditMode ? "Edit" : "Add"} Date for Order`}
