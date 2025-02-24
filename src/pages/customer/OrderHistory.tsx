@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
+import BTable from "../../components/BTable/BTable";
+import { SkeletonTable } from "../../components/Skeleton/SkeletonTable";
 import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
 import { useGetOrdersQuery } from "../../redux/features/order/orderSlice";
 import { useAppDispatch } from "../../redux/hook";
-import { Helmet } from "react-helmet-async";
 import BPagination from "../../shared/Pagination/BPagination";
-import BTable from "../../components/BTable/BTable";
 
 const OrderHistory = () => {
    const [params, setParams] = useState<{ limit: number; page: number }>({
@@ -103,7 +104,7 @@ const OrderHistory = () => {
         <h1 className="text-xl font-bold pb-3">Order History</h1>
       </div>
       {isLoading ? (
-        <div>Loading....</div>
+        <SkeletonTable cols={10} rows={8} />
       ) : (
         <>
            <BTable

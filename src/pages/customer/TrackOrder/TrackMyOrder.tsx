@@ -9,6 +9,7 @@ import { useAppDispatch } from "../../../redux/hook";
 import StatusTrackModal from "./StatusTrackModal";
 import { Helmet } from "react-helmet-async";
 import BPagination from "../../../shared/Pagination/BPagination";
+import { SkeletonTable } from "../../../components/Skeleton/SkeletonTable";
 const TrackMyOrder = () => {
   const [params, setParams] = useState<{ limit: number; page: number }>({
     limit: 10,
@@ -136,7 +137,7 @@ const TrackMyOrder = () => {
       <h1 className="text-xl font-bold pb-3">Track Order</h1>
 
       {isLoading ? (
-        <div>Loading....</div>
+       <SkeletonTable cols={10} rows={9} />
       ) : (
        <>
         <BTable

@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
 import { useDispatch } from "react-redux";
 import BPagination from "../../shared/Pagination/BPagination";
+import { SkeletonTable } from "../../components/Skeleton/SkeletonTable";
 
 export default function ManageUser() {
   const user = useAppSelector(selectCurrentUser);
@@ -151,7 +152,7 @@ export default function ManageUser() {
         <h1 className="text-xl font-bold pb-3">User Management</h1>
       </div>
       {isLoading ? (
-        <div>Loading....</div>
+        <SkeletonTable cols={10} rows={6} />
       ) : (
         <>
           <BTable

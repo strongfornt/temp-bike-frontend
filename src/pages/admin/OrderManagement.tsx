@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import BPagination from "../../shared/Pagination/BPagination";
 import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
 import { useAppDispatch } from "../../redux/hook";
+import { SkeletonTable } from "../../components/Skeleton/SkeletonTable";
 
 const OrderManagement = () => {
   const [params, setParams] = useState<{ limit: number; page: number }>({
@@ -236,7 +237,7 @@ const OrderManagement = () => {
         <h1 className="text-xl font-bold pb-3">Order Management</h1>
       </div>
       {isLoading ? (
-        <div>Loading....</div>
+        <SkeletonTable cols={10} rows={10} />
       ) : (
         <>
           <BTable
