@@ -8,8 +8,13 @@ import { useGetOrdersQuery } from "../../../redux/features/order/orderSlice";
 import { useAppDispatch } from "../../../redux/hook";
 import StatusTrackModal from "./StatusTrackModal";
 import { Helmet } from "react-helmet-async";
+import BPagination from "../../../shared/Pagination/BPagination";
 const TrackMyOrder = () => {
-  const { data, isLoading, isFetching, refetch } = useGetOrdersQuery(undefined, {
+  const [params, setParams] = useState<{ limit: number; page: number }>({
+    limit: 10,
+    page: 1,
+  });
+  const { data, isLoading, isFetching, refetch } = useGetOrdersQuery(params, {
     pollingInterval: 60000,
   });
   const dispatch = useAppDispatch()
@@ -133,6 +138,7 @@ const TrackMyOrder = () => {
       {isLoading ? (
         <div>Loading....</div>
       ) : (
+       <>
         <BTable
           columns={columns}
           dataSource={data?.data || []}
@@ -140,6 +146,8 @@ const TrackMyOrder = () => {
           isLoading={isFetching}
           scroll={{ x: 1000, y: 440 }}
         />
+        <BPagination params={params} setParams={setParams} totalCount={data?.totalCount} />
+       </>
       )}
       {isModalOpen && (
         <StatusTrackModal
