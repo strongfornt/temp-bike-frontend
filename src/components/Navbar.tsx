@@ -1,13 +1,15 @@
 import {
+  CloseOutlined,
   DeleteOutlined,
   LogoutOutlined,
   MenuOutlined,
   ShoppingCartOutlined,
-  UserOutlined,
+  UserOutlined
 } from "@ant-design/icons";
 import { Button, Divider, Drawer, Dropdown, MenuProps } from "antd";
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import logo from "../assets/logo/logo.png";
 import { selectCurrentUser } from "../redux/features/auth/authSlice";
 import {
   clearCart,
@@ -18,7 +20,6 @@ import { useOrderProductMutation } from "../redux/features/order/orderSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 import { RootState } from "../redux/store";
 import useHandleLogout from "../utils/handleLogout";
-import logo from "../assets/logo/logo.png";
 import "./nav.css";
 const Navbar = () => {
   const links = (
@@ -81,12 +82,12 @@ const Navbar = () => {
   const cart: any = useAppSelector((state: RootState) => state.cart);
   const dispatch = useAppDispatch();
   const [handleProduct, res] = useOrderProductMutation();
+  const [toggle, setToggle] = useState(false)
   const [open, setOpen] = useState(false);
   const { handleLogout } = useHandleLogout();
   const showDrawer = () => {
     setOpen(true);
   };
-
   const onClose = () => {
     setOpen(false);
   };
@@ -128,11 +129,27 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto  container flex justify-between items-center">
         <div className="flex justify-center items-center gap-3 lg:gap-5">
           {/* Mobile menu toggle button */}
-          <button className="w-7 h-7 flex justify-center items-center bg-primary rounded lg:hidden">
-            {<MenuOutlined className="font-bold" />}
+          <button onClick={() => setToggle(!toggle)} className="w-7 h-7 flex justify-center items-center bg-primary rounded lg:hidden">
+            {
+              toggle ? <CloseOutlined className="font-bold" /> : <MenuOutlined className="font-bold" />
+            }
           </button>
+          {/* Mobile menu */}
+          {
+            toggle &&
+            <div
+              className={`lg:hidden fixed top-0 left-0 w-full min-h-screen bg-black text-white flex justify-center items-start pt-20 transition-all duration-300 transform z-30 ${toggle ? "translate-x-[50%]" : "translate-x-full"
+                }`}
+            >
+              <div className="flex flex-col items-start space-y-5 w-full pl-8 md:pl-10">
+                <button onClick={() => setToggle(!toggle)} className="w-7 h-7 absolute top-8 left-8 text-sm flex items-center gap-2">
+                  <CloseOutlined className="font-bold" /> <span className="text-nowrap font-medium"> Close</span>
+                </button>
+                {links}
+              </div>
+            </div>
+          }
           {/* Logo */}
-
           <Link
             to="/"
             className="text-xl flex items-center md:text-3xl lg:text-4xl font-bold text-primary cursor-pointer"
@@ -142,7 +159,6 @@ const Navbar = () => {
             </span>
             Steel<span className="text-secondary">Rev</span>
           </Link>
-
           {/* Search bar */}
           <div className="hidden mx-10 md:block md:w-[300px] lg:w-[350px] text-white ">
             <div className="relative">
@@ -294,7 +310,7 @@ const Navbar = () => {
           )}
         </div>
       </Drawer>
-    </nav>
+    </nav >
   );
 };
 

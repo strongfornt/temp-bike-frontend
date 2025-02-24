@@ -117,6 +117,7 @@ const ProductManagement = () => {
       dataIndex: "serial",
       key: "serial",
       align: "center",
+      width: '60px',
       render: (_: any, __: any, index: number) => index + 1,
     },
     {
@@ -142,6 +143,7 @@ const ProductManagement = () => {
     {
       title: "Action",
       key: "action",
+      width: '120px',
       render: (record: any) => (
         <div className="flex justify-start items-center gap-2">
           <Button size="small" onClick={() => handleEdit(record)}>
@@ -195,7 +197,7 @@ const ProductManagement = () => {
           isLoading={isFetching}
           dataSource={data?.data || []}
           isBorder={true}
-          scroll={{  y: 440 }}
+          scroll={{ x: 1000, y: 440 }}
         />
         <BPagination params={params} setParams={setParams} totalCount={data?.totalCount} />
       </div>

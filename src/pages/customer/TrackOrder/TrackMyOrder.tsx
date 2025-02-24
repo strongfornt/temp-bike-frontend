@@ -19,7 +19,7 @@ const TrackMyOrder = () => {
     {
       title: "SL",
       key: "sl",
-      width: "80px",
+      width: "50px",
       align: "center",
       render: (_: any, __: any, index: number) => index + 1,
     },
@@ -83,31 +83,30 @@ const TrackMyOrder = () => {
       title: "Order Status",
       dataIndex: "orderStatus",
       key: "orderStatus",
+      width: '100px',
       render: (status: any) => {
         return (
-          <>
-            <Button
-              size="small"
-              className="!bg-primary !text-white !px-4"
-              // type="primary"
-              onClick={() => {
-                setSelectedStatus(status);
-                setIsModalOpen(true);
-              }}
-            >
-              View
-            </Button>
-          </>
+          <Button
+            size="small"
+            className="!bg-primary !text-white !px-4"
+            // type="primary"
+            onClick={() => {
+              setSelectedStatus(status);
+              setIsModalOpen(true);
+            }}
+          >
+            View
+          </Button>
         );
       },
     },
   ];
 
   const handleRefresh = () => {
-   refetch()
+    refetch()
   };
 
-  
+
   useEffect(() => {
     dispatch(
       setRefreshObj({
@@ -122,15 +121,15 @@ const TrackMyOrder = () => {
     };
   }, []);
 
- 
+
 
   return (
     <>
-     <Helmet>
-            <title>Track Order | SteelRev</title>
-          </Helmet>
-        <h1 className="text-xl font-bold pb-3">Track Order</h1>
-      
+      <Helmet>
+        <title>Track Order | SteelRev</title>
+      </Helmet>
+      <h1 className="text-xl font-bold pb-3">Track Order</h1>
+
       {isLoading ? (
         <div>Loading....</div>
       ) : (
@@ -139,6 +138,7 @@ const TrackMyOrder = () => {
           dataSource={data?.data || []}
           isBorder={true}
           isLoading={isFetching}
+          scroll={{ x: 1000, y: 440 }}
         />
       )}
       {isModalOpen && (

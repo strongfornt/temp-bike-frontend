@@ -22,7 +22,7 @@ const OrderHistory = () => {
     {
       title: "SL",
       key: "sl",
-      width: "80px",
+      width: "50px",
       align: "center",
       render: (_: any, __: any, index: number) => index + 1,
     },
@@ -111,7 +111,7 @@ const OrderHistory = () => {
           dataSource={data?.data || []}
           isBorder={true}
           isLoading={isFetching}
-          // scroll={{y:440}}
+          scroll={{ x: 1000, y: 440 }}
         />
         <BPagination params={params} setParams={setParams} totalCount={data?.totalCount}  />
         </>
