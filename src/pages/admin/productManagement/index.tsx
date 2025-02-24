@@ -33,6 +33,7 @@ const ProductManagement = () => {
   const [handleProductDelete] = useDeleteProductMutation();
   const [visible, setVisible] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<any | null>(null);
+
   const [isEdit, setIsEdit] = useState(false);
   const { data, isFetching } = useGetProductsQuery(undefined);
 
@@ -75,6 +76,7 @@ const ProductManagement = () => {
         await handleProductAdd(formData);
         toast.success("Product added successfully!");
         setVisible(false);
+        form.resetFields();
       } catch (error: any) {
         toast.error(error?.message || "An error occurred");
       }

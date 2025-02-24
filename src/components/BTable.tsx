@@ -10,7 +10,7 @@ interface BTableProps {
 }
 
 const BTable: React.FC<BTableProps> = ({ columns, dataSource, rowKey = "key", isBorder, isLoading }) => {
-    return <Table columns={columns} dataSource={dataSource} rowKey={rowKey} bordered={isBorder} loading={isLoading}/>;
+    return <Table columns={columns} dataSource={dataSource} rowKey={rowKey} pagination={false} bordered={isBorder} loading={isLoading}/>;
 };
 
 export default BTable;
