@@ -1,6 +1,9 @@
 import { Button, Modal, Tag } from "antd";
 import BTable from "../../components/BTable/BTable";
-import { useGetAllUserQuery, useUpdateStatusMutation } from "../../redux/features/user/userApi";
+import {
+  useGetAllUserQuery,
+  useUpdateStatusMutation,
+} from "../../redux/features/user/userApi";
 import { useAppSelector } from "../../redux/hook";
 import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 import { useState } from "react";
@@ -31,22 +34,22 @@ export default function ManageUser() {
       }).unwrap();
       setIsModalVisible(false);
       toast.success(response?.message);
-    } catch (error:any) {
+    } catch (error: any) {
       setIsModalVisible(false);
       toast.error(error?.message || "Something went wrong");
     }
   };
   const handleCancel = () => {
     setIsModalVisible(false);
-    setSelectedUser(null)
+    setSelectedUser(null);
   };
-  
+
   // useEffect(() => {
   //   if (res.isSuccess) {
   //     setIsModalVisible(false);
   //     toast.success(res?.data?.message); // Assuming `data` has a 'message'
   //   }
-  
+
   //   if (res.isError) {
   //     setIsModalVisible(false);
   //     toast.error(res?.error?.message || "Something went wrong");
@@ -80,7 +83,9 @@ export default function ManageUser() {
       dataIndex: "isBlocked",
       key: "isBlocked",
       render: (status: any) => (
-        <Tag color={status ? "gray" : "green"}>{status ? "Deactivated" : "Active"}</Tag>
+        <Tag color={status ? "gray" : "green"}>
+          {status ? "Deactivated" : "Active"}
+        </Tag>
       ),
     },
     {
@@ -124,12 +129,19 @@ export default function ManageUser() {
       {isLoading ? (
         <div>Loading....</div>
       ) : (
-        <BTable columns={columns} dataSource={data?.data || []} isBorder={true} isLoading={isFetching} />
+        <BTable
+          columns={columns}
+          dataSource={data?.data || []}
+          isBorder={true}
+          isLoading={isFetching}
+        />
       )}
 
       {/* Deactivation/Activation Confirmation Modal */}
       <Modal
-        title={`Confirm ${selectedUser?.isBlocked ? "Activation" : "Deactivation"}`}
+        title={`Confirm ${
+          selectedUser?.isBlocked ? "Activation" : "Deactivation"
+        }`}
         open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -137,7 +149,8 @@ export default function ManageUser() {
         cancelText="Cancel"
       >
         <p>
-          Are you sure you want to {selectedUser?.isBlocked ? "activate" : "deactivate"}{" "}
+          Are you sure you want to{" "}
+          {selectedUser?.isBlocked ? "activate" : "deactivate"}{" "}
           {selectedUser?.name}?
         </p>
       </Modal>

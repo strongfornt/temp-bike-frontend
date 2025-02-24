@@ -174,7 +174,7 @@ const ProductManagement = () => {
           isLoading={isFetching}
           dataSource={data?.data || []}
           isBorder={true}
-          scroll={{ x: 1000, y: 440 }}
+          scroll={{  y: 440 }}
         />
         <BPagination params={params} setParams={setParams} totalCount={data?.totalCount} />
       </div>

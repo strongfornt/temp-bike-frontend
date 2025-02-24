@@ -8,9 +8,11 @@ import {
   useUpdateOrderStatusMutation,
 } from "../../redux/features/order/orderSlice";
 import dayjs from "dayjs";
+import BPagination from "../../shared/Pagination/BPagination";
 
 const OrderManagement = () => {
-  const { data, isLoading, isFetching } = useGetAllOrdersQuery(undefined);
+  const [params, setParams] = useState<{limit:number, page:number}>({limit:10, page:1})
+  const { data, isLoading, isFetching } = useGetAllOrdersQuery(params);
   const [editingOrder, setEditingOrder] = useState<any>(null);
   const [newDate, setNewDate] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -23,7 +25,7 @@ const OrderManagement = () => {
       toast.error("Please select a date");
       return;
     }
-    const res = await handleUpdateDelivery({
+    const res:any = await handleUpdateDelivery({
       orderId,
       estimate_delivery_date: newDate,
     });
@@ -58,7 +60,7 @@ const OrderManagement = () => {
     setNewDate(null);
   };
   const onMenuClick: any = async (data: any) => {
-    const res = await handleUpdate(data);
+    const res:any = await handleUpdate(data);
     if (res.error) {
       return toast.error(
         res.error?.data?.message || "An error occur. Please try again!"
@@ -113,6 +115,7 @@ const OrderManagement = () => {
       title: "Product Name",
       dataIndex: "products",
       key: "products",
+      // width: '160px',
       render: (products: any[]) => products.map((p) => p.name).join(", "),
     },
     {
@@ -135,17 +138,20 @@ const OrderManagement = () => {
     {
       title: "Transaction ID",
       dataIndex: "transaction",
+      // width:'160px',
       key: "id",
       render: (transaction: any) => transaction?.id || "N/A", // Handles missing status
     },
     {
       title: "Bank Status",
+      // width:'120px',
       dataIndex: "transaction",
       key: "bank_status",
       render: (transaction: any) => transaction?.bank_status || "N/A", // Handles missing status
     },
     {
       title: "Order Status",
+      // width:'140px',
       render: (record: any) => {
         return (
           <div>
@@ -166,6 +172,7 @@ const OrderManagement = () => {
     },
     {
       title: "Delivery Date",
+      // width:'130px',
       dataIndex: "estimate_delivery_date",
       key: "estimate_delivery_date",
       render: (value: any) => {
@@ -208,12 +215,16 @@ const OrderManagement = () => {
       {isLoading ? (
         <div>Loading....</div>
       ) : (
+    <>
         <BTable
           columns={columns}
           dataSource={data?.data || []}
           isBorder={true}
+          scroll={{ x: 500, y: 440 }}
           isLoading={isFetching || res.isLoading}
         />
+        <BPagination params={params} setParams={setParams} totalCount={data?.totalCount} />
+    </>
       )}
       <Modal
         title={`${isEditMode ? "Edit" : "Add"} Date for Order`}
