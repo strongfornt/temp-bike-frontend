@@ -1,4 +1,4 @@
-import { Skeleton } from "antd";
+import { Spin } from "antd";
 import React, { Suspense } from "react";
 
 interface ISuspenseWrapper {
@@ -8,7 +8,7 @@ interface ISuspenseWrapper {
 
 const SuspenseWrapper = ({
   children,
-  fallback = <Skeleton active />
+  fallback = <div className="min-h-screen grid place-content-center"><Spin size="large" /></div>
 }: ISuspenseWrapper) => {
   return <Suspense fallback={fallback}>{children}</Suspense>
 };
