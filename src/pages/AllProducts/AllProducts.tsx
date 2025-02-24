@@ -227,7 +227,7 @@ const AllProducts = () => {
       {/* Products Section */}
       <>
         {isLoading && page === 1 ? (
-          <div>Loading...</div>
+          <div className="flex items-center justify-center my-24 " ><Spin size="large"  /></div>
         ) : allProducts.length > 0 ? (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">

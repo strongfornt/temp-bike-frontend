@@ -1,14 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import dayjs from "dayjs";
-import { useEffect } from "react";
-import BTable from "../../components/BTable/BTable";
+import { useEffect, useState } from "react";
 import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
 import { useGetOrdersQuery } from "../../redux/features/order/orderSlice";
 import { useAppDispatch } from "../../redux/hook";
 import { Helmet } from "react-helmet-async";
+import BPagination from "../../shared/Pagination/BPagination";
+import BTable from "../../components/BTable/BTable";
 
 const OrderHistory = () => {
-  const { data, isLoading, isFetching, refetch } = useGetOrdersQuery(undefined, {
+   const [params, setParams] = useState<{ limit: number; page: number }>({
+      limit: 10,
+      page: 1,
+    });
+  const { data, isLoading, isFetching, refetch } = useGetOrdersQuery(params, {
     pollingInterval:120000 
   });
   
@@ -100,12 +105,16 @@ const OrderHistory = () => {
       {isLoading ? (
         <div>Loading....</div>
       ) : (
-        <BTable
+        <>
+           <BTable
           columns={columns}
           dataSource={data?.data || []}
           isBorder={true}
           isLoading={isFetching}
+          // scroll={{y:440}}
         />
+        <BPagination params={params} setParams={setParams} totalCount={data?.totalCount}  />
+        </>
       )}
     </>
   );
