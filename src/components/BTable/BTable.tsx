@@ -7,7 +7,7 @@ interface BTableProps {
   rowKey?: string;
   isBorder?: boolean;
   isLoading?: boolean;
-  scroll?:object
+  scroll?: object
 }
 
 const BTable: React.FC<BTableProps> = ({
@@ -19,15 +19,18 @@ const BTable: React.FC<BTableProps> = ({
   scroll
 }) => {
   return (
-    <Table
-      columns={columns}
-      dataSource={dataSource}
-      rowKey={rowKey}
-      pagination={false}
-      bordered={isBorder}
-      scroll={scroll ? scroll : { y: 440 }}
-      loading={isLoading}
-    />
+    <div
+      className="scroll_bar_thin data_table">
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        rowKey={rowKey}
+        pagination={false}
+        bordered={isBorder}
+        scroll={scroll ? scroll : { y: 440 }}
+        loading={isLoading}
+      />
+    </div>
   );
 };
 

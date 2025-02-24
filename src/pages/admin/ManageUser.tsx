@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
 import { useDispatch } from "react-redux";
 import BPagination from "../../shared/Pagination/BPagination";
+import { SkeletonTable } from "../../components/Skeleton/SkeletonTable";
 
 export default function ManageUser() {
   const user = useAppSelector(selectCurrentUser);
@@ -100,13 +101,13 @@ export default function ManageUser() {
     {
       title: "Action",
       key: "action",
-      width: "150px",
+      width: "180px",
       align: "center",
       render: (_: any, record: any) => (
         <div className="flex items-center gap-2">
           {/* Deactivate button always visible */}
           <Button
-            disabled={user?.email === record?.email || record?.isBlocked} // Disable if current user or already blocked
+            disabled={user?.email === record?.email || record?.isBlocked}
             size="small"
             type="primary"
             danger
@@ -118,9 +119,8 @@ export default function ManageUser() {
           {/* Active button always visible */}
           <Button
             type="default"
-            style={{ marginLeft: 8 }}
             size="small"
-            disabled={user?.email === record?.email || !record?.isBlocked} // Disable if current user or already active
+            disabled={user?.email === record?.email || !record?.isBlocked} 
             onClick={() => showModal(record)}
           >
             Active
@@ -152,7 +152,7 @@ export default function ManageUser() {
         <h1 className="text-xl font-bold pb-3">User Management</h1>
       </div>
       {isLoading ? (
-        <div>Loading....</div>
+        <SkeletonTable cols={10} rows={6} />
       ) : (
         <>
           <BTable
@@ -160,7 +160,7 @@ export default function ManageUser() {
             dataSource={data?.data || []}
             isBorder={true}
             isLoading={isFetching}
-            scroll={{y:440}}
+            scroll={{ x: 1000, y: 440 }}
           />
           <BPagination params={params} setParams={setParams} totalCount={data?.totalCount} />
         </>

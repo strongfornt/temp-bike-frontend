@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import BPagination from "../../shared/Pagination/BPagination";
 import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
 import { useAppDispatch } from "../../redux/hook";
+import { SkeletonTable } from "../../components/Skeleton/SkeletonTable";
 
 const OrderManagement = () => {
   const [params, setParams] = useState<{ limit: number; page: number }>({
@@ -98,7 +99,7 @@ const OrderManagement = () => {
     {
       title: "SL",
       key: "sl",
-      width: "80px",
+      width: "60px",
       align: "center",
       render: (_: any, __: any, index: number) => index + 1,
     },
@@ -194,7 +195,7 @@ const OrderManagement = () => {
             {record?.estimate_delivery_date ? (
               <Button
                 size="small"
-                className="!bg-secondary  !text-white !px-4"
+                className="!bg-secondary  !text-white"
                 onClick={() => handleEditDate(record)}
               >
                 Edit Date
@@ -202,7 +203,7 @@ const OrderManagement = () => {
             ) : (
               <Button
                 size="small"
-                className="!bg-primary !text-white !px-4"
+                className="!bg-primary !text-white"
                 onClick={() => handleAddDate(record)}
               >
                 Add Date
@@ -236,14 +237,14 @@ const OrderManagement = () => {
         <h1 className="text-xl font-bold pb-3">Order Management</h1>
       </div>
       {isLoading ? (
-        <div>Loading....</div>
+        <SkeletonTable cols={10} rows={10} />
       ) : (
         <>
           <BTable
             columns={columns}
             dataSource={data?.data || []}
             isBorder={true}
-            scroll={{ x: 500, y: 440 }}
+            scroll={{ x: 1000, y: 440 }}
             isLoading={isFetching || res.isLoading}
           />
           <BPagination

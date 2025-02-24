@@ -28,6 +28,7 @@ import {
 import BPagination from "../../../shared/Pagination/BPagination";
 import { setRefreshObj } from "../../../redux/features/commonRefresh/commonSlice";
 import { useAppDispatch } from "../../../redux/hook";
+import { SkeletonTable } from "../../../components/Skeleton/SkeletonTable";
 
 const ProductManagement = () => {
   const [form] = Form.useForm();
@@ -37,9 +38,9 @@ const ProductManagement = () => {
   const [handleProductDelete] = useDeleteProductMutation();
   const [visible, setVisible] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<any | null>(null);
-  const [params, setParams] = useState<{limit:number, page:number}>({limit:10, page:1})
+  const [params, setParams] = useState<{ limit: number, page: number }>({ limit: 10, page: 1 })
   const [isEdit, setIsEdit] = useState(false);
-  const { data, isFetching, refetch } = useGetProductsQuery(params);
+  const { data, isLoading, isFetching, refetch } = useGetProductsQuery(params);
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -103,7 +104,7 @@ const ProductManagement = () => {
         try {
           const res = await handleProductDelete({ id: record?._id });
           toast.success(res?.data?.message);
-        } catch (error:any) {
+        } catch (error: any) {
           toast.error(error?.message || "Something went wrong");
         }
       },
@@ -117,6 +118,7 @@ const ProductManagement = () => {
       dataIndex: "serial",
       key: "serial",
       align: "center",
+      width: '60px',
       render: (_: any, __: any, index: number) => index + 1,
     },
     {
@@ -142,6 +144,7 @@ const ProductManagement = () => {
     {
       title: "Action",
       key: "action",
+      width: '120px',
       render: (record: any) => (
         <div className="flex justify-start items-center gap-2">
           <Button size="small" onClick={() => handleEdit(record)}>
@@ -156,21 +159,21 @@ const ProductManagement = () => {
   ];
 
 
-   const handleRefresh = () => {
-      refetch();
+  const handleRefresh = () => {
+    refetch();
+  };
+  useEffect(() => {
+    dispatch(
+      setRefreshObj({
+        CB: () => {
+          handleRefresh();
+        },
+      })
+    );
+    return () => {
+      dispatch(setRefreshObj({}));
     };
-    useEffect(() => {
-      dispatch(
-        setRefreshObj({
-          CB: () => {
-            handleRefresh();
-          },
-        })
-      );
-      return () => {
-        dispatch(setRefreshObj({}));
-      };
-    }, []);
+  }, []);
 
   return (
     <>
@@ -190,13 +193,15 @@ const ProductManagement = () => {
             Add Product
           </Button>
         </div>
-        <BTable
-          columns={columns}
-          isLoading={isFetching}
-          dataSource={data?.data || []}
-          isBorder={true}
-          scroll={{  y: 440 }}
-        />
+        {
+          isLoading ? <SkeletonTable cols={10} rows={6} /> : <BTable
+            columns={columns}
+            isLoading={isFetching}
+            dataSource={data?.data || []}
+            isBorder={true}
+            scroll={{ x: 1000, y: 440 }}
+          />
+        }
         <BPagination params={params} setParams={setParams} totalCount={data?.totalCount} />
       </div>
 
