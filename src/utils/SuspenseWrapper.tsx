@@ -1,3 +1,4 @@
+import { Skeleton } from "antd";
 import React, { Suspense } from "react";
 
 interface ISuspenseWrapper {
@@ -7,7 +8,7 @@ interface ISuspenseWrapper {
 
 const SuspenseWrapper = ({
   children,
-  fallback = <div>Loading...</div>
+  fallback = <Skeleton active />
 }: ISuspenseWrapper) => {
   return <Suspense fallback={fallback}>{children}</Suspense>
 };
