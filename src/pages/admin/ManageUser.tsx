@@ -1,5 +1,5 @@
 import { Button, Modal, Tag } from "antd";
-import BTable from "../../components/BTable";
+import BTable from "../../components/BTable/BTable";
 import { useGetAllUserQuery, useUpdateStatusMutation } from "../../redux/features/user/userApi";
 import { useAppSelector } from "../../redux/hook";
 import { selectCurrentUser } from "../../redux/features/auth/authSlice";

@@ -2,7 +2,7 @@
 import { Button } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import BTable from "../../../components/BTable";
+import BTable from "../../../components/BTable/BTable";
 import { setRefreshObj } from "../../../redux/features/commonRefresh/commonSlice";
 import { useGetOrdersQuery } from "../../../redux/features/order/orderSlice";
 import { useAppDispatch } from "../../../redux/hook";

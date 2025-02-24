@@ -38,3 +38,26 @@ body {
   color: white !important;
   background-color: #3b83f65b !important;
 }
+
+
+/* global scrollbar style */
+/* Style the scrollbar track */
+.ant-table-body::-webkit-scrollbar {
+  width: 3px !important; /* Width of the scrollbar */
+}
+/* Style the track (background) */
+.ant-table-body::-webkit-scrollbar-track {
+  background: red; /* Light gray background */
+  border-radius: 10px;
+}
+
+/* Style the thumb (scroll indicator) */
+.ant-table-body::-webkit-scrollbar-thumb {
+  background: red; /* Darker gray for thumb */
+  border-radius: 10px;
+}
+
+/* Hover effect on the thumb */
+.ant-table-body::-webkit-scrollbar-thumb:hover {
+  background: #a1a0a0; /* Even darker gray when hovered */
+}

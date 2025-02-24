@@ -1,7 +1,7 @@
 import { Button, DatePicker, Dropdown, Modal } from "antd";
 import { useState } from "react";
 import { toast } from "sonner";
-import BTable from "../../components/BTable";
+import BTable from "../../components/BTable/BTable";
 import {
   useGetAllOrdersQuery,
   useUpdateDeliveryDateMutation,

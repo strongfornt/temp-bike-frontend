@@ -17,13 +17,14 @@ import {
 import TextArea from "antd/es/input/TextArea";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import BTable from "../../../components/BTable";
+import BTable from "../../../components/BTable/BTable";
 import {
   useAddProductMutation,
   useDeleteProductMutation,
   useGetProductsQuery,
   useUpdateProductMutation,
 } from "../../../redux/features/product/productApi";
+import BPagination from "../../../shared/Pagination/BPagination";
 
 const ProductManagement = () => {
   const [form] = Form.useForm();
@@ -33,9 +34,9 @@ const ProductManagement = () => {
   const [handleProductDelete] = useDeleteProductMutation();
   const [visible, setVisible] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<any | null>(null);
-
+  const [params, setParams] = useState<{limit:number, page:number}>({limit:10, page:1})
   const [isEdit, setIsEdit] = useState(false);
-  const { data, isFetching } = useGetProductsQuery(undefined);
+  const { data, isFetching } = useGetProductsQuery(params);
 
   useEffect(() => {
     if (isEdit && currentProduct) {
@@ -173,7 +174,9 @@ const ProductManagement = () => {
           isLoading={isFetching}
           dataSource={data?.data || []}
           isBorder={true}
+          scroll={{ x: 1000, y: 440 }}
         />
+        <BPagination params={params} setParams={setParams} totalCount={data?.totalCount} />
       </div>
 
       <Modal

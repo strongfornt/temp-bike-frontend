@@ -1,0 +1,78 @@
+$table_header_background: #f8f8f8;
+.RawRmgDataTable {
+  table {
+    width: 100%;
+    text-align: left;
+    border-radius: 2px 2px 0 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #efeff4;
+    border-bottom: 0;
+    border-radius: 4px;
+  }
+  svg {
+    height: 12px;
+  }
+
+  thead tr th {
+    // border: 1px solid #efeff4 !important;
+    padding: 5px 5px;
+    background: $table_header_background;
+    font-size: var(--fs_normal);
+    line-height: normal;
+    &:before {
+      background-color: transparent !important;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: 0.3s ease-in-out all;
+      td {
+        border: 0px;
+        height: 0px;
+        padding: 6px 5px;
+        background: transparent;
+        font-size: var(--fs_normal);
+        line-height: 16px;
+        border-bottom: 1px solid #f0f0f0;
+        transition: transparent 5s;
+      }
+      &:first-child {
+        border-left: 1px solid #f0f0f0;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      &:hover {
+        background: var(--white);
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        box-shadow: 0 4px 16px rgb(0 0 0 / 16%);
+        -webkit-box-shadow: 0 4px 16px rgb(0 0 0 / 16%);
+        cursor: pointer;
+        .TFTableButton {
+          .icon {
+            visibility: visible !important;
+          }
+        }
+      }
+    }
+  }
+  &.bordered {
+    table {
+      border: none !important;
+      tbody {
+        tr {
+          td {
+            border-right: 1px solid #dee2e6;
+            &:first-child {
+              border-left: 1px solid #dee2e6;
+            }
+          }
+        }
+      }
+    }
+  }
+}
