@@ -5,6 +5,7 @@ import { useSingInMutation } from "../../redux/features/auth/authApi";
 import { setUser } from "../../redux/features/auth/authSlice";
 import { useAppDispatch } from "../../redux/hook";
 import bg from "./../../assets/motor sport 150cc.jpg";
+import { Helmet } from "react-helmet-async";
 const SignUp = () => {
   const [submitFunc, res] = useSingInMutation();
 
@@ -30,6 +31,9 @@ const SignUp = () => {
 
   return (
     <div className="flex items-center min-h-screen">
+        <Helmet>
+            <title>Sign Up | SteelRev</title>
+        </Helmet>
       <div className="flex justify-center items-center bg-[#c2c2c2] h-screen flex-1">
         <div className="bg-[#f3f4f6ec] p-5 rounded-xl space-y-2 md:space-y-5 w-full md:w-[480px] drop-shadow-lg">
           <div className="text-center space-y-3">
