@@ -73,6 +73,9 @@ const AdminDashboard = () => {
     );
   }
 
+
+  
+
   return (
     <div  className="p-6 bg-gray-50 min-h-screen">
       <Helmet>
@@ -84,7 +87,7 @@ const AdminDashboard = () => {
           <Card>
             <Statistic
               title="Total Users"
-              value={userData1?.data?.length}
+              value={userData1?.data?.length || 0}
               prefix={<UserOutlined />}
               valueStyle={{ color: "#3B82F6" }}
             />
@@ -94,7 +97,7 @@ const AdminDashboard = () => {
           <Card>
             <Statistic
               title="Total Orders"
-              value={totalOrders}
+              value={orderData1?.data?.length || 0}
               prefix={<ShoppingCartOutlined />}
               valueStyle={{ color: "#10B981" }}
             />
@@ -104,7 +107,7 @@ const AdminDashboard = () => {
           <Card>
             <Statistic
               title="Total Products"
-              value={totalQuantity}
+              value={productData1?.data?.length || 0}
               prefix={<ShoppingOutlined />}
               valueStyle={{ color: "#F59E0B" }}
             />
