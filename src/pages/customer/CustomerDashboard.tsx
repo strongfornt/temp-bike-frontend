@@ -1,25 +1,17 @@
+import { Button } from "antd";
 import { useState } from "react";
-import { Modal, Upload, Button } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import { useAppSelector } from "../../redux/hook";
-import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 import { Helmet } from "react-helmet-async";
-
+import PassChangeModal from "../../components/modal/PassChangeModal";
+import { selectCurrentUser } from "../../redux/features/auth/authSlice";
+import { useAppSelector } from "../../redux/hook";
+import profile from "./../../assets/images (2).jpeg";
 const CustomerDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [imagePreview, setImagePreview] = useState<any>(null);
-  const [imageText, setImageText] = useState<any>("Upload Image");
-
    const currentUser = useAppSelector(selectCurrentUser)
-  
-  const handleImageChange = (file: any) => {
-    setImageText(file.name);
-    const reader = new FileReader();
-    reader.onloadend = () => setImagePreview(reader.result);
-    reader.readAsDataURL(file);
-  };
+ 
 
   return (
+   <>
     <div className="flex justify-center items-center p-4">
        <Helmet>
               <title>Dashboard | SteelRev</title>
@@ -34,7 +26,7 @@ const CustomerDashboard = () => {
           <img
             alt="profile"
             src={
-              "https://randomuser.me/api/portraits/men/25.jpg"
+             profile
             }
             className="mx-auto object-cover rounded-full h-28 w-28 border-4 border-white"
           />
@@ -46,65 +38,21 @@ const CustomerDashboard = () => {
           </p>
           {/* <p className="font-bold text-black">Address: {userDb?.address || 'Not Provided'}</p> */}
           <Button
-          disabled
+          // disabled
             type="primary"
             className="mt-4"
             onClick={() => setIsModalOpen(true)}
           >
-            Update Profile
+            Change Password
           </Button>
         </div>
       </div>
 
-      <Modal
-        title="Update Profile"
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-        footer={null}
-      >
-        <form className="space-y-3">
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-600">
-              Update Name:
-            </label>
-            <input
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              type="text"
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <Upload
-              beforeUpload={(file) => {
-                handleImageChange(file);
-                return false;
-              }}
-              showUploadList={false}
-            >
-              <Button icon={<UploadOutlined />}>{imageText}</Button>
-            </Upload>
-            {imagePreview && (
-              <img
-                className="w-20 h-20 rounded-lg"
-                src={imagePreview}
-                alt="Preview"
-              />
-            )}
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-600">
-              Address:
-            </label>
-            <input
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              type="text"
-            />
-          </div>
-          <Button  type="primary" htmlType="submit" className="w-full mt-4">
-            Update
-          </Button>
-        </form>
-      </Modal>
+     
     </div>
+
+    <PassChangeModal email={currentUser?.email} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+   </>
   );
 };
 

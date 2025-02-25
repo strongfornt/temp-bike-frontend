@@ -13,6 +13,7 @@ import BPagination from "../../shared/Pagination/BPagination";
 import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
 import { useAppDispatch } from "../../redux/hook";
 import { SkeletonTable } from "../../components/Skeleton/SkeletonTable";
+import { Helmet } from "react-helmet-async";
 
 const OrderManagement = () => {
   const [params, setParams] = useState<{ limit: number; page: number }>({
@@ -233,6 +234,9 @@ const OrderManagement = () => {
 
   return (
     <>
+     <Helmet>
+            <title>Order Management | SteelRev</title>
+          </Helmet>
       <div>
         <h1 className="text-xl font-bold pb-3">Order Management</h1>
       </div>

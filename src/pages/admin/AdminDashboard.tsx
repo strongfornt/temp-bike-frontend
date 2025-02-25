@@ -22,6 +22,7 @@ import {
 import { useGetAllUserQuery } from "../../redux/features/user/userApi";
 import { useGetAllOrdersQuery } from "../../redux/features/order/orderSlice";
 import { useGetProductsQuery } from "../../redux/features/product/productApi";
+import { Helmet } from "react-helmet-async";
 
 const AdminDashboard = () => {
   const { data: userData1, isLoading: isLoadingUsers } =
@@ -73,7 +74,10 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div  className="p-6 bg-gray-50 min-h-screen">
+      <Helmet>
+        <title>Dashboard | SteelRev</title>
+      </Helmet>
       {/* Stats Cards */}
       <Row gutter={[16, 16]} className="mb-8">
         <Col xs={24} sm={12} md={8}>

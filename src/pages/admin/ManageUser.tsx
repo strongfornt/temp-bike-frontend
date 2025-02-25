@@ -13,6 +13,7 @@ import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
 import { useDispatch } from "react-redux";
 import BPagination from "../../shared/Pagination/BPagination";
 import { SkeletonTable } from "../../components/Skeleton/SkeletonTable";
+import { Helmet } from "react-helmet-async";
 
 export default function ManageUser() {
   const user = useAppSelector(selectCurrentUser);
@@ -148,6 +149,9 @@ export default function ManageUser() {
 
   return (
     <>
+     <Helmet>
+            <title>User Management | SteelRev</title>
+          </Helmet>
       <div>
         <h1 className="text-xl font-bold pb-3">User Management</h1>
       </div>

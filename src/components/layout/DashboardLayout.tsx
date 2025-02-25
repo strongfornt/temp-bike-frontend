@@ -18,15 +18,14 @@ const { handleLogout } = useHandleLogout();
       <Layout>
         <Header
           style={{ backgroundColor: "#000001" }}
-          className="sticky top-0 flex  items-center justify-end z-10 gap-7"
+          className="sticky top-0 flex  items-center justify-end z-10 gap-3"
         >
-        <div className="space-x-3" >
-        <Button
+        {/* <Button
             href="/"
             className="!bg-transparent !text-gray-300 !rounded-md hover:!text-white"
           >
             Change Password
-          </Button>
+          </Button> */}
           <Button
             icon={<LogoutOutlined />}
             onClick={() => handleLogout()}
@@ -34,7 +33,6 @@ const { handleLogout } = useHandleLogout();
           >
             Logout
           </Button>
-        </div>
         <Tooltip title="Refresh">
           <Button
           onClick={() => refreshObj?.CB && refreshObj.CB()}
