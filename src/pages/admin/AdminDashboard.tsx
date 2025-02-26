@@ -3,68 +3,26 @@ import {
   ShoppingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Card, Col, Row, Statistic, Spin } from "antd";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Cell,
-  Legend,
-  Line,
-  LineChart,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
-import { useGetAllUserQuery } from "../../redux/features/user/userApi";
+import { Button, Card, Col, Row, Spin, Statistic } from "antd";
+import { Helmet } from "react-helmet-async";
 import { useGetAllOrdersQuery } from "../../redux/features/order/orderSlice";
 import { useGetProductsQuery } from "../../redux/features/product/productApi";
-import { Helmet } from "react-helmet-async";
-
+import { useGetAllUserQuery } from "../../redux/features/user/userApi";
+import DashboardChart from "./DashboardChart";
+import { useState } from "react";
+import { selectCurrentUser } from "../../redux/features/auth/authSlice";
+import { useAppSelector } from "../../redux/hook";
+import PassChangeModal from "../../components/modal/PassChangeModal";
+import profile from "./../../assets/images.jpeg"
 const AdminDashboard = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const currentUser = useAppSelector(selectCurrentUser);
   const { data: userData1, isLoading: isLoadingUsers } =
     useGetAllUserQuery(undefined);
   const { data: orderData1, isLoading: isLoadingOrders } =
     useGetAllOrdersQuery(undefined);
   const { data: productData1, isLoading: isLoadingProducts } =
     useGetProductsQuery(undefined);
-  // Static data for Users, Orders, and Products
-  const userData =
-    userData1?.data?.map((user: any) => ({
-      month: user.createdAt.substring(0, 7), // assuming createdAt is in ISO 8601 format
-      users: userData1.data.length, // this might need to be adjusted based on how you want to count users
-    })) || [];
-
-  const orderData =
-    orderData1?.data?.map((order: any) => ({
-      month: order.createdAt.substring(0, 7), // assuming createdAt is in ISO 8601 format
-      orders: orderData1.data.length, // this might need to be adjusted based on order creation dates
-    })) || [];
-
-  const productData =
-    productData1?.data?.map((product: any) => ({
-      name: product.category,
-      value: product.quantity,
-    })) || [];
-  const totalQuantity =
-    productData1?.data?.reduce(
-      (total: any, bike: any) => total + bike.quantity,
-      0
-    ) || 0;
-  const totalOrders = orderData1?.data?.reduce((total: number, order: any) => {
-    return (
-      total +
-        order?.products?.reduce(
-          (subtotal: number, product: any) => subtotal + product.quantity,
-          0
-        ) || 0
-    );
-  }, 0);
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"]; // Colors for pie chart
-
   if (isLoadingUsers || isLoadingOrders || isLoadingProducts) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -72,17 +30,45 @@ const AdminDashboard = () => {
       </div>
     );
   }
-
-
-  
-
   return (
-    <div  className="p-6 bg-gray-50 min-h-screen">
+  <>
+    <div  className="space-y-5 mb-4 ">
       <Helmet>
         <title>Dashboard | SteelRev</title>
       </Helmet>
+      <div className="bg-white rounded-2xl w-full ">
+          <img
+            alt="profile cover"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWumRdY_Qm3mPwyVFyyunAlNqGI721bc3Ftw&s"
+            className="w-full mb-4 rounded-t-lg h-36 bg-cover"
+          />
+          <div className="flex gap-1 flex-col items-center justify-center p-4 -mt-20 text-sm">
+            <img
+              alt="profile"
+              src={profile}
+              className="mx-auto object-cover rounded-full h-28 w-28 border-4 border-white"
+            />
+           <div  className="text-center mt-2">
+           <span className="font-medium text-black ">
+              Name: <span className="font-medium" >{currentUser?.name || "Unknown"}</span>
+            </span>
+            <p className="font-medium text-black">
+              Email: {currentUser?.email || "Not Available"}
+            </p>
+           </div>
+            {/* <p className="font-bold text-black">Address: {userDb?.address || 'Not Provided'}</p> */}
+            <Button
+              // disabled
+              type="primary"
+              className="mt-4"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Change Password
+            </Button>
+          </div>
+        </div>
       {/* Stats Cards */}
-      <Row gutter={[16, 16]} className="mb-8">
+      <Row gutter={[20, 20]} className="">
         <Col xs={24} sm={12} md={8}>
           <Card>
             <Statistic
@@ -114,75 +100,17 @@ const AdminDashboard = () => {
           </Card>
         </Col>
       </Row>
-
-      {/* Charts Section */}
-      <Row gutter={[16, 16]}>
-        {/* Users Chart */}
-        <Col xs={24} md={12}>
-          <Card title="User Growth Over Time">
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={userData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="users" fill="#3B82F6" name="Users" />
-              </BarChart>
-            </ResponsiveContainer>
-          </Card>
-        </Col>
-
-        {/* Orders Chart */}
-        <Col xs={24} md={12}>
-          <Card title="Order Growth Over Time">
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={orderData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="orders"
-                  stroke="#10B981"
-                  name="Orders"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </Card>
-        </Col>
-
-        {/* Products Chart */}
-        <Col xs={24} md={12}>
-          <Card title="Product Distribution">
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={productData}
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                  label
-                >
-                  {productData.map((_entry: any, index: number) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
-          </Card>
-        </Col>
-      </Row>
+      
+    <DashboardChart orders={orderData1?.data} products={productData1?.data} />
     </div>
+
+    
+    <PassChangeModal
+        email={currentUser?.email}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
+  </>
   );
 };
 
