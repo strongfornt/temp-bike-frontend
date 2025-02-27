@@ -8,17 +8,17 @@ import { customerPaths } from "../../routes/customer.routes";
 import { findRouteName } from "../../utils/findRouteNames";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
 import { verifyToken } from "../../utils/verifyToken";
-import './sidebar.css';
-import logo from "./../../assets/logo/logo.png"
+import logo from "./../../assets/logo/logo.png";
+import "./sidebar.css";
 const { Sider } = Layout;
 const userRole = {
   ADMIN: "admin",
   CUSTOMER: "customer",
 };
 
-const Sidebar = () => {
+const Sidebar = ({collapsed, setCollapsed}:any) => {
   const token = useAppSelector(useCurrentToken);
-
+ 
   let user;
 
   if (token) {
@@ -41,15 +41,14 @@ const Sidebar = () => {
   const routeName = findRouteName(sidebarItems, location.pathname);
   return (
     <Sider
-    className="z-30"
       breakpoint="lg"
       collapsedWidth="0"
-      onBreakpoint={(broken) => {
-        console.log(broken);
-      }}
-      onCollapse={(collapsed, type) => {
-        console.log(collapsed, type);
-      }}
+      collapsed={collapsed}
+      // // onCollapse={setCollapsed}
+      // onBreakpoint={(broken) => {
+      //   console.log(broken);
+      // }}
+      onCollapse={(value) => setCollapsed(value)}
       style={{
         height: "100vh",
         position: "sticky",
@@ -70,22 +69,24 @@ const Sidebar = () => {
         }}
       >
         {/* <h1>PH Uni</h1> */}
-        <Link to={'/'}>
+        <Link to={"/"}>
           <h1
             // to="/"
             style={{
               marginBottom: 0,
-              padding: '11px 0px'
+              padding: "11px 0px",
             }}
             className="text-xl flex items-center text-center  md:text-3xl lg:text-3xl  !font-bold text-primary "
           >
-             <span className="">
+            <span className="">
               <img className="h-7" src={logo} alt="" />
             </span>
             Steel<span className="text-secondary">Rev</span>
           </h1>
         </Link>
       </div>
+      <div className="flex justify-between flex-col  h-[85vh]" >
+
       <Menu
         theme="dark"
         mode="inline"
@@ -93,9 +94,18 @@ const Sidebar = () => {
         defaultSelectedKeys={[(routeName as string) || "Dashboard"]}
         items={sidebarItems as any}
       />
-      <div className="absolute bottom-10 w-full px-4">
-        <Button href="/" block icon={<HolderOutlined />} className="!bg-transparent !rounded-md !text-gray-400 hover:!text-white ">Home</Button>
+       <div className=" w-full px-4">
+        <Button
+          href="/"
+          block
+          icon={<HolderOutlined />}
+          className="!bg-transparent !rounded-md !text-gray-400 hover:!text-white "
+        >
+          Home
+        </Button>
       </div>
+      </div>
+
     </Sider>
   );
 };
