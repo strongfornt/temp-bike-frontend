@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   ShoppingCartOutlined,
   ShoppingOutlined,
@@ -9,20 +10,45 @@ import { useGetAllOrdersQuery } from "../../redux/features/order/orderSlice";
 import { useGetProductsQuery } from "../../redux/features/product/productApi";
 import { useGetAllUserQuery } from "../../redux/features/user/userApi";
 import DashboardChart from "./DashboardChart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { selectCurrentUser } from "../../redux/features/auth/authSlice";
-import { useAppSelector } from "../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import PassChangeModal from "../../components/modal/PassChangeModal";
 import profile from "./../../assets/images.jpeg"
+import { setRefreshObj } from "../../redux/features/commonRefresh/commonSlice";
 const AdminDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const currentUser = useAppSelector(selectCurrentUser);
-  const { data: userData1, isLoading: isLoadingUsers } =
+  const dispatch = useAppDispatch();
+  const { data: userData1, isLoading: isLoadingUsers, refetch: userRefetch } =
     useGetAllUserQuery(undefined);
-  const { data: orderData1, isLoading: isLoadingOrders } =
+  const { data: orderData1, isLoading: isLoadingOrders, refetch: ordersRefetch } =
     useGetAllOrdersQuery(undefined);
-  const { data: productData1, isLoading: isLoadingProducts } =
+  const { data: productData1, isLoading: isLoadingProducts, refetch: productRefetch } =
     useGetProductsQuery(undefined);
+
+
+
+
+    const handleRefresh = () => {
+      userRefetch();
+      ordersRefetch();
+      productRefetch();
+    };
+    useEffect(() => {
+      dispatch(
+        setRefreshObj({
+          CB: () => {
+            handleRefresh();
+          },
+        })
+      );
+      return () => {
+        dispatch(setRefreshObj({}));
+      };
+    }, []);
+
+
   if (isLoadingUsers || isLoadingOrders || isLoadingProducts) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -30,6 +56,7 @@ const AdminDashboard = () => {
       </div>
     );
   }
+   
   return (
   <>
     <div  className="space-y-5 mb-4 ">

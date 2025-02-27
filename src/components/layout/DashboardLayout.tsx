@@ -12,9 +12,9 @@ const refreshObj = useAppSelector(useRefreshObj)
 const { handleLogout } = useHandleLogout();
   return (
    <>
-   <ScrollRestoration />
+  {/* <ScrollRestoration /> */}
     <Layout style={{ height: "100%" }}>
-      <Sidebar />
+      <Sidebar  />
       <Layout>
         <Header
           style={{ backgroundColor: "#000001" }}
