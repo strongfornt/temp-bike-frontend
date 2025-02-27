@@ -1,50 +1,50 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## SteelRev (Bike Shop Application)
+The **Bike Shop Application** is a user-friendly e-commerce platform for purchasing bikes. It includes role-based authentication, smooth product management, and a secure checkout process. The application is built with a responsive design, ensuring seamless access on all devices.
 
-Currently, two official plugins are available:
+## Admin credentials
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- "email": "admin@example.com",
+-  "password": "admin"
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+##  Live Link
 
-- Configure the top-level `parserOptions` property like this:
+- https://bike-store-forntend.vercel.app/
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+
+
+
+
+
+## Features
+
+- **User Authentication & Authorization** – Secure login, registration, JWT-based authentication, and role-based access control.
+- **Product Management** – Users can browse, search, and filter bikes, while admins can manage inventory (CRUD operations).
+- **Secure Checkout & Payments** – Users can place orders with stock validation and **SurjoPay integration** for payments.
+- **Role-Based Dashboard** – Admins can manage users, orders, and products, while customers can track orders and update profiles.
+
+
+
+
+## 3. Technologies Used
+
+- React.js
+- Tailwind CSS
+- Antd
+
+
+
+## 📖 Installation Guide
+### **1️⃣ Clone the repository**
+```sh
+git clone https://github.com/strongfornt/temp-bike-frontend.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### **2️⃣ Install dependencies**
+#### Frontend
+```sh
+cd temp-bike-frontend
+npm install
+npm run dev
