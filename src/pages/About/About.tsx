@@ -65,7 +65,7 @@ const stats = [
   {
     icon: <TeamOutlined className="text-4xl mb-4 text-primary" />,
     value: "10k+",
-    label: "Cycling Community",
+    label: "Bike Community",
   },
   {
     icon: <EnvironmentOutlined className="text-4xl mb-4 text-primary" />,
