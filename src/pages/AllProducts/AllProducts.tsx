@@ -78,7 +78,7 @@ const AllProducts = () => {
                       value={formData?.search || ""}
                       allowClear
                       onChange={(event) => handleSearch(event)}
-                      className="w-full  md:w-[180px] py-[6.1px] [&_.ant-input-clear-icon]:!text-white !bg-transparent !text-white placeholder:!text-white"
+                      className="w-full md:w-[180px] py-[6.1px] peer custom-search-input"
                     />
                   );
                 }}
@@ -190,45 +190,44 @@ const AllProducts = () => {
                   }}
                 </Form.Item>
 
-              {/* Availability Filter */}
-              <Form.Item noStyle shouldUpdate>
-                {() => {
-                  const formData = form.getFieldsValue(true);
-                  return (
-                    <Select
-                      placeholder="Select Availability"
-                      value={
-                        formData?.inStock !== undefined
-                          ? formData.inStock
-                          : undefined
-                      }
-                      onChange={(value) => {
-                        form.setFieldsValue({
-                          inStock: value !== undefined ? value : undefined,
-                        });
-                        handleFilter();
-                      }}
-                      allowClear
-                      showSearch
-                      className="md:w-[180px] w-full filter"
-                      suffixIcon={<span style={{ color: "#BBBABA" }}>▼</span>}
-                      options={[
-                        { label: "In Stock", value: true },
-                        { label: "Out of Stock", value: false },
-                      ]}
-                    />
-                  );
-                }}
-              </Form.Item>
+                {/* Availability Filter */}
+                <Form.Item noStyle shouldUpdate>
+                  {() => {
+                    const formData = form.getFieldsValue(true);
+                    return (
+                      <Select
+                        placeholder="Select Availability"
+                        value={
+                          formData?.inStock !== undefined
+                            ? formData.inStock
+                            : undefined
+                        }
+                        onChange={(value) => {
+                          form.setFieldsValue({
+                            inStock: value !== undefined ? value : undefined,
+                          });
+                          handleFilter();
+                        }}
+                        allowClear
+                        showSearch
+                        className="md:w-[180px] w-full filter"
+                        suffixIcon={<span style={{ color: "#BBBABA" }}>▼</span>}
+                        options={[
+                          { label: "In Stock", value: true },
+                          { label: "Out of Stock", value: false },
+                        ]}
+                      />
+                    );
+                  }}
+                </Form.Item>
+              </div>
             </div>
-          </div>
-        </Form>
-      </div>
-      {/* Products Section */}
-      <>
-        {isLoading  ? (
-          <div className="flex items-center justify-center my-24 " ><Spin size="large"  /></div>
-        ) : allProducts?.length > 0 ? (
+          </Form>
+        </div>
+        {/* Products Section */}
+        {isLoading ? (
+          <div className="flex items-center justify-center my-24 " ><Spin size="large" /></div>
+        ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
               {allProducts.map((product: any) => (
@@ -241,11 +240,11 @@ const AllProducts = () => {
               </div>
             )}
           </>
-        ) : (
+        )}
+        {!isLoading && !hasMore && allProducts.length === 0 && (
           <div>No products found.</div>
         )}
-      </>
-    </div>
+      </div>
     </>
   );
 };
